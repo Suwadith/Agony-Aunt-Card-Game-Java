@@ -1,11 +1,14 @@
 package model;
 
+import java.util.Map;
+
 public class Player {
 
     private int playerNumber;
     private String playerName;
     private int counterBalance;
     private Counter counter;
+    private Map<Integer, Card> playerCards;
 
     public Player(int playerNumber, String playerName, int counterBalance, Counter counter) {
         this.playerNumber = playerNumber;
@@ -34,4 +37,11 @@ public class Player {
         return counter;
     }
 
+    public Map<Integer, Card> getPlayerCards() {
+        return playerCards;
+    }
+
+    public void setPlayerCards(Map<Integer, Card> playerCards) {
+        this.playerCards = playerCards;
+    }
 }
