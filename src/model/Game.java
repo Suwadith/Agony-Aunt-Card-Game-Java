@@ -4,12 +4,14 @@ public class Game {
 
     private Player[] players;
     private DumpCard dumpCard;
-    private Trick trick;
+    private Trick[] tricks;
+    private Player winner;
 
-    public Game(Player[] players, DumpCard dumpCard, Trick trick) {
+    public Game(Player[] players, DumpCard dumpCard, Trick[] tricks, Player winner) {
         this.players = players;
         this.dumpCard = dumpCard;
-        this.trick = trick;
+        this.tricks = tricks;
+        this.winner = winner;
     }
 
     public Player[] getPlayers() {
@@ -28,11 +30,19 @@ public class Game {
         this.dumpCard = dumpCard;
     }
 
-    public Trick getTrick() {
-        return trick;
+    public Trick[] getTricks() {
+        return tricks;
     }
 
-    public void setTrick(Trick trick) {
-        this.trick = trick;
+    public void setTricks(Trick[] tricks) {
+        this.tricks = tricks;
+    }
+
+    public Player getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Player winner) {
+        this.winner = winner;
     }
 }
