@@ -10,6 +10,9 @@ public class Card {
         this.number = number;
     }
 
+    public Card(Suit suit) {
+    	this.suit = suit;
+    }
     public Suit getSuit() {
         return suit;
     }
