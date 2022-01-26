@@ -3,10 +3,12 @@ package model;
 public class Card {
 
     private Suit suit;
+    private Rank rank;
     private int number;
 
-    public Card(Suit suit, int number) {
+    public Card(Suit suit, Rank rank, int number) {
         this.suit = suit;
+        this.rank = rank;
         this.number = number;
     }
 
@@ -22,12 +24,16 @@ public class Card {
         this.suit = suit;
     }
 
-    public int getNumber() {
-        return number;
+    public Rank getRank() {
+        return rank;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setRank(Rank rank) {
+        this.rank = rank;
+    }
+    
+    public int getNumber() {
+    	return number;
     }
 }
 

@@ -7,6 +7,7 @@ import model.Card;
 import model.Rank;
 import model.Suit;
 import model.Deck;
+import model.DumpCard;
 
 public class main {
 	public static void main(String array[])
@@ -17,15 +18,17 @@ public class main {
 		//Shuffle the cards
 		Collections.shuffle(cardList);
 		
-		//Joker card Check
+		//Joker card check
 		cardList = jokerCheck(cardList);
 		
 		//Add them to deck		
 		Stack<Card> cardStack = addtoDeck(cardList);
 		
 		//Display dump card
-		Card dumpCard = cardStack.peek(); 
-		System.out.println("Dump suit is: " + dumpCard.getSuit() + "\nDump number is: " + dumpCard.getNumber());
+		Card topCard = cardStack.peek(); 
+		DumpCard dumpCard = new DumpCard(topCard.getSuit(),topCard.getRank(),topCard.getNumber()); 
+		System.out.println("Dump suit is: " + dumpCard.getSuit() + "\nDump "
+				+ "number is: " + dumpCard.getRank()+""+dumpCard.getNumber());
 }
 
 /*Create 53 cards. 13 of each suit*/
@@ -33,14 +36,16 @@ public class main {
 		
 		List<Card> cardList = new ArrayList();
 		for(Suit suit : Suit.values()) {
+			int i=0;
 			if (suit.equals(Suit.JOKER)) {
 				cardList.add(new Card(Suit.JOKER));
 			}
 			else {
-				for(int i=1;i<14;i++) {
-				cardList.add(new Card(suit, i));
+				for(Rank rank: Rank.values()) {
+				i++;	
+				cardList.add(new Card(suit,rank,i));
 			}
-			}
+		}
 		}
 		return cardList;
 	}
@@ -74,7 +79,5 @@ public class main {
 			cardList.add(pos, lastCard);			
 		} 
 		return cardList;
-
 	}
-
 }
