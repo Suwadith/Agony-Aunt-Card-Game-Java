@@ -23,7 +23,7 @@ public class Card {
         this.number = number;
     }
     
-    public Card(Suit Suit, int number) {
+    public Card(Suit suit, int number) {
     	this.suit = suit;
     	this.number = number;
     }
