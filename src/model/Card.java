@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Card {
@@ -54,7 +55,11 @@ public class Card {
 			}
 		}
 		}
+
+		Collections.shuffle(cardList);
+		cardList = jokerCheck(cardList);
 		return cardList;
+
     }
 
 /*Rearrange if last card is joker card*/

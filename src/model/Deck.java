@@ -8,6 +8,7 @@ public class Deck {
     private Stack<Card> deck = new Stack<>();
     
     public Deck() {
+        this.deck = addtoDeck(new Card().createCards());
     }
 
     public Deck(Stack<Card> deck) {
@@ -24,10 +25,10 @@ public class Deck {
     
 /*Pass List of cards to Stack of Deck*/
 	public static Stack<Card> addtoDeck(List<Card> cardList){
-	
-		Stack<Card> cardStack = new Stack<>();		
+
+		Stack<Card> cardStack = new Stack<>();
 		cardStack.addAll(cardList);
-		Deck cardDeck = new Deck(cardStack);		
+		Deck cardDeck = new Deck(cardStack);
 		cardStack = cardDeck.getDeck();
 		return cardStack;
 	}
