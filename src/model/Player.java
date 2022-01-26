@@ -12,14 +12,11 @@ public class Player {
     private Map<Integer, Card> cardsWon;
     private int[] trickRoundsWon;
 
-    public Player(int playerNumber, String playerName, int counterBalance, Counter counter, Map<Integer, Card> playingCards, Map<Integer, Card> cardsWon, int[] trickRoundsWon) {
+    public Player(int playerNumber, String playerName, int counterBalance, Counter counter) {
         this.playerNumber = playerNumber;
         this.playerName = playerName;
         this.counterBalance = counterBalance;
         this.counter = counter;
-        this.playingCards = playingCards;
-        this.cardsWon = cardsWon;
-        this.trickRoundsWon = trickRoundsWon;
     }
 
     public int getPlayerNumber() {
