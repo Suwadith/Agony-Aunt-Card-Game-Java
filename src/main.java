@@ -3,6 +3,8 @@ import java.util.*;
 import model.*;
 
 import static model.CounterColor.*;
+import static model.Suit.*;
+import static model.Rank.*;
 
 public class main {
     public static void main(String array[]) {
@@ -16,6 +18,11 @@ public class main {
         //Create deck of cards
         Deck deck = new Deck();
 
+        //Display dump card
+        Card topCard = deck.getDeck().pop();
+        DumpCard dumpCard = new DumpCard(topCard.getSuit(), topCard.getRank(), topCard.getNumber());
+        System.out.println("Dump suit is: " + dumpCard.getSuit() + "\nDump "
+                + "rank is: " + dumpCard.getRank() + "\nDump Number is: " + dumpCard.getNumber());
 
         //Creating individual player objects
         for (int i = 0; i < 4; i++) {
@@ -24,17 +31,14 @@ public class main {
             players[i] = new Player((i + 1), name, 17, counters[i]);
         }
 
-
-        //Display dump card
-        Card topCard = deck.getDeck().pop();
-        DumpCard dumpCard = new DumpCard(topCard.getSuit(), topCard.getRank(), topCard.getNumber());
-        System.out.println("Dump suit is: " + dumpCard.getSuit() + "\nDump "
-                + "rank is: " + dumpCard.getRank() + "\nDump Number is: " + dumpCard.getNumber());
-
-
-		for(int i=0; i<deck.getDeck().size(); i++) {
-			System.out.println(deck.getDeck().pop().getSuit());
-		}
-
+        //Assign 13 cards per player
+        int x = 0;
+        for(int i=0; i<13; i++) {
+            players[0].updatePlayingCards(x, deck.getDeck().pop());
+            players[1].updatePlayingCards(x, deck.getDeck().pop());
+            players[2].updatePlayingCards(x, deck.getDeck().pop());
+            players[3].updatePlayingCards(x, deck.getDeck().pop());
+            x++;
+        }
     }
 }	

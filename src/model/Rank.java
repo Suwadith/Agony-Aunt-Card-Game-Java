@@ -15,6 +15,6 @@ public enum Rank {
     THREE,
     TWO,
     ACE
-    
+
 }
 

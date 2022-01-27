@@ -2,11 +2,11 @@ package model;
 
 public enum Suit {
 
-	CLUBS,
+    CLUBS,
     SPADES,
     HEARTS,
     DIAMONDS,
     JOKER
-   
+
 }
 

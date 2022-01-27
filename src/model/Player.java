@@ -1,5 +1,6 @@
 package model;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Player {
@@ -17,6 +18,7 @@ public class Player {
         this.playerName = playerName;
         this.counterBalance = counterBalance;
         this.counter = counter;
+        this.playingCards = new HashMap<>();
     }
 
     public int getPlayerNumber() {
@@ -57,6 +59,10 @@ public class Player {
 
     public void setPlayingCards(Map<Integer, Card> playingCards) {
         this.playingCards = playingCards;
+    }
+
+    public void updatePlayingCards(Integer x, Card card) {
+        this.playingCards.put(x, card);
     }
 
     public Map<Integer, Card> getCardsWon() {
