@@ -21,8 +21,9 @@ public class main {
         //Display dump card
         Card topCard = deck.getDeck().pop();
         DumpCard dumpCard = new DumpCard(topCard.getSuit(), topCard.getRank(), topCard.getNumber());
-        System.out.println("Dump suit is: " + dumpCard.getSuit() + "\nDump "
-                + "rank is: " + dumpCard.getRank() + "\nDump Number is: " + dumpCard.getNumber());
+        System.out.println("Dump card details");
+        System.out.println("-----------------");
+        System.out.println(dumpCard);
 
         //Creating individual player objects
         for (int i = 0; i < 4; i++) {
