@@ -32,7 +32,7 @@ public class main {
         }
 
         //Assign 13 cards per player
-        int x = 0;
+        int x = 1;
         for(int i=0; i<13; i++) {
             players[0].updatePlayingCards(x, deck.getDeck().pop());
             players[1].updatePlayingCards(x, deck.getDeck().pop());
