@@ -27,7 +27,7 @@ public class Card {
         this.suit = suit;
         this.number = number;
     }
-
+    
     public Rank getRank() {
         return rank;
     }
@@ -44,13 +44,13 @@ public class Card {
     public List<Card> createCards() {
         List<Card> cardList = new ArrayList();
         for (Suit suit : Suit.values()) {
-            int i = 0;
+            int i = 13;
             if (suit.equals(Suit.JOKER)) {
                 cardList.add(new Card(Suit.JOKER, 0));
             } else {
                 for (Rank rank : Rank.values()) {
-                    i++;
                     cardList.add(new Card(suit, rank, i));
+                    i--;
                 }
             }
         }

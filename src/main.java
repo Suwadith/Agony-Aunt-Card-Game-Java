@@ -17,7 +17,7 @@ public class main {
 
         //Create deck of cards
         Deck deck = new Deck();
-
+        
         //Display dump card
         Card topCard = deck.getDeck().pop();
         DumpCard dumpCard = new DumpCard(topCard.getSuit(), topCard.getRank(), topCard.getNumber());
@@ -25,13 +25,25 @@ public class main {
         System.out.println("-----------------");
         System.out.println(dumpCard);
 
+        //Display Penalty Board
+        PenaltyBoard penaltyboard = new PenaltyBoard();
+        PenaltySquares[][] penaltySquares = penaltyboard.getPenaltyBoard();
+        for(int i=0;i<3;i++) {
+        	for(int j=0;j<3;j++) {
+        		System.out.format("%-10s", penaltySquares[i][j].getPenaltyName());
+        	}
+        	System.out.println();
+        //	System.out.println("-----------------------------");
+        }
+        System.out.println();
+        
         //Creating individual player objects
         for (int i = 0; i < 4; i++) {
             System.out.println("Enter Player " + (i + 1) + " name: ");
             String name = sc.next();
             players[i] = new Player((i + 1), name, 17, counters[i]);
         }
-
+       
         //Assign 13 cards per player
         int x = 1;
         for(int i=0; i<13; i++) {
@@ -47,8 +59,12 @@ public class main {
         System.out.println("Player 1 cards are as follows");
         System.out.println("-----------------------------");
         players[0].getPlayingCards().forEach((key, value) -> {
+        	if (value.getSuit() == Suit.JOKER) {
+        		System.out.println(key+" -> "+ value.getSuit());
+        	} else {
             System.out.println(key+" -> "+ value.getRank() + " : " + value.getSuit());
-        });
+        	}
+        	});
 //        Trick trick = new Trick()
 
     }
