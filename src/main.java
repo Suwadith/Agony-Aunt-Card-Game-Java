@@ -41,5 +41,15 @@ public class main {
             players[3].updatePlayingCards(x, deck.getDeck().pop());
             x++;
         }
+
+        //Start a trick
+        //player 1 chooses the first card
+        System.out.println("Player 1 cards are as follows");
+        System.out.println("-----------------------------");
+        players[0].getPlayingCards().forEach((key, value) -> {
+            System.out.println(key+" -> "+ value.getRank() + " : " + value.getSuit());
+        });
+//        Trick trick = new Trick()
+
     }
 }	

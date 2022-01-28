@@ -5,13 +5,13 @@ public class Trick {
     private Card leadCard;
     private Card[] followingCards;
     private Player winner;
-    private int trickNumber;
+    public static int trickNumber;
 
 
     public Trick(Card leadCard, Card[] followingCards) {
         this.leadCard = leadCard;
         this.followingCards = followingCards;
-        this.trickNumber += 1;
+        trickNumber += 1;
     }
 
     public Card getLeadCard() {
