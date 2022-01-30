@@ -80,4 +80,8 @@ public class Player {
     public void setTrickRoundsWon(int[] trickRoundsWon) {
         this.trickRoundsWon = trickRoundsWon;
     }
+
+    public void removeCard(Integer cardNumber) {
+        playingCards.remove(cardNumber);
+    }
 }

@@ -2,15 +2,16 @@ package model;
 
 public class Trick {
 
+    private Player trickLeader;
     private Card leadCard;
+    private Player[] followingPlayers;
     private Card[] followingCards;
     private Player winner;
+    private Player previousTrickWinner;
     public static int trickNumber;
 
 
-    public Trick(Card leadCard, Card[] followingCards) {
-        this.leadCard = leadCard;
-        this.followingCards = followingCards;
+    public Trick() {
         trickNumber += 1;
     }
 
@@ -36,5 +37,29 @@ public class Trick {
 
     public void setWinner(Player winner) {
         this.winner = winner;
+    }
+
+    public Player getTrickLeader() {
+        return trickLeader;
+    }
+
+    public void setTrickLeader(Player trickLeader) {
+        this.trickLeader = trickLeader;
+    }
+
+    public Player[] getFollowingPlayers() {
+        return followingPlayers;
+    }
+
+    public void setFollowingPlayers(Player[] followingPlayers) {
+        this.followingPlayers = followingPlayers;
+    }
+
+    public Player getPreviousTrickWinner() {
+        return previousTrickWinner;
+    }
+
+    public void setPreviousTrickWinner(Player previousTrickWinner) {
+        this.previousTrickWinner = previousTrickWinner;
     }
 }

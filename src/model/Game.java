@@ -7,11 +7,9 @@ public class Game {
     private Trick[] tricks;
     private Player winner;
 
-    public Game(Player[] players, DumpCard dumpCard, Trick[] tricks, Player winner) {
+    public Game(Player[] players, DumpCard dumpCard) {
         this.players = players;
         this.dumpCard = dumpCard;
-        this.tricks = tricks;
-        this.winner = winner;
     }
 
     public Player[] getPlayers() {

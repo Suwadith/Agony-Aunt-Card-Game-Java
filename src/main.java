@@ -1,5 +1,6 @@
 import java.util.*;
 
+
 import model.*;
 
 import static model.CounterColor.*;
@@ -17,7 +18,7 @@ public class main {
 
         //Create deck of cards
         Deck deck = new Deck();
-        
+
         //Display dump card
         Card topCard = deck.getDeck().pop();
         DumpCard dumpCard = new DumpCard(topCard.getSuit(), topCard.getRank(), topCard.getNumber());
@@ -28,25 +29,25 @@ public class main {
         //Display Penalty Board
         PenaltyBoard penaltyboard = new PenaltyBoard();
         PenaltySquares[][] penaltySquares = penaltyboard.getPenaltyBoard();
-        for(int i=0;i<3;i++) {
-        	for(int j=0;j<3;j++) {
-        		System.out.format("%-10s", penaltySquares[i][j].getPenaltyName());
-        	}
-        	System.out.println();
-        //	System.out.println("-----------------------------");
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.format("%-10s", penaltySquares[i][j].getPenaltyName());
+            }
+            System.out.println();
+            //	System.out.println("-----------------------------");
         }
         System.out.println();
-        
+
         //Creating individual player objects
         for (int i = 0; i < 4; i++) {
             System.out.println("Enter Player " + (i + 1) + " name: ");
             String name = sc.next();
             players[i] = new Player((i + 1), name, 17, counters[i]);
         }
-       
+
         //Assign 13 cards per player
         int x = 1;
-        for(int i=0; i<13; i++) {
+        for (int i = 0; i < 13; i++) {
             players[0].updatePlayingCards(x, deck.getDeck().pop());
             players[1].updatePlayingCards(x, deck.getDeck().pop());
             players[2].updatePlayingCards(x, deck.getDeck().pop());
@@ -54,18 +55,50 @@ public class main {
             x++;
         }
 
-        //Start a trick
-        //player 1 chooses the first card
-        System.out.println("Player 1 cards are as follows");
-        System.out.println("-----------------------------");
-        players[0].getPlayingCards().forEach((key, value) -> {
-        	if (value.getSuit() == Suit.JOKER) {
-        		System.out.println(key+" -> "+ value.getSuit());
-        	} else {
-            System.out.println(key+" -> "+ value.getRank() + " : " + value.getSuit());
-        	}
-        	});
-//        Trick trick = new Trick()
+        //Start a game
+        Game game = new Game(players, dumpCard);
+
+
+        //13 tricks in total
+        for (int i = 0; i < 13; i++) {
+            //Start a trick
+            Trick trick = new Trick();
+
+            //Check if this is the first trick
+            if (Trick.trickNumber == 1) {
+                trick.setTrickLeader(players[0]);
+                trick.setFollowingPlayers(new Player[]{players[1], players[2], players[3]});
+            } else {
+                trick.setTrickLeader(trick.getPreviousTrickWinner());
+                List<Player> playerList = new ArrayList<>(Arrays.asList(players));
+                playerList.remove(trick.getPreviousTrickWinner());
+                Player[] tempList = playerList.toArray(new Player[0]);
+                trick.setFollowingPlayers(tempList);
+            }
+
+            //Leading a trick
+            System.out.println("Player " + trick.getTrickLeader().getPlayerNumber() + " cards are as follows");
+            System.out.println("-----------------------------");
+            players[0].getPlayingCards().forEach((key, value) -> {
+                if (value.getSuit() == Suit.JOKER) {
+                    System.out.println(key + " -> " + value.getSuit());
+                } else {
+                    System.out.println(key + " -> " + value.getRank() + " : " + value.getSuit());
+                }
+            });
+            System.out.println();
+            System.out.println("Player " + trick.getTrickLeader().getPlayerNumber() + " picks a card(choose the card by typing a number from the previously displayed list)");
+            int cardNumber = Integer.parseInt(sc.next());
+            System.out.println();
+            trick.setLeadCard(trick.getTrickLeader().getPlayingCards().get(cardNumber));
+            trick.getTrickLeader().removeCard(cardNumber);
+            System.out.println("Card chosen by the leader");
+            System.out.println("--------------------------");
+            System.out.println(trick.getLeadCard());
+
+            //Following a trick
+        }
+
 
     }
 }	
