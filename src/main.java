@@ -77,9 +77,9 @@ public class main {
             }
 
             //Leading a trick
-            System.out.println("Player " + trick.getTrickLeader().getPlayerNumber() + " cards are as follows");
+            System.out.println(trick.getTrickLeader().getPlayerName() + "'s cards are as follows");
             System.out.println("-----------------------------");
-            players[0].getPlayingCards().forEach((key, value) -> {
+            trick.getTrickLeader().getPlayingCards().forEach((key, value) -> {
                 if (value.getSuit() == Suit.JOKER) {
                     System.out.println(key + " -> " + value.getSuit());
                 } else {
@@ -87,7 +87,7 @@ public class main {
                 }
             });
             System.out.println();
-            System.out.println("Player " + trick.getTrickLeader().getPlayerNumber() + " picks a card(choose the card by typing a number from the previously displayed list)");
+            System.out.println(trick.getTrickLeader().getPlayerName() + " picks a card(choose the card by typing a number from the previously displayed list)");
             int cardNumber = Integer.parseInt(sc.next());
             System.out.println();
             trick.setLeadCard(trick.getTrickLeader().getPlayingCards().get(cardNumber));
@@ -95,8 +95,44 @@ public class main {
             System.out.println("Card chosen by the leader");
             System.out.println("--------------------------");
             System.out.println(trick.getLeadCard());
+//            System.out.println();
 
             //Following a trick
+            for(int y=0; y<3; y++) {
+                System.out.println(trick.getFollowingPlayers()[y].getPlayerName() + "'s cards are as follows");
+                System.out.println("-----------------------------");
+                if(Card.checkIfFollowingSuitPossible(trick.getFollowingPlayers()[0].getPlayingCards(), trick.getLeadCard().getSuit())) {
+                    trick.getFollowingPlayers()[y].getPlayingCards().forEach((key, value) -> {
+                        if (value.getSuit() == Suit.JOKER) {
+                            System.out.println(key + " -> " + value.getSuit());
+                        } else if(value.getSuit() == trick.getLeadCard().getSuit()) {
+                            System.out.println(key + " -> " + value.getRank() + " : " + value.getSuit());
+                        }
+                    });
+                } else {
+                    trick.getFollowingPlayers()[y].getPlayingCards().forEach((key, value) -> {
+                        if (value.getSuit() == Suit.JOKER) {
+                            System.out.println(key + " -> " + value.getSuit());
+                        } else {
+                            System.out.println(key + " -> " + value.getRank() + " : " + value.getSuit());
+                        }
+                    });
+                }
+                System.out.println();
+
+                System.out.println();
+                System.out.println(trick.getFollowingPlayers()[y].getPlayerName() + " picks a card(choose the card by typing a number from the previously displayed list)");
+                cardNumber = Integer.parseInt(sc.next());
+                System.out.println();
+                trick.setFollowingCards(trick.getFollowingPlayers()[y].getPlayingCards().get(cardNumber), y);
+                trick.getFollowingPlayers()[y].removeCard(cardNumber);
+                System.out.println("Card chosen by the follower");
+                System.out.println("--------------------------");
+                System.out.println(trick.getFollowingCards()[y]);
+            }
+
+            //Checking legality
+
         }
 
 

@@ -5,7 +5,7 @@ public class Trick {
     private Player trickLeader;
     private Card leadCard;
     private Player[] followingPlayers;
-    private Card[] followingCards;
+    private Card[] followingCards = new Card[3];
     private Player winner;
     private Player previousTrickWinner;
     public static int trickNumber;
@@ -27,8 +27,8 @@ public class Trick {
         return followingCards;
     }
 
-    public void setFollowingCards(Card[] followingCards) {
-        this.followingCards = followingCards;
+    public void setFollowingCards(Card followingCards, int position) {
+        this.followingCards[position] = followingCards;
     }
 
     public Player getWinner() {

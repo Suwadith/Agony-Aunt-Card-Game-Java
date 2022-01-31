@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Card {
 
@@ -13,8 +15,8 @@ public class Card {
     public Card() {
     }
 
-    public Suit getSuit() {
-        return suit;
+    public Card(Suit suit) {
+        this.suit = suit;
     }
 
     public Card(Suit suit, Rank rank, int number) {
@@ -26,6 +28,10 @@ public class Card {
     public Card(Suit suit, int number) {
         this.suit = suit;
         this.number = number;
+    }
+
+    public Suit getSuit() {
+        return suit;
     }
     
     public Rank getRank() {
@@ -75,6 +81,16 @@ public class Card {
             cardList.add(pos, lastCard);
         }
         return cardList;
+    }
+
+    public static boolean checkIfFollowingSuitPossible(Map<Integer, Card> cards, Suit suit) {
+        AtomicBoolean check = new AtomicBoolean(false);
+        cards.forEach((key, value) -> {
+            if (value.getSuit() == suit) {
+                check.set(true);
+            }
+        });
+        return check.get();
     }
 
 

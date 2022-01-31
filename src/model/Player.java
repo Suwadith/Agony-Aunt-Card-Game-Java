@@ -2,6 +2,7 @@ package model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Player {
 
@@ -84,4 +85,5 @@ public class Player {
     public void removeCard(Integer cardNumber) {
         playingCards.remove(cardNumber);
     }
+
 }
