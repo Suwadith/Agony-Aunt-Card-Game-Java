@@ -31,7 +31,7 @@ public class main {
         PenaltySquares[][] penaltySquares = penaltyboard.getPenaltyBoard();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                System.out.format("%-10s", penaltySquares[i][j].getPenaltyName());
+                System.out.format("%-10s", penaltySquares[i][j].getPenaltySquareName());
             }
             System.out.println();
             //	System.out.println("-----------------------------");

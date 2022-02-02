@@ -4,15 +4,15 @@ import java.util.Map;
 
 public class PenaltySquares {
 
-    private String penaltyName;
+    private String penaltySquareName;
 	private Map<Counter, Integer> counters;
 
-	public PenaltySquares(String penaltyName) {
-		this.penaltyName = penaltyName;
+	public PenaltySquares(String penaltySquareName) {
+		this.penaltySquareName = penaltySquareName;
 	}
 
-	public String getPenaltyName() {
-		return penaltyName;
+	public String getPenaltySquareName() {
+		return penaltySquareName;
 	}
 
 	public Map<Counter, Integer> getCounters() {
