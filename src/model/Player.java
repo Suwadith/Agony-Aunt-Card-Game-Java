@@ -14,6 +14,9 @@ public class Player {
     private Map<Integer, Card> cardsWon;
     private int[] trickRoundsWon;
 
+    public Player() {
+    }
+    
     public Player(int playerNumber, String playerName, int counterBalance, Counter counter) {
         this.playerNumber = playerNumber;
         this.playerName = playerName;

@@ -34,7 +34,6 @@ public class main {
                 System.out.format("%-10s", penaltySquares[i][j].getPenaltySquareName());
             }
             System.out.println();
-            //	System.out.println("-----------------------------");
         }
         System.out.println();
 
@@ -136,16 +135,42 @@ public class main {
                     trick.setFollowingCards(trick.getFollowingPlayers()[y].getPlayingCards().get(cardNumber), y);
                 }
 
-                trick.setFollowingCards(trick.getFollowingPlayers()[y].getPlayingCards().get(cardNumber), y);
+                //trick.setFollowingCards(trick.getFollowingPlayers()[y].getPlayingCards().get(cardNumber), y);
 
                 trick.getFollowingPlayers()[y].removeCard(cardNumber);
                 System.out.println("Card chosen by the follower");
                 System.out.println("--------------------------");
                 System.out.println(trick.getFollowingCards()[y]);
             }
-
+            
+/* Determine winner of the trick */
+            /*If leading card is Ace*/
+            if(trick.getLeadCard().getRank() == Rank.ACE) {
+            	System.out.println("Winner of the trick is: " + trick.getTrickLeader().getPlayerName());
+            }
+            else {
+            	Player tempWinner = trick.getTrickLeader();
+            	Card tempLeadCard = trick.getLeadCard();
+            	/*Check if all players follow leading card suit*/
+            	for(int j=0;j<3;j++) {
+            		if(trick.getLeadCard().getSuit() == trick.getFollowingCards()[j].getSuit()) {
+            			//Check if the player has ACE and announce winner
+            			if(trick.getFollowingCards()[j].getRank() == Rank.ACE ) {
+            				tempWinner = trick.getFollowingPlayers()[j];
+            				break;
+            			}
+            			//Compare rank of leading player and following player of the current loop
+            			else{
+            				if(trick.getFollowingCards()[j].getNumber() > tempLeadCard.getNumber()) {
+            					tempWinner = trick.getFollowingPlayers()[j];
+            					tempLeadCard = trick.getFollowingCards()[j];
+            				}
+            			}
+            		}
+            	}
+            	trick.setWinner(tempWinner);
+				System.out.println("Winner of the trick is: " + tempWinner.getPlayerName());
+            }
         }
-
-
     }
 }	
