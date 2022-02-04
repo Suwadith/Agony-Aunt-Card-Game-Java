@@ -57,12 +57,13 @@ public class main {
         //Start a game
         Game game = new Game(players, dumpCard);
 
-
+        //Start a trick
+        Trick trick = new Trick();
+        
         //13 tricks in total
         for (int i = 0; i < 13; i++) {
-            //Start a trick
-            Trick trick = new Trick();
-
+        	System.out.println();
+        	System.out.println( "Start of trick: "+ (i+1));
             //Check if this is the first trick
             if (Trick.trickNumber == 1) {
                 trick.setTrickLeader(players[0]);
@@ -147,6 +148,7 @@ public class main {
             /*If leading card is Ace*/
             if(trick.getLeadCard().getRank() == Rank.ACE) {
             	System.out.println("Winner of the trick is: " + trick.getTrickLeader().getPlayerName());
+            	trick.setWinner(trick.getTrickLeader());
             }
             else {
             	Player tempWinner = trick.getTrickLeader();
@@ -171,6 +173,8 @@ public class main {
             	trick.setWinner(tempWinner);
 				System.out.println("Winner of the trick is: " + tempWinner.getPlayerName());
             }
+            trick.setPreviousTrickWinner(trick.getWinner());
+            System.out.println();
         }
     }
 }	
