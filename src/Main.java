@@ -42,7 +42,7 @@ public class Main {
         for (int i = 0; i < 4; i++) {
             System.out.println("Enter Player " + (i + 1) + " name: ");
             String name = sc.next();
-            players[i] = new Player((i + 1), name, 17, counters[i]);
+            players[i] = new Player((i + 1), name, counters[i]);
         }
 
         //Assign 13 cards per player

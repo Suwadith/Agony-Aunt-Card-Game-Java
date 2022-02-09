@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -8,7 +9,7 @@ public class Player {
 
     private int playerNumber;
     private String playerName;
-    private int counterBalance;
+    private ArrayList<Counter> counters = new ArrayList<>();
     private Counter counter;
     private Map<Integer, Card> playingCards;
     private Map<Integer, Card> cardsWon;
@@ -17,12 +18,17 @@ public class Player {
     public Player() {
     }
     
-    public Player(int playerNumber, String playerName, int counterBalance, Counter counter) {
+    public Player(int playerNumber, String playerName, Counter counter) {
         this.playerNumber = playerNumber;
         this.playerName = playerName;
-        this.counterBalance = counterBalance;
-        this.counter = counter;
+        assignCounters(counter);
         this.playingCards = new HashMap<>();
+    }
+
+    public void assignCounters(Counter counter) {
+        for(int i=0; i<17; i++) {
+            this.counters.add(counter);
+        }
     }
 
     public int getPlayerNumber() {
@@ -31,14 +37,6 @@ public class Player {
 
     public String getPlayerName() {
         return playerName;
-    }
-
-    public int getCounterBalance() {
-        return counterBalance;
-    }
-
-    public void setCounterBalance(int counterBalance) {
-        this.counterBalance = counterBalance;
     }
 
     public Counter getCounter() {
