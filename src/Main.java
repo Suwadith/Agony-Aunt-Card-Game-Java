@@ -4,6 +4,8 @@ import java.util.*;
 import model.*;
 import model.Penalties.AgonyAunt;
 import model.Penalties.AgonyUncle;
+import model.Penalties.DumpthTrick;
+import model.Penalties.LastTrick;
 import model.Penalties.Queen;
 
 import static model.CounterColor.*;
@@ -198,6 +200,14 @@ public class Main {
            
             	//Queen Penalty
             	new Queen(cardPenalty, trick.getWinner().getCounters(), penaltyboard);
+
+                //Dumpth trick penalty
+                new DumpthTrick(dumpCard, Trick.trickNumber, trick.getWinner().getCounters(), penaltyboard);
+
+                //Last trick penalty
+                new LastTrick(Trick.trickNumber, trick.getWinner().getCounters(), penaltyboard);
+
+                //Most trick penalty
             }
         	
             /* Display Penalty Board */
