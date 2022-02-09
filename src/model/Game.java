@@ -4,7 +4,7 @@ public class Game {
 
     private Player[] players;
     private DumpCard dumpCard;
-    private Trick[] tricks;
+    private Trick[] tricks = new Trick[13];
     private Player winner;
 
     public Game(Player[] players, DumpCard dumpCard) {
@@ -34,6 +34,10 @@ public class Game {
 
     public void setTricks(Trick[] tricks) {
         this.tricks = tricks;
+    }
+    
+    public void setTrick(int trickNumber, Trick currentTrick) {
+    	this.tricks[trickNumber] = currentTrick;
     }
 
     public Player getWinner() {

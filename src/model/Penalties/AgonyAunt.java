@@ -1,12 +1,13 @@
 package model.Penalties;
 
-import model.Penalty;
+import model.*;
 
 public class AgonyAunt extends Penalty {
 
     @Override
-    public void checkForPenalty() {
-
+    public boolean checkForPenalty(Card card) {
+    	boolean check = false;
+    	return check;
     }
 
 
