@@ -31,13 +31,14 @@ public class Main {
         //Display Penalty Board
         PenaltyBoard penaltyboard = new PenaltyBoard();
         PenaltySquares[][] penaltySquares = penaltyboard.getPenaltyBoard();
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                System.out.format("%-10s", penaltySquares[i][j].getPenaltySquareName());
-            }
-            System.out.println();
-        }
-        System.out.println();
+        penaltyboard.displayBoard();
+//        for (int i = 0; i < 3; i++) {
+//            for (int j = 0; j < 3; j++) {
+//                System.out.format("%-10s", penaltySquares[i][j].getPenaltySquareName());
+//            }
+//            System.out.println();
+//        }
+//        System.out.println(); 
 
         //Creating individual player objects
         for (int i = 0; i < 4; i++) {
@@ -199,17 +200,12 @@ public class Main {
             	if(cardPenalty.getSuit() == dumpCard.getSuit()) {
                 	new AgonyAunt(cardPenalty,trick.getWinner().getCounters(),penaltyboard);	
             	}
+            	
+            	//Agony Uncle Penalty
             }
         	
 /* Display Penalty Board */
-            penaltySquares = penaltyboard.getPenaltyBoard();
-            for (int u=0; u<3; u++) {
-                for (int v=0; v<3; v++) {
-                    System.out.format("%-12s", penaltySquares[u][v].getPenaltySquareName());
-                }
-                System.out.println();
-            }
-            System.out.println();
+            penaltyboard.displayBoard();
         }
     }
 }	
