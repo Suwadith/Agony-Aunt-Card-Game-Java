@@ -2,6 +2,7 @@ import java.util.*;
 
 
 import model.*;
+import model.Penalties.AgonyAunt;
 import model.Penalties.Queen;
 
 import static model.CounterColor.*;
@@ -15,7 +16,7 @@ public class Main {
         //Creating player array
         Player[] players = new Player[4];
         //Creating counter array with different colours
-        Counter[] counters = new Counter[]{new Counter(RED), new Counter(GREEN), new Counter(BLUE), new Counter(YELLOW)};
+        Counter[] counter = new Counter[]{new Counter(RED), new Counter(GREEN), new Counter(BLUE), new Counter(YELLOW)};
 
         //Create deck of cards
         Deck deck = new Deck();
@@ -42,9 +43,9 @@ public class Main {
         for (int i = 0; i < 4; i++) {
             System.out.println("Enter Player " + (i + 1) + " name: ");
             String name = sc.next();
-            players[i] = new Player((i + 1), name, counters[i]);
+            players[i] = new Player((i + 1), name, counter[i]);
         }
-
+        
         //Assign 13 cards per player
         int x = 1;
         for (int i = 0; i < 13; i++) {
@@ -188,14 +189,27 @@ public class Main {
             
             //Add the cards won by the Player
             trick.getWinner().setCardsWon(cardsWon);
-
-            //Iterate at the cards won to check for penalty
-            for(Map.Entry<Integer, Card> entry: trick.getWinner().getCardsWon().entrySet()) {
+        	System.out.println("Updated Penalty Board:");
+        	
+            /* Iterate at the cards won to check for penalty */
+            for(Map.Entry<Integer, Card> entry: cardsWon.entrySet()) {
             	Card cardPenalty = entry.getValue();
-            	
-            	//new Queen(cardPenalty);
+            
+                //Agony Aunt Penalty
+            	if(cardPenalty.getSuit() == dumpCard.getSuit()) {
+                	new AgonyAunt(cardPenalty,trick.getWinner().getCounters(),penaltyboard);	
+            	}
             }
-          
+        	
+/* Display Penalty Board */
+            penaltySquares = penaltyboard.getPenaltyBoard();
+            for (int u=0; u<3; u++) {
+                for (int v=0; v<3; v++) {
+                    System.out.format("%-12s", penaltySquares[u][v].getPenaltySquareName());
+                }
+                System.out.println();
+            }
+            System.out.println();
         }
     }
 }	

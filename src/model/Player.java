@@ -3,13 +3,14 @@ package model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Player {
 
     private int playerNumber;
     private String playerName;
-    private ArrayList<Counter> counters = new ArrayList<>();
+    private Stack<Counter> counters = new Stack<>();
     private Counter counter;
     private Map<Integer, Card> playingCards;
     private Map<Integer, Card> cardsWon;
@@ -27,11 +28,19 @@ public class Player {
 
     public void assignCounters(Counter counter) {
         for(int i=0; i<17; i++) {
-            this.counters.add(counter);
+            this.counters.push(counter);
         }
     }
 
-    public int getPlayerNumber() {
+	public void setCounters(Stack<Counter> counters) {
+		this.counters = counters;
+	}
+
+    public Stack<Counter> getCounters() {
+		return counters;
+	}	
+	
+	public int getPlayerNumber() {
         return playerNumber;
     }
 

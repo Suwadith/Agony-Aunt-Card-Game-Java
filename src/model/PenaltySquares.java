@@ -11,6 +11,10 @@ public class PenaltySquares {
 		this.penaltySquareName = penaltySquareName;
 	}
 
+	public void setPenaltySquareName(String penaltySquareName) {
+		this.penaltySquareName = penaltySquareName;
+	}
+
 	public String getPenaltySquareName() {
 		return penaltySquareName;
 	}
@@ -22,4 +26,5 @@ public class PenaltySquares {
 	public void setCounters(Map<Counter, Integer> counters) {
 		this.counters = counters;
 	}
+	
 }

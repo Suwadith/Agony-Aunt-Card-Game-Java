@@ -26,9 +26,10 @@ public class PenaltyBoard {
         return penaltySquares;
     }
 
-    public PenaltySquares getPenaltySquare(Integer row, Integer column) {
-        return penaltySquares[row][column];
+
+    public void setCounterOnBoard( Integer row, Integer column, char color) {
+    	String penality = penaltySquares[row][column].getPenaltySquareName() + "(" + color +')';
+    	penaltySquares[row][column].setPenaltySquareName(penality);
     }
-
-
+    
 }
