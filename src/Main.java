@@ -2,11 +2,7 @@ import java.util.*;
 
 
 import model.*;
-import model.Penalties.AgonyAunt;
-import model.Penalties.AgonyUncle;
-import model.Penalties.DumpthTrick;
-import model.Penalties.LastTrick;
-import model.Penalties.Queen;
+import model.Penalties.*;
 
 import static model.CounterColor.*;
 import static model.Suit.*;
@@ -154,6 +150,7 @@ public class Main {
 /* Determine winner of the trick */
             /*If leading card is Ace*/
             if(trick.getLeadCard().getRank() == Rank.ACE) {
+                trick.getTrickLeader().incrementTrickRoundsWon();
             	System.out.println("Winner of the trick is: " + trick.getTrickLeader().getPlayerName());
             	trick.setWinner(trick.getTrickLeader());
             }
@@ -177,6 +174,7 @@ public class Main {
             			}
             		}
             	}
+                tempWinner.incrementTrickRoundsWon();
             	trick.setWinner(tempWinner);
 				System.out.println("Winner of the trick is: " + tempWinner.getPlayerName());
             }
@@ -186,6 +184,10 @@ public class Main {
             
             //Add the cards won by the Player
             trick.getWinner().setCardsWon(cardsWon);
+            trick.getWinner().updateTotalCardsWon(trick.getLeadCard());
+            for(int d=0; d<trick.getFollowingCards().length; d++) {
+                trick.getWinner().updateTotalCardsWon(trick.getFollowingCards()[d]);
+            }
         	System.out.println("Updated Penalty Board:");
         	
             /* Iterate at the cards won to check for penalty */
@@ -201,14 +203,16 @@ public class Main {
             	//Queen Penalty
             	new Queen(cardPenalty, trick.getWinner().getCounters(), penaltyboard);
 
-                //Dumpth trick penalty
-                new DumpthTrick(dumpCard, Trick.trickNumber, trick.getWinner().getCounters(), penaltyboard);
-
-                //Last trick penalty
-                new LastTrick(Trick.trickNumber, trick.getWinner().getCounters(), penaltyboard);
-
-                //Most trick penalty
             }
+
+            //Dumpth trick penalty
+            new DumpthTrick(dumpCard, Trick.trickNumber, trick.getWinner().getCounters(), penaltyboard);
+
+            //Last trick penalty
+            new LastTrick(Trick.trickNumber, trick.getWinner().getCounters(), penaltyboard);
+
+            //Most trick penalty
+            new MostTrick(game, penaltyboard);
         	
             /* Display Penalty Board */
             penaltyboard.displayBoard();

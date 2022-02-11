@@ -1,12 +1,9 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Player {
+public class Player implements Comparable<Player>{
 
     private int playerNumber;
     private String playerName;
@@ -14,7 +11,8 @@ public class Player {
     private Counter counter;
     private Map<Integer, Card> playingCards;
     private Map<Integer, Card> cardsWon;
-    private int[] trickRoundsWon;
+    private int trickRoundsWon;
+    private List<Card> totalCardsWon = new ArrayList<>();
 
     public Player() {
     }
@@ -84,16 +82,34 @@ public class Player {
         this.cardsWon = cardsWon;
     }
 
-    public int[] getTrickRoundsWon() {
+    public void removeCard(Integer cardNumber) {
+        playingCards.remove(cardNumber);
+    }
+
+    public int getTrickRoundsWon() {
         return trickRoundsWon;
     }
 
-    public void setTrickRoundsWon(int[] trickRoundsWon) {
-        this.trickRoundsWon = trickRoundsWon;
+    public void incrementTrickRoundsWon() {
+        this.trickRoundsWon += 1;
     }
 
-    public void removeCard(Integer cardNumber) {
-        playingCards.remove(cardNumber);
+    public void updateTotalCardsWon(Card card) {
+        totalCardsWon.add(card);
+    }
+
+    public List<Card> getTotalCardsWon() {
+        return totalCardsWon;
+    }
+
+    @Override
+    public int compareTo(Player o) {
+        if (this.getTrickRoundsWon() > o.getTrickRoundsWon()) {
+            return 1;
+        } else if (this.getTrickRoundsWon() < o.getTrickRoundsWon()) {
+            return -1;
+        }
+        return 0;
     }
 
 }
