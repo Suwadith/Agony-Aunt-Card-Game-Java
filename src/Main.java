@@ -216,6 +216,68 @@ public class Main {
         	
             /* Display Penalty Board */
             penaltyboard.displayBoard();
+
+
+            //Score
+            if(Trick.trickNumber == 13) {
+                for(int e=0; e<4; e++) {
+                    int count =0;
+                    //Horizontal penalty check and counter removal
+                    for(int f=0; f<3; f++) {
+                        count = 0;
+                        for(int g=0; g<3; g++) {
+                            if(penaltyboard.getPenaltyBoard()[f][g].getPenaltySquareName().endsWith("(" + game.getPlayers()[e].getCounters().peek().getCounterColor().toString().charAt(0) +')')) {
+                                count+=1;
+                                if(count == 3) {
+                                    game.getPlayers()[e].getCounters().pop();
+                                }
+                            }
+                        }
+                    }
+
+                    //Vertical penalty check and counter removal
+                    for(int f=0; f<3; f++) {
+                        count = 0;
+                        for(int g=0; g<3; g++) {
+                            if(penaltyboard.getPenaltyBoard()[g][f].getPenaltySquareName().endsWith("(" + game.getPlayers()[e].getCounters().peek().getCounterColor().toString().charAt(0) +')')) {
+                                count+=1;
+                                if(count == 3) {
+                                    game.getPlayers()[e].getCounters().pop();
+                                }
+                            }
+                        }
+                    }
+
+                    count =0;
+
+                    //Diagonal penalty check and counter removal
+                    for(int f=0; f<3; f++) {
+                        if(penaltyboard.getPenaltyBoard()[f][f].getPenaltySquareName().endsWith("(" + game.getPlayers()[e].getCounters().peek().getCounterColor().toString().charAt(0) +')')) {
+                            count+=1;
+                            if(count == 3) {
+                                game.getPlayers()[e].getCounters().pop();
+                            }
+                        }
+                    }
+
+                    count =0;
+                    for(int f=0; f<3; f++) {
+                        for(int g=0; g<3; g++) {
+                            if(f+g == 2) {
+                                if (penaltyboard.getPenaltyBoard()[f][g].getPenaltySquareName().endsWith("(" + game.getPlayers()[e].getCounters().peek().getCounterColor().toString().charAt(0) + ')')) {
+                                    count += 1;
+                                    if (count == 3) {
+                                        game.getPlayers()[e].getCounters().pop();
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+
+                }
+            }
+
         }
     }
 }	

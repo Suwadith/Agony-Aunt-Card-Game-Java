@@ -10,8 +10,8 @@ public class Queen extends Penalty {
 	public Queen(Card cardPenalty, Stack<Counter> counters, PenaltyBoard penaltyboard) {
 		this.penaltyPresent = checkForPenalty(cardPenalty);
 		if(penaltyPresent) {
-    		String countercolor = counters.pop().getCounterColor().toString();
-    		char color = countercolor.charAt(0);
+    		String counterColor = counters.pop().getCounterColor().toString();
+    		char color = counterColor.charAt(0);
 			
     		if(cardPenalty.getSuit() == Suit.SPADES) {
     			//Place counter on penalty board

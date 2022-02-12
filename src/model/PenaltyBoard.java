@@ -27,9 +27,14 @@ public class PenaltyBoard {
     }
 
 
-    public void setCounterOnBoard( Integer row, Integer column, char color) {
-    	String penality = penaltySquares[row][column].getPenaltySquareName() + "(" + color +')';
-    	penaltySquares[row][column].setPenaltySquareName(penality);
+    public void setCounterOnBoard(Integer row, Integer column, char color) {
+    	String penalty = penaltySquares[row][column].getPenaltySquareName() + "(" + color +')';
+    	penaltySquares[row][column].setPenaltySquareName(penalty);
+    }
+
+    public void removeCounterOnBoard(Integer row, Integer column, Counter counter) {
+        String penalty = penaltySquares[row][column].getPenaltySquareName();
+        String resetPenalty = penalty.substring(0, penalty.length()-3);
     }
     
     public void displayBoard() {

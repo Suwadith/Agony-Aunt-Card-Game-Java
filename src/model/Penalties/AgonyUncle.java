@@ -10,8 +10,8 @@ public class AgonyUncle extends Penalty {
 	  public AgonyUncle(Card cardPenalty, DumpCard dumpCard, Stack<Counter> counters, PenaltyBoard penaltyboard) {
 		  	this.penaltyPresent = checkForPenalty(cardPenalty, dumpCard);
 	    	if(penaltyPresent) {
-	    		String countercolor = counters.pop().getCounterColor().toString();
-	    		char color = countercolor.charAt(0);
+	    		String counterColor = counters.pop().getCounterColor().toString();
+	    		char color = counterColor.charAt(0);
 	        	//Place counter on penalty board
 	    		super.placeCounter(color, 0, 0,penaltyboard);
 	    	}
