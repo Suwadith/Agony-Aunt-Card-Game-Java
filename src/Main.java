@@ -67,8 +67,21 @@ public class Main {
             	Trick previousTrick = game.getTricks()[i-1]; 
             	trick.setTrickLeader(previousTrick.getPreviousTrickWinner());
                 List<Player> playerList = new ArrayList<>(Arrays.asList(players));
-                playerList.remove(previousTrick.getPreviousTrickWinner());
-                Player[] tempList = playerList.toArray(new Player[0]);
+                List<Player> reOrderedPlayerList = new ArrayList<>();
+
+                //Order of following players to be in sequence to leading players
+                int leadPlayerIndex = playerList.indexOf(trick.getTrickLeader());
+
+                for(int f=leadPlayerIndex+1; f<playerList.size(); f++) {
+                    reOrderedPlayerList.add(playerList.get(f));
+                }
+
+                for(int f=0; f<leadPlayerIndex; f++) {
+                    reOrderedPlayerList.add(playerList.get(f));
+                }
+
+//                playerList.remove(previousTrick.getPreviousTrickWinner());
+                Player[] tempList = reOrderedPlayerList.toArray(new Player[0]);
                 trick.setFollowingPlayers(tempList);
             }
 
@@ -278,6 +291,13 @@ public class Main {
                 }
             }
 
+            //Print remaining counters each player has
+            System.out.println();
+            System.out.println("Players => Remaining Counters");
+            System.out.println("-----------------------------");
+            for(int f=0; f<4; f++) {
+                System.out.println((f+1) + ". " + game.getPlayers()[f].getPlayerName() + ": " + game.getPlayers()[f].getCounters().size());
+            }
         }
     }
 }	
