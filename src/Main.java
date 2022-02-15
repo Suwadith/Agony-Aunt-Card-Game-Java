@@ -289,15 +289,18 @@ public class Main {
                     }
 
                 }
+
+                //Print remaining counters each player has
+                System.out.println();
+                System.out.println("Players => Remaining Counters");
+                System.out.println("-----------------------------");
+                for(int f=0; f<4; f++) {
+                    System.out.println((f+1) + ". " + game.getPlayers()[f].getPlayerName() + ": " + game.getPlayers()[f].getCounters().size());
+                }
+
             }
 
-            //Print remaining counters each player has
-            System.out.println();
-            System.out.println("Players => Remaining Counters");
-            System.out.println("-----------------------------");
-            for(int f=0; f<4; f++) {
-                System.out.println((f+1) + ". " + game.getPlayers()[f].getPlayerName() + ": " + game.getPlayers()[f].getCounters().size());
-            }
+
         }
     }
 }	
