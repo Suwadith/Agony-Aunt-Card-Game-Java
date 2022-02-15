@@ -70,8 +70,21 @@ public class Main {
             	Trick previousTrick = game.getTricks()[i-1]; 
             	trick.setTrickLeader(previousTrick.getPreviousTrickWinner());
                 List<Player> playerList = new ArrayList<>(Arrays.asList(players));
-                playerList.remove(previousTrick.getPreviousTrickWinner());
-                Player[] tempList = playerList.toArray(new Player[0]);
+                List<Player> reOrderedPlayerList = new ArrayList<>();
+
+                //Order of following players to be in sequence to leading players
+                int leadPlayerIndex = playerList.indexOf(trick.getTrickLeader());
+
+                for(int f=leadPlayerIndex+1; f<playerList.size(); f++) {
+                    reOrderedPlayerList.add(playerList.get(f));
+                }
+
+                for(int f=0; f<leadPlayerIndex; f++) {
+                    reOrderedPlayerList.add(playerList.get(f));
+                }
+
+//                playerList.remove(previousTrick.getPreviousTrickWinner());
+                Player[] tempList = reOrderedPlayerList.toArray(new Player[0]);
                 trick.setFollowingPlayers(tempList);
             }
 
@@ -229,6 +242,10 @@ public class Main {
 
             //Score
             if(Trick.trickNumber == 13) {
+                System.out.println();
+                System.out.println("***********************************************************");
+                System.out.println("Additional score/counter removal (End of round (13 tricks))");
+                System.out.println("***********************************************************");
                 for(int e=0; e<4; e++) {
                     int count =0;
                     //Horizontal penalty check and counter removal
@@ -239,6 +256,7 @@ public class Main {
                                 count+=1;
                                 if(count == 3) {
                                     game.getPlayers()[e].getCounters().pop();
+                                    System.out.println(game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters horizontally on the penalty board");
                                 }
                             }
                         }
@@ -252,6 +270,7 @@ public class Main {
                                 count+=1;
                                 if(count == 3) {
                                     game.getPlayers()[e].getCounters().pop();
+                                    System.out.println(game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters vertically on the penalty board");
                                 }
                             }
                         }
@@ -265,6 +284,7 @@ public class Main {
                             count+=1;
                             if(count == 3) {
                                 game.getPlayers()[e].getCounters().pop();
+                                System.out.println(game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters diagonally on the penalty board");
                             }
                         }
                     }
@@ -277,6 +297,7 @@ public class Main {
                                     count += 1;
                                     if (count == 3) {
                                         game.getPlayers()[e].getCounters().pop();
+                                        System.out.println(game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters diagonally on the penalty board");
                                     }
                                 }
                             }
@@ -285,6 +306,15 @@ public class Main {
                     }
 
                 }
+
+                //Print remaining counters each player has
+                System.out.println();
+                System.out.println("Players => Remaining Counters");
+                System.out.println("-----------------------------");
+                for(int f=0; f<4; f++) {
+                    System.out.println((f+1) + ". " + game.getPlayers()[f].getPlayerName() + ": " + game.getPlayers()[f].getCounters().size());
+                }
+
             }
 
         }
