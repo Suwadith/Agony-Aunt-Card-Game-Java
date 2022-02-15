@@ -58,7 +58,10 @@ public class Main {
         	//Start a trick
             Trick trick = new Trick();
         	System.out.println();
-        	System.out.println( "Start of trick: "+ (i+1));
+        	System.out.println("******************************");
+        	System.out.println( "START OF TRICK: "+ (i+1));
+        	System.out.println("******************************");
+        	System.out.println();
             //Check if this is the first trick
             if (Trick.trickNumber == 1) {
                 trick.setTrickLeader(players[0]);
@@ -67,21 +70,8 @@ public class Main {
             	Trick previousTrick = game.getTricks()[i-1]; 
             	trick.setTrickLeader(previousTrick.getPreviousTrickWinner());
                 List<Player> playerList = new ArrayList<>(Arrays.asList(players));
-                List<Player> reOrderedPlayerList = new ArrayList<>();
-
-                //Order of following players to be in sequence to leading players
-                int leadPlayerIndex = playerList.indexOf(trick.getTrickLeader());
-
-                for(int f=leadPlayerIndex+1; f<playerList.size(); f++) {
-                    reOrderedPlayerList.add(playerList.get(f));
-                }
-
-                for(int f=0; f<leadPlayerIndex; f++) {
-                    reOrderedPlayerList.add(playerList.get(f));
-                }
-
-//                playerList.remove(previousTrick.getPreviousTrickWinner());
-                Player[] tempList = reOrderedPlayerList.toArray(new Player[0]);
+                playerList.remove(previousTrick.getPreviousTrickWinner());
+                Player[] tempList = playerList.toArray(new Player[0]);
                 trick.setFollowingPlayers(tempList);
             }
 
@@ -164,7 +154,9 @@ public class Main {
             /*If leading card is Ace*/
             if(trick.getLeadCard().getRank() == Rank.ACE) {
                 trick.getTrickLeader().incrementTrickRoundsWon();
+                System.out.println("******************************");
             	System.out.println("Winner of the trick is: " + trick.getTrickLeader().getPlayerName());
+            	System.out.println("******************************");
             	trick.setWinner(trick.getTrickLeader());
             }
             else {
@@ -189,7 +181,9 @@ public class Main {
             	}
                 tempWinner.incrementTrickRoundsWon();
             	trick.setWinner(tempWinner);
+            	System.out.println("******************************");
 				System.out.println("Winner of the trick is: " + tempWinner.getPlayerName());
+				System.out.println("******************************");
             }
             trick.setPreviousTrickWinner(trick.getWinner());
             System.out.println();
@@ -201,7 +195,9 @@ public class Main {
             for(int d=0; d<trick.getFollowingCards().length; d++) {
                 trick.getWinner().updateTotalCardsWon(trick.getFollowingCards()[d]);
             }
+            System.out.println("******************************");
         	System.out.println("Updated Penalty Board:");
+        	System.out.println("******************************");
         	
             /* Iterate at the cards won to check for penalty */
             for(Map.Entry<Integer, Card> entry: cardsWon.entrySet()) {
@@ -289,17 +285,7 @@ public class Main {
                     }
 
                 }
-
-                //Print remaining counters each player has
-                System.out.println();
-                System.out.println("Players => Remaining Counters");
-                System.out.println("-----------------------------");
-                for(int f=0; f<4; f++) {
-                    System.out.println((f+1) + ". " + game.getPlayers()[f].getPlayerName() + ": " + game.getPlayers()[f].getCounters().size());
-                }
-
             }
-
 
         }
     }
