@@ -115,7 +115,7 @@ public class Main {
            
             //Add leading card to HashMap
             Map<Integer, Card> cardsWon = new HashMap();
-            cardsWon.put(i, trick.getLeadCard());
+            cardsWon.put(0, trick.getLeadCard());
 
             //Following a trick
             for(int y=0; y<3; y++) {
