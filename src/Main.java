@@ -297,7 +297,7 @@ public class Main {
                                     count += 1;
                                     if (count == 3) {
                                         game.getPlayers()[e].getCounters().pop();
-                                        System.out.println(game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters diagonally on the penalty board");
+                                        System.out.println(game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters in a row on the penalty board");
                                     }
                                 }
                             }
@@ -306,7 +306,6 @@ public class Main {
                     }
 
                 }
-
                 //Print remaining counters each player has
                 System.out.println();
                 System.out.println("Players => Remaining Counters");

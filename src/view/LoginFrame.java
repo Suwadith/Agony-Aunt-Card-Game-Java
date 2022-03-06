@@ -58,7 +58,7 @@ public class LoginFrame {
         p4T = new JTextField();
         p4T.setBounds(190, 140, 165, 25);
         jP.add(p4T);
-
+        
         jBS = new JButton("Start");
         jBS.setBounds(190, 200, 80, 25);
         jBS.addActionListener(new ActionListener() {

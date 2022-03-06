@@ -15,7 +15,7 @@ public class AgonyAunt extends Penalty {
 	        	//Place counter on penalty board
 	    		super.placeCounter(color, 1, 1,penaltyboard);
 	    	}
-		}
+	  }
 
     @Override
     public boolean checkForPenalty(Card card) {
