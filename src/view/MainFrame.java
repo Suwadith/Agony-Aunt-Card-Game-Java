@@ -3,6 +3,7 @@ package view;
 import javax.swing.*;
 
 import model.Counter;
+import model.Player;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,7 +20,7 @@ public class MainFrame{
 	public static Graphics g;
 	public static Color c;
 	
-	public MainFrame(String[] playerNames, int[] countersAvailable) {
+	public MainFrame(Player[] players) {
 			
 		jF = new JFrame();
 		jF.setTitle("Play Agony Aunt");
@@ -40,7 +41,7 @@ public class MainFrame{
 		N1 = new JLabel("1");
 		N1.setBounds(400,12,300,30);
 		jF.add(N1);
-		p1N = new JLabel(playerNames[0]);
+		p1N = new JLabel(players[0].getPlayerName());
 		p1N.setBounds(420,12,300,30);
 		jF.add(p1N);
 			
@@ -48,7 +49,7 @@ public class MainFrame{
 		N2 = new JLabel("2");
 		N2.setBounds(400,32,300,30);
 		jF.add(N2);
-		p2N = new JLabel(playerNames[1]);
+		p2N = new JLabel(players[1].getPlayerName());
 		p2N.setBounds(420,32,300,30);
 		jF.add(p2N);
 		
@@ -56,7 +57,7 @@ public class MainFrame{
 		N3 = new JLabel("3");
 		N3.setBounds(400,52,300,30);
 		jF.add(N3);
-		p3N = new JLabel(playerNames[2]);
+		p3N = new JLabel(players[2].getPlayerName());
 		p3N.setBounds(420,52,300,30);
 		jF.add(p3N);
 		
@@ -64,7 +65,7 @@ public class MainFrame{
 		N4 = new JLabel("4");
 		N4.setBounds(400,72,300,30);
 		jF.add(N4);
-		p4N = new JLabel(playerNames[3]);
+		p4N = new JLabel(players[3].getPlayerName());
 		p4N.setBounds(420,72,300,30);
 		jF.add(p4N);
 
@@ -72,25 +73,25 @@ public class MainFrame{
 		p1C = new JLabel("");
 		p1C.setBounds(520,16,20,20);
 		jF.add(p1C);
-		p1C.setText(String.valueOf(countersAvailable[0]));
+		p1C.setText(String.valueOf(players[0].getCounters().size()));
 		
 		//Display Available counters for player2
 		p2C = new JLabel("");
 		p2C.setBounds(520,37,20,20);
 		jF.add(p2C);
-		p2C.setText(String.valueOf(countersAvailable[1]));
+		p2C.setText(String.valueOf(players[1].getCounters().size()));
 				
 		//Display Available counters for player3
 		p3C = new JLabel("");
 		p3C.setBounds(520,58,20,20);
 		jF.add(p3C);
-		p3C.setText(String.valueOf(countersAvailable[2]));
+		p3C.setText(String.valueOf(players[2].getCounters().size()));
 				
 		//Display Available counters for player1
 		p4C = new JLabel("");
 		p4C.setBounds(520,78,20,20);
 		jF.add(p4C);
-		p4C.setText(String.valueOf(countersAvailable[3]));
+		p4C.setText(String.valueOf(players[3].getCounters().size()));
 		
 		//Display counters
 		jF.add(dr);
