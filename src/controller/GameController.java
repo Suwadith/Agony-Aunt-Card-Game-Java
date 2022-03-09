@@ -21,14 +21,15 @@ public class GameController {
     //Create deck of cards
     Deck deck = new Deck();
 
-    //Display dump card
+    //Retrieve dump card
     Card topCard = deck.getDeck().pop();
     DumpCard dumpCard = new DumpCard(topCard.getSuit(), topCard.getRank(), topCard.getNumber());
-
+    String dumpCardImage = new String();
+    
     public void handleGame() {
         Trick trick = new Trick();
         /**************************MAIN FRAME ********************/
-        new MainFrame(players);
+        new MainFrame(players, dumpCardImage);
     }
 
     public void createPlayers(String[] playerNames) {
@@ -38,10 +39,21 @@ public class GameController {
             countersAvailable[i] = players[i].getCounters().size();
         }
         assignCards(players, deck);
+        getDumpCardImage();
         handleGame();
 
     }
 
+    //method - get file name of card
+    public void getDumpCardImage() {
+        if(topCard.getNumber() > 1 && topCard.getNumber() <= 10)
+        {
+        	dumpCardImage = topCard.getNumber() + "_of_" + topCard.getSuit();
+        } else {
+        	dumpCardImage = topCard.getRank() + "_of_" + topCard.getSuit();
+        }
+    }
+    
     public void assignCards(Player[] players, Deck deck) {
         //Assign 13 cards per player
         int x = 1;

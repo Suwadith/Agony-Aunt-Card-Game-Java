@@ -2,8 +2,7 @@ package view;
 
 import javax.swing.*;
 
-import model.Counter;
-import model.Player;
+import model.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,12 +12,12 @@ import java.util.Stack;
 public class MainFrame{
 	DrawCircle circleCounter = new DrawCircle();
 	JLabel heading = new JLabel("My drawing");
-	public static JLabel jL, N1, p1N, N2, p2N, N3, p3N, N4, p4N, p1C, p2C, p3C, p4C, dumpCard;
+	public static JLabel jL, N1, p1N, N2, p2N, N3, p3N, N4, p4N, p1C, p2C, p3C, p4C, dumpCardTitle, dumpCard;
 	public static JFrame jF;
 	public static Graphics g;
 	public static Color c;
 	
-	public MainFrame(Player[] players) {
+	public MainFrame(Player[] players, String dumpCardImage) {
 			
 		jF = new JFrame();
 		jF.setTitle("Play Agony Aunt");
@@ -28,12 +27,16 @@ public class MainFrame{
 		//set frame size
 		jF.setSize(600,550);
 
-		//display dump card		
-		ImageIcon icon = new ImageIcon(new ImageIcon("src\\view\\Cards\\6_of_clubs.png").getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
-		System.out.println(icon);
+		//display dump card
+		dumpCardTitle = new JLabel("Dump Card");
+		dumpCardTitle.setBounds(16,1,80,20);
+		jF.add(dumpCardTitle);
+		
+		String filePath = "src\\view\\Cards\\" + dumpCardImage + ".png";
+		ImageIcon icon = new ImageIcon(new ImageIcon(filePath).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
 		dumpCard = new JLabel((icon));
 		dumpCard.setIcon(icon);
-		dumpCard.setBounds(20,80,80,80);
+		dumpCard.setBounds(8,1,100,130);
 		jF.add(dumpCard);
 			
 		jL = new JLabel("Player information");
