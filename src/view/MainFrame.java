@@ -11,11 +11,9 @@ import java.awt.event.ActionListener;
 import java.util.Stack;
 
 public class MainFrame{
-	DrawCircle dr = new DrawCircle();
+	DrawCircle circleCounter = new DrawCircle();
 	JLabel heading = new JLabel("My drawing");
-	public static JLabel jL, N1, p1N, N2, p2N, N3, p3N, N4, p4N, p1C, p2C, p3C, p4C;
-//	public static JPanel jP;
-	public static JPanel jP2;
+	public static JLabel jL, N1, p1N, N2, p2N, N3, p3N, N4, p4N, p1C, p2C, p3C, p4C, dumpCard;
 	public static JFrame jF;
 	public static Graphics g;
 	public static Color c;
@@ -27,11 +25,16 @@ public class MainFrame{
 		jF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jF.setResizable(false);
 		
+		//set frame size
 		jF.setSize(600,550);
-//		JPanel jP = dc.getjP();
-//		jF.add(jP);	
-//		
-//		jP.setLayout(null);
+
+		//display dump card		
+		ImageIcon icon = new ImageIcon(new ImageIcon("src\\view\\Cards\\6_of_clubs.png").getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
+		System.out.println(icon);
+		dumpCard = new JLabel((icon));
+		dumpCard.setIcon(icon);
+		dumpCard.setBounds(20,80,80,80);
+		jF.add(dumpCard);
 			
 		jL = new JLabel("Player information");
 		jL.setBounds(400,1,200,15);
@@ -94,7 +97,7 @@ public class MainFrame{
 		p4C.setText(String.valueOf(players[3].getCounters().size()));
 		
 		//Display counters
-		jF.add(dr);
+		jF.getContentPane().add(circleCounter);
 		
 		jF.setVisible(true);	
 			
