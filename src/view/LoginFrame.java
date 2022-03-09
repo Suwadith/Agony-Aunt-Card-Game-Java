@@ -6,8 +6,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent; 
+import java.awt.event.WindowListener;   
 
-public class LoginFrame {
+public class LoginFrame{
 
     public static JFrame jF;
     public static JLabel p1L, p2L, p3L, p4L;
@@ -22,7 +25,7 @@ public class LoginFrame {
         jP = new JPanel();
         jF = new JFrame();
         jF.setTitle("Agony Aunt - Player Registration");
-        jF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jF.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         jF.setResizable(false);
 
         jF.setSize(500, 350);
@@ -68,7 +71,10 @@ public class LoginFrame {
                 player2 = p2T.getText();
                 player3 = p3T.getText();
                 player4 = p4T.getText();
-
+                
+                //Close frame before opening next frame
+                jF.setVisible(false);
+                jF.dispose();
                 GameController gc = new GameController();
                 gc.createPlayers(new String[]{player1, player2, player3, player4});
 
@@ -76,8 +82,8 @@ public class LoginFrame {
         });
         jP.add(jBS);
 
-
         jF.setVisible(true);
+
     }
 }
 
