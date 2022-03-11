@@ -28,8 +28,11 @@ public class GameController {
     
     public void handleGame() {
         Trick trick = new Trick();
-        /**************************MAIN FRAME ********************/
+        /************************** MAIN FRAME ********************/
         new MainFrame(players, dumpCardImage);
+        
+       /******************PENALTY BOARD *************************/
+       new PenaltyBoardFrame();
     }
 
     public void createPlayers(String[] playerNames) {
