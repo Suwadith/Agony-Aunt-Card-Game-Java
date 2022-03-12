@@ -3,11 +3,14 @@ package controller;
 import model.*;
 import view.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Stack;
 
 import static model.CounterColor.*;
 import static model.CounterColor.YELLOW;
+import static model.Suit.JOKER;
 
 
 public class GameController {
@@ -28,11 +31,42 @@ public class GameController {
     
     public void handleGame() {
         Trick trick = new Trick();
-        /************************** MAIN FRAME ********************/
-        new MainFrame(players, dumpCardImage);
-        
-       /******************PENALTY BOARD *************************/
-       new PenaltyBoardFrame();
+
+        if(Trick.trickNumber<=13) {
+
+            if (Trick.trickNumber == 1) {
+                trick.setTrickLeader(players[0]);
+                trick.setFollowingPlayers(new Player[]{players[1], players[2], players[3]});
+            } else {
+                Trick previousTrick = game.getTricks()[Trick.trickNumber-1];
+                trick.setTrickLeader(previousTrick.getPreviousTrickWinner());
+                List<Player> playerList = new ArrayList<>(Arrays.asList(players));
+                List<Player> reOrderedPlayerList = new ArrayList<>();
+
+                //Order of following players to be in sequence to leading players
+                int leadPlayerIndex = playerList.indexOf(trick.getTrickLeader());
+
+                for(int f=leadPlayerIndex+1; f<playerList.size(); f++) {
+                    reOrderedPlayerList.add(playerList.get(f));
+                }
+
+                for(int f=0; f<leadPlayerIndex; f++) {
+                    reOrderedPlayerList.add(playerList.get(f));
+                }
+
+//                playerList.remove(previousTrick.getPreviousTrickWinner());
+                Player[] tempList = reOrderedPlayerList.toArray(new Player[0]);
+                trick.setFollowingPlayers(tempList);
+            }
+
+            /************************** MAIN FRAME ********************/
+            new MainFrame(players, dumpCardImage, trick);
+
+            /******************PENALTY BOARD *************************/
+            new PenaltyBoardFrame();
+        }
+
+
     }
 
     public void createPlayers(String[] playerNames) {

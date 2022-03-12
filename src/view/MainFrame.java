@@ -3,21 +3,25 @@ package view;
 import javax.swing.*;
 import model.*;
 import java.awt.*;
+import java.util.ArrayList;
+
+import static model.Suit.JOKER;
 
 public class MainFrame extends JFrame{
 //	DrawCircle circleCounter = new DrawCircle();
-	public static JLabel jL, N1, p1N, N2, p2N, N3, p3N, N4, p4N, p1C, p2C, p3C, p4C, dumpCardTitle, dumpCard;
+	public static JLabel jL, N1, p1N, N2, p2N, N3, p3N, N4, p4N, p1C, p2C, p3C, p4C, dumpCardTitle, dumpCard, tmpCard;
 	public static JPanel jP, mainPanel, subPanel;
 	public static Graphics g;
 	public static Color c;
+	public ArrayList<JLabel> playingCards = new ArrayList<>();
 	
-	public MainFrame(Player[] players, String dumpCardImage) {
+	public MainFrame(Player[] players, String dumpCardImage, Trick trick) {
 		setTitle("Play Agony Aunt");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setResizable(false);
+//		setResizable(false);
 		
 		//set frame size
-		setSize(600,550);
+		setSize(1200,550);
 
 		jP = new JPanel() {
 		@Override
@@ -48,10 +52,10 @@ public class MainFrame extends JFrame{
 		jP.add(dumpCardTitle);
 		
 		String filePath = "src\\view\\Cards\\" + dumpCardImage + ".png";
-		ImageIcon icon = new ImageIcon(new ImageIcon(filePath).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
+		ImageIcon icon = new ImageIcon(new ImageIcon(filePath).getImage().getScaledInstance(80,110, Image.SCALE_SMOOTH));
 		dumpCard = new JLabel((icon));
-		dumpCard.setIcon(icon);
-		dumpCard.setBounds(8,1,100,130);
+//		dumpCard.setIcon(icon);
+		dumpCard.setBounds(8,1,100,160);
 		jP.add(dumpCard);
 			
 		jL = new JLabel("Player information");
@@ -116,9 +120,47 @@ public class MainFrame extends JFrame{
 		
 		//Display counters
 		jP.repaint();
-		
+
+
+
+		//Leading a trick
+		System.out.println(trick.getTrickLeader().getPlayerName() + "'s cards are as follows");
+		System.out.println("-----------------------------");
+		trick.getTrickLeader().getPlayingCards().forEach((key, value) -> {
+			String imgPath = returnCardImgPath(value);
+			System.out.println(imgPath);
+			ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80,110, Image.SCALE_SMOOTH));
+			playingCards.add(new JLabel(iconImg));
+		});
+
+		System.out.println(playingCards);
+		int x =0;
+		for(int i=0; i<playingCards.size(); i++) {
+			playingCards.get(i).setBounds(x,300,300,300);
+			x+=80;
+		}
+
+		for(JLabel j: playingCards) {
+			jP.add(j);
+		}
+
 		add(jP);
 		setVisible(true);		
+	}
+
+
+	//get card image path
+	public String returnCardImgPath(Card card) {
+		if (card.getSuit() == JOKER) {
+			return "src\\view\\Cards\\" + card.getSuit() + ".png";
+		} else {
+			if(card.getNumber() > 1 && card.getNumber() <= 10)
+			{
+				return "src\\view\\Cards\\" + card.getNumber() + "_of_" + card.getSuit() + ".png";
+			} else {
+				return "src\\view\\Cards\\" + card.getRank() + "_of_" + card.getSuit() + ".png";
+			}
+		}
 	}
 	
 }

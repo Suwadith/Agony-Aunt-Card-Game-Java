@@ -15,7 +15,6 @@ public class LoginFrame{
     public static JFrame jF;
     public static JLabel p1L, p2L, p3L, p4L;
     public static JPanel jP;
-    public static GridLayout gL;
     public static JTextField p1T, p2T, p3T, p4T;
     public static JButton jBS;
     public static String player1, player2, player3, player4;
