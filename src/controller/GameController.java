@@ -60,7 +60,7 @@ public class GameController {
             }
 
             /************************** MAIN FRAME ********************/
-            new MainFrame(players, dumpCardImage, trick);
+            new MainFrame(players, dumpCardImage, trick, game);
 
             /******************PENALTY BOARD *************************/
             new PenaltyBoardFrame();
