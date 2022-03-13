@@ -12,10 +12,10 @@ public class PenaltyBoardFrame extends JFrame{
 	public PenaltyBoardFrame(){
 		setTitle("Penalty Board");
 		
-		//Joker square
 		mainPanel = new JPanel(); 
 		mainPanel.setLayout(new GridLayout(3, 4));
 		
+		//Joker square
 		subPanel1 = new JPanel();
 //		{
 //			@Override
@@ -23,10 +23,9 @@ public class PenaltyBoardFrame extends JFrame{
 //			{
 //				super.paintComponent(g);
 //				g.setColor(Color.RED);
-//				g.fillOval(10,20,15,15);
-//				g.drawOval(10,20,15,15); }
+//				g.fillOval(8,20,15,15);
+//				g.drawOval(8,20,15,15); } 
 //			};
-//		String jokerSquare = "C:\\Users\\rk984\\OneDrive - Middlesex University\\Software Development\\Latest codebase\\Agony-Aunt\\src\\view\\PenaltyBoard\\jokersquare.jpg";
 		String jokerSquare = "src\\view\\PenaltyBoard\\jokersquare.jpg";
 		ImageIcon j_icon = new ImageIcon(new ImageIcon(jokerSquare).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
 		subPanel1.add(new JLabel(j_icon, SwingConstants.CENTER));
@@ -34,7 +33,16 @@ public class PenaltyBoardFrame extends JFrame{
 		subPanel1.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 	    
 		//Spades square
-	    subPanel2 = new JPanel();
+	    subPanel2 = new JPanel()
+	    {
+			@Override
+			public void paintComponent(Graphics g)
+			{
+				super.paintComponent(g);
+				g.setColor(Color.GREEN);
+				g.fillOval(8,20,15,15);
+				g.drawOval(8,20,15,15); }
+			};
 	    String spadesSquare = "src\\view\\PenaltyBoard\\spadessquare.jpg";
 	    ImageIcon s_icon = new ImageIcon(new ImageIcon(spadesSquare).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
 	    subPanel2.add(new JLabel(s_icon, SwingConstants.CENTER));
@@ -43,6 +51,15 @@ public class PenaltyBoardFrame extends JFrame{
 	      
 	    //Omega square
 	    subPanel3 = new JPanel();
+//	    {
+//			@Override
+//			public void paintComponent(Graphics g)
+//			{
+//				super.paintComponent(g);
+//				g.setColor(Color.BLUE);
+//				g.fillOval(8,20,15,15);
+//				g.drawOval(8,20,15,15); }
+//			};	
 	    String omegaSquare = "src\\view\\PenaltyBoard\\omegasquare.jpg";
 	    ImageIcon o_icon = new ImageIcon(new ImageIcon(omegaSquare).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
 	    subPanel3.add(new JLabel(o_icon, SwingConstants.CENTER));
@@ -51,6 +68,15 @@ public class PenaltyBoardFrame extends JFrame{
 	    
 	    //Heart square
 	    subPanel4 = new JPanel();
+//	    {
+//			@Override
+//			public void paintComponent(Graphics g)
+//			{
+//				super.paintComponent(g);
+//				g.setColor(Color.YELLOW);
+//				g.fillOval(8,20,15,15);
+//				g.drawOval(8,20,15,15); }
+//			};	
 	    String heartSquare = "src\\view\\PenaltyBoard\\heartssquare.jpg";
 	    ImageIcon h_icon = new ImageIcon(new ImageIcon(heartSquare).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
 	    subPanel4.add(new JLabel(h_icon, SwingConstants.CENTER));
