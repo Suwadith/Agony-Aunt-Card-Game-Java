@@ -17,21 +17,25 @@ public class GameController {
 
     int[] countersAvailable = new int[4];
     //Creating player array
-    Player[] players = new Player[4];
+    static Player[] players = new Player[4];
     //Creating counter array with different colours
     Counter[] counter = new Counter[]{new Counter(RED), new Counter(GREEN), new Counter(BLUE), new Counter(YELLOW)};
 
     //Create deck of cards
-    Deck deck = new Deck();
+    static Deck deck = new Deck();
 
     //Retrieve dump card
-    Card topCard = deck.getDeck().pop();
-    DumpCard dumpCard = new DumpCard(topCard.getSuit(), topCard.getRank(), topCard.getNumber());
-    String dumpCardImage = new String();
-    
-    public void handleGame() {
-        Trick trick = new Trick();
+    static Card topCard = deck.getDeck().pop();
+    static DumpCard dumpCard = new DumpCard(topCard.getSuit(), topCard.getRank(), topCard.getNumber());
+    static String dumpCardImage = new String();
 
+    //Start a game
+    static Game game = new Game(players, dumpCard);
+    
+    public static void handleGame() {
+        System.out.println(Trick.trickNumber);
+        Trick trick = new Trick();
+        System.out.println(Trick.trickNumber);
         if(Trick.trickNumber<=13) {
 
             if (Trick.trickNumber == 1) {
@@ -60,10 +64,11 @@ public class GameController {
             }
 
             /************************** MAIN FRAME ********************/
+            MainFrame.turnCount = -1;
             new MainFrame(players, dumpCardImage, trick, game);
 
             /******************PENALTY BOARD *************************/
-            new PenaltyBoardFrame();
+//            new PenaltyBoardFrame();
         }
 
 
@@ -105,6 +110,5 @@ public class GameController {
 
 
 
-    //Start a game
-    Game game = new Game(players, dumpCard);
+
 }

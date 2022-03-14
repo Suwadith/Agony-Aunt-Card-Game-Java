@@ -1,6 +1,8 @@
 package view;
 
 import javax.swing.*;
+
+import controller.GameController;
 import model.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -21,7 +23,9 @@ public class MainFrame extends JFrame{
 	public static Color c;
 	//	public ArrayList<JLabel> playingCards = new ArrayList<>();
 	public ArrayList<JButton> playingCards = new ArrayList<>();
-	public static int turnCount = 0;
+	public static int turnCount;
+	public static Map<Integer, Card> cardsWon;
+	public static ArrayList<Integer> followingCardKeys= new ArrayList<>();
 
 	public MainFrame(Player[] players, String dumpCardImage, Trick trick, Game game) {
 		setTitle("Play Agony Aunt");
@@ -130,7 +134,7 @@ public class MainFrame extends JFrame{
 		jP.repaint();
 
 		//calls the method to load the leader cards
-		setupLeaderCards(trick, game);
+		setupCardImages(trick, game);
 
 
 		add(jP);
@@ -152,134 +156,64 @@ public class MainFrame extends JFrame{
 		}
 	}
 
-	//setup button click listeners for leader cards and handle card pick
-	public void setUpCardChoiceListeners(Trick trick, Game game) {
-		ActionListener cardListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Object o = e.getSource();
-				System.out.println(trick.getTrickLeader().getPlayingCards().get(playingCards.indexOf(o) + 1));
-
-				if(trick.getTrickLeader().getPlayingCards().get(playingCards.indexOf(o)+1).getSuit() == JOKER) {
-					System.out.println("Joker picked");
-					trick.setLeadCard(game.getDumpCard());
-				} else {
-					trick.setLeadCard(trick.getTrickLeader().getPlayingCards().get(playingCards.indexOf(o)+1));
-				}
-				trick.getTrickLeader().removeCard(playingCards.indexOf(o)+1);
-				System.out.println("Card chosen by the leader");
-				System.out.println("--------------------------");
-				System.out.println(trick.getLeadCard());
-
-				//Add leading card to HashMap
-				Map<Integer, Card> cardsWon = new HashMap();
-				cardsWon.put(0, trick.getLeadCard());
-				turnCount+=1;
 
 
-				for (JButton j : playingCards) {
-					jP.remove(j);
-				}
+	//load images cards
+	public void setupCardImages(Trick trick, Game game) {
 
-				playingCards.clear();
-
-
-				repaint();
-				setupNextPlayerCards(trick, game);
-			}
-		};
-		for (JButton j : playingCards) {
-			j.addActionListener(cardListener);
-		}
-	}
-
-	//load images for the leader cards
-	public void setupLeaderCards(Trick trick, Game game) {
-
-		if (turnCount == 0) {
+		if (turnCount == -1) {
 
 			//Leading a trick
 			System.out.println(trick.getTrickLeader().getPlayerName() + "'s cards are as follows");
 			System.out.println("-----------------------------");
 			trick.getTrickLeader().getPlayingCards().forEach((key, value) -> {
 				String imgPath = returnCardImgPath(value);
-				System.out.println(imgPath);
+//				System.out.println(imgPath);
 				ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
 				playingCards.add(new JButton(iconImg));
 			});
 
-			System.out.println(playingCards);
-			int x = 50;
-			for (int i = 0; i < playingCards.size(); i++) {
-				playingCards.get(i).setBounds(x, 300, 80, 110);
-				x += 85;
+			//following players
+		} else if(turnCount>-1 && turnCount<3) {
+			System.out.println(turnCount);
+			System.out.println(trick.getFollowingPlayers()[turnCount].getPlayerName() + "'s cards are as follows");
+			System.out.println("-----------------------------");
+			if (Card.checkIfFollowingSuitPossible(trick.getFollowingPlayers()[turnCount].getPlayingCards(), trick.getLeadCard().getSuit())) {
+				trick.getFollowingPlayers()[turnCount].getPlayingCards().forEach((key, value) -> {
+					if (value.getSuit() == JOKER && game.getDumpCard().getSuit() == trick.getLeadCard().getSuit()) {
+						System.out.println(key + " -> " + value.getSuit());
+						String imgPath = returnCardImgPath(value);
+//						System.out.println(imgPath);
+						ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
+						playingCards.add(new JButton(iconImg));
+						followingCardKeys.add(key);
+					} else if (value.getSuit() == trick.getLeadCard().getSuit()) {
+						String imgPath = returnCardImgPath(value);
+//						System.out.println(imgPath);
+						ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
+						playingCards.add(new JButton(iconImg));
+						followingCardKeys.add(key);
+					}
+				});
+			} else {
+				trick.getFollowingPlayers()[turnCount].getPlayingCards().forEach((key, value) -> {
+					if (value.getSuit() == JOKER) {
+						String imgPath = returnCardImgPath(value);
+						System.out.println(imgPath);
+						ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
+						playingCards.add(new JButton(iconImg));
+						followingCardKeys.add(key);
+					} else {
+						String imgPath = returnCardImgPath(value);
+						System.out.println(imgPath);
+						ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
+						playingCards.add(new JButton(iconImg));
+						followingCardKeys.add(key);
+					}
+				});
+
 			}
-
-			for (JButton j : playingCards) {
-				jP.add(j);
-			}
-
-			setUpCardChoiceListeners(trick, game);
 		}
-
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	public void setupNextPlayerCards(Trick trick, Game game) {
-		System.out.println(trick.getFollowingPlayers()[turnCount].getPlayerName() + "'s cards are as follows");
-		System.out.println("-----------------------------");
-		if(Card.checkIfFollowingSuitPossible(trick.getFollowingPlayers()[turnCount].getPlayingCards(), trick.getLeadCard().getSuit())) {
-			trick.getFollowingPlayers()[turnCount].getPlayingCards().forEach((key, value) -> {
-				if (value.getSuit() == JOKER && game.getDumpCard().getSuit() == trick.getLeadCard().getSuit()) {
-					System.out.println(key + " -> " + value.getSuit());
-					String imgPath = returnCardImgPath(value);
-					System.out.println(imgPath);
-					ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80,110, Image.SCALE_SMOOTH));
-					playingCards.add(new JButton(iconImg));
-				} else if(value.getSuit() == trick.getLeadCard().getSuit()) {
-					String imgPath = returnCardImgPath(value);
-					System.out.println(imgPath);
-					ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80,110, Image.SCALE_SMOOTH));
-					playingCards.add(new JButton(iconImg));
-				}
-			});
-		} else {
-			trick.getFollowingPlayers()[turnCount].getPlayingCards().forEach((key, value) -> {
-				if (value.getSuit() == JOKER) {
-					String imgPath = returnCardImgPath(value);
-					System.out.println(imgPath);
-					ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80,110, Image.SCALE_SMOOTH));
-					playingCards.add(new JButton(iconImg));
-				} else {
-					String imgPath = returnCardImgPath(value);
-					System.out.println(imgPath);
-					ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80,110, Image.SCALE_SMOOTH));
-					playingCards.add(new JButton(iconImg));
-				}
-			});
-		}
-
 
 		System.out.println(playingCards);
 		int x = 50;
@@ -292,6 +226,194 @@ public class MainFrame extends JFrame{
 			jP.add(j);
 		}
 
+		setUpCardChoiceListeners(trick, game);
+
 	}
+
+
+
+	//setup button click listeners for leader cards and handle card pick
+	public void setUpCardChoiceListeners(Trick trick, Game game) {
+		ActionListener cardListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Object o = e.getSource();
+				System.out.println(o.toString());
+				if(turnCount == -1) {
+					System.out.println(trick.getTrickLeader().getPlayerName());
+					System.out.println(trick.getTrickLeader().getPlayingCards().get(playingCards.indexOf(o) + 1));
+
+					if(trick.getTrickLeader().getPlayingCards().get(playingCards.indexOf(o)+1).getSuit() == JOKER) {
+						System.out.println("Joker picked");
+						trick.setLeadCard(game.getDumpCard());
+					} else {
+						trick.setLeadCard(trick.getTrickLeader().getPlayingCards().get(playingCards.indexOf(o)+1));
+					}
+					trick.getTrickLeader().removeCard(playingCards.indexOf(o)+1);
+					System.out.println("Card chosen by the leader");
+					System.out.println("--------------------------");
+					System.out.println(trick.getLeadCard());
+
+					//Add leading card to HashMap
+					cardsWon = new HashMap();
+					cardsWon.put(0, trick.getLeadCard());
+				} else {
+					System.out.println(turnCount);
+					System.out.println(trick.getFollowingPlayers()[turnCount].getPlayingCards().get(followingCardKeys.get(playingCards.indexOf(o))));
+					System.out.println("picked number: " + playingCards.indexOf(o) +1);
+					if(trick.getFollowingPlayers()[turnCount].getPlayingCards().get(followingCardKeys.get(playingCards.indexOf(o))).getSuit() == JOKER) {
+						System.out.println("Joker picked");
+						trick.setFollowingCards(game.getDumpCard(), turnCount);
+					} else {
+						trick.setFollowingCards(trick.getFollowingPlayers()[turnCount].getPlayingCards().get(followingCardKeys.get(playingCards.indexOf(o))), turnCount);
+						System.out.println("NEWWW");
+						System.out.println(trick.getFollowingPlayers()[turnCount].getPlayingCards().get(followingCardKeys.get(playingCards.indexOf(o))));
+					}
+
+					//trick.setFollowingCards(trick.getFollowingPlayers()[y].getPlayingCards().get(cardNumber), y);
+
+					trick.getFollowingPlayers()[turnCount].removeCard(followingCardKeys.get(playingCards.indexOf(o)));
+					System.out.println("Card chosen by the follower");
+					System.out.println("--------------------------");
+					System.out.println(trick.getFollowingCards()[turnCount]);
+
+					//Add following cards to HashMap
+					cardsWon.put((turnCount+1), trick.getFollowingCards()[turnCount]);
+
+				}
+
+				turnCount+=1;
+
+				for (JButton j : playingCards) {
+					jP.remove(j);
+				}
+
+				playingCards.clear();
+				followingCardKeys.clear();
+				repaint();
+
+				if(turnCount==3) {
+
+
+					if(trick.getLeadCard().getRank() == Rank.ACE) {
+						trick.getTrickLeader().incrementTrickRoundsWon();
+						System.out.println("******************************");
+						System.out.println("Winner of the trick is: " + trick.getTrickLeader().getPlayerName());
+						System.out.println("******************************");
+						trick.setWinner(trick.getTrickLeader());
+					}
+					else {
+						Player tempWinner = trick.getTrickLeader();
+						Card tempLeadCard = trick.getLeadCard();
+						/*Check if all players follow leading card suit*/
+						for(int j=0;j<3;j++) {
+							if(trick.getLeadCard().getSuit() == trick.getFollowingCards()[j].getSuit()) {
+								//Check if the player has ACE and announce winner
+								if(trick.getFollowingCards()[j].getRank() == Rank.ACE ) {
+									tempWinner = trick.getFollowingPlayers()[j];
+									break;
+								}
+								//Compare rank of leading player and following player of the current loop
+								else{
+									if(trick.getFollowingCards()[j].getNumber() > tempLeadCard.getNumber()) {
+										tempWinner = trick.getFollowingPlayers()[j];
+										tempLeadCard = trick.getFollowingCards()[j];
+									}
+								}
+							}
+						}
+						tempWinner.incrementTrickRoundsWon();
+						trick.setWinner(tempWinner);
+						System.out.println("******************************");
+						System.out.println("Winner of the trick is: " + tempWinner.getPlayerName());
+						System.out.println("******************************");
+					}
+					trick.setPreviousTrickWinner(trick.getWinner());
+					System.out.println();
+					game.setTrick(Trick.trickNumber, trick);
+
+					//Add the cards won by the Player
+					trick.getWinner().setCardsWon(cardsWon);
+					trick.getWinner().updateTotalCardsWon(trick.getLeadCard());
+					for(int d=0; d<trick.getFollowingCards().length; d++) {
+						trick.getWinner().updateTotalCardsWon(trick.getFollowingCards()[d]);
+					}
+					dispose();
+					GameController.handleGame();
+				}
+
+				setupCardImages(trick, game);
+
+			}
+		};
+
+		for (JButton j : playingCards) {
+			j.addActionListener(cardListener);
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//	public void setupNextPlayerCards(Trick trick, Game game) {
+//		System.out.println(trick.getFollowingPlayers()[turnCount].getPlayerName() + "'s cards are as follows");
+//		System.out.println("-----------------------------");
+//		if(Card.checkIfFollowingSuitPossible(trick.getFollowingPlayers()[turnCount].getPlayingCards(), trick.getLeadCard().getSuit())) {
+//			trick.getFollowingPlayers()[turnCount].getPlayingCards().forEach((key, value) -> {
+//				if (value.getSuit() == JOKER && game.getDumpCard().getSuit() == trick.getLeadCard().getSuit()) {
+//					System.out.println(key + " -> " + value.getSuit());
+//					String imgPath = returnCardImgPath(value);
+//					System.out.println(imgPath);
+//					ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80,110, Image.SCALE_SMOOTH));
+//					playingCards.add(new JButton(iconImg));
+//				} else if(value.getSuit() == trick.getLeadCard().getSuit()) {
+//					String imgPath = returnCardImgPath(value);
+//					System.out.println(imgPath);
+//					ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80,110, Image.SCALE_SMOOTH));
+//					playingCards.add(new JButton(iconImg));
+//				}
+//			});
+//		} else {
+//			trick.getFollowingPlayers()[turnCount].getPlayingCards().forEach((key, value) -> {
+//				if (value.getSuit() == JOKER) {
+//					String imgPath = returnCardImgPath(value);
+//					System.out.println(imgPath);
+//					ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80,110, Image.SCALE_SMOOTH));
+//					playingCards.add(new JButton(iconImg));
+//				} else {
+//					String imgPath = returnCardImgPath(value);
+//					System.out.println(imgPath);
+//					ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80,110, Image.SCALE_SMOOTH));
+//					playingCards.add(new JButton(iconImg));
+//				}
+//			});
+//		}
+//
+//
+//		System.out.println(playingCards);
+//		int x = 50;
+//		for (int i = 0; i < playingCards.size(); i++) {
+//			playingCards.get(i).setBounds(x, 300, 80, 110);
+//			x += 85;
+//		}
+//
+//		for (JButton j : playingCards) {
+//			jP.add(j);
+//		}
+//
+//	}
 
 }
