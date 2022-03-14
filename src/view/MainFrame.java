@@ -280,6 +280,7 @@ public class MainFrame extends JFrame {
                     //Add following cards to HashMap
                     cardsWon.put((turnCount + 1), trick.getFollowingCards()[turnCount]);
 
+
                 }
 
                 turnCount += 1;
@@ -340,9 +341,9 @@ public class MainFrame extends JFrame {
                     }
                     dispose();
                     GameController.handleGame();
+                } else {
+                    setupCardImages(trick, game);
                 }
-
-                setupCardImages(trick, game);
 
             }
         };
