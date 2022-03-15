@@ -370,7 +370,7 @@ public class MainFrame extends JFrame {
                     }
                     trick.setPreviousTrickWinner(trick.getWinner());
                     System.out.println();
-                    game.setTrick(Trick.trickNumber, trick);
+                    game.setTrick(Trick.trickNumber-1, trick);
 
                     //Add the cards won by the Player
                     trick.getWinner().setCardsWon(cardsWon);

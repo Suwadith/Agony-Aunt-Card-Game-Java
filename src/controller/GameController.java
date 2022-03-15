@@ -45,7 +45,8 @@ public class GameController {
                 trick.setTrickLeader(players[0]);
                 trick.setFollowingPlayers(new Player[]{players[1], players[2], players[3]});
             } else {
-                Trick previousTrick = game.getTricks()[Trick.trickNumber - 1];
+            	Trick previousTrick = game.getTricks()[Trick.trickNumber - 2];
+//                Trick previousTrick = game.getTricks()[Trick.trickNumber - 1];
                 trick.setTrickLeader(previousTrick.getPreviousTrickWinner());
                 List<Player> playerList = new ArrayList<>(Arrays.asList(players));
                 List<Player> reOrderedPlayerList = new ArrayList<>();
