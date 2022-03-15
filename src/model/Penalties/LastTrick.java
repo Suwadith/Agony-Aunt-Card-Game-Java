@@ -17,7 +17,7 @@ public class LastTrick extends Penalty {
         if(trickNumber == 13) {
 //        	counters.pop();
         	setPenalty();
-            String counterColor = counters.pop().getCounterColor().toString();
+            counterColor = counters.pop().getCounterColor().toString();
             char color = counterColor.charAt(0);
 //            //Call method to place counter
             super.placeCounter(color, 0, 2, penaltyBoard);

@@ -15,7 +15,7 @@ public class MostTrick extends Penalty {
             Player player =check(game);
 //            player.getCounters().pop();
             setPenalty();
-            String counterColor = player.getCounters().pop().getCounterColor().toString();
+            counterColor = player.getCounters().pop().getCounterColor().toString();
             char color = counterColor.charAt(0);
 //            //Call method to place counter
             super.placeCounter(color, 2, 0, penaltyBoard);
