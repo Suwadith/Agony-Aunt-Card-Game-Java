@@ -17,7 +17,7 @@ public class DumpthTrick extends Penalty {
         if(dumpCard.getNumber() == trickNumber) {
 //        	counters.pop();
         	setPenalty();
-            String counterColor = counters.pop().getCounterColor().toString();
+            counterColor = counters.pop().getCounterColor().toString();
             char color = counterColor.charAt(0);
 //            //Call method to place counter
             super.placeCounter(color, 2, 2, penaltyBoard);
