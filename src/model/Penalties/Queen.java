@@ -6,28 +6,47 @@ import model.*;
 public class Queen extends Penalty {
 	
 	private boolean penaltyPresent;
+	public String penaltyCode;
+	public String counterColor;
 	
-	public Queen(Card cardPenalty, Stack<Counter> counters, PenaltyBoard penaltyboard) {
+	public Queen(Card cardPenalty, Stack<Counter> counters) {
 		this.penaltyPresent = checkForPenalty(cardPenalty);
 		if(penaltyPresent) {
-    		String counterColor = counters.pop().getCounterColor().toString();
-    		char color = counterColor.charAt(0);
+//			counters.pop();
+//    		String counterColor = counters.pop().getCounterColor().toString();
+//    		char color = counterColor.charAt(0);
 			
     		if(cardPenalty.getSuit() == Suit.SPADES) {
+//    			counters.pop();
+    			setPenalty();
+        		counterColor = counters.pop().getCounterColor().toString();
+    			penaltyCode = penaltyCode + "_SPADES";
     			//Place counter on penalty board
-	    		super.placeCounter(color, 0, 1,penaltyboard);
+//	    		super.placeCounter(color, 0, 1,penaltyboard);
 			}
     		if(cardPenalty.getSuit() == Suit.HEARTS) {
-    			//Place counter on penalty board
-	    		super.placeCounter(color, 1, 0,penaltyboard);
+//    			counters.pop();
+    			setPenalty();
+    			counterColor = counters.pop().getCounterColor().toString();
+    			penaltyCode = penaltyCode + "_HEARTS";
+//    			//Place counter on penalty board
+//	    		super.placeCounter(color, 1, 0,penaltyboard);
     		}
     		if(cardPenalty.getSuit() == Suit.DIAMONDS) {
-    			//Place counter on penalty board
-	    		super.placeCounter(color, 1, 2,penaltyboard);
+//    			counters.pop();
+    			setPenalty();
+    			counterColor = counters.pop().getCounterColor().toString();
+    			penaltyCode = penaltyCode + "_DIAMONDS";
+//    			//Place counter on penalty board
+//	    		super.placeCounter(color, 1, 2,penaltyboard);
     		}
     		if(cardPenalty.getSuit() == Suit.CLUBS) {
-    			//Place counter on penalty board
-	    		super.placeCounter(color, 2, 1,penaltyboard);
+//    			counters.pop();
+    			setPenalty();
+    			counterColor = counters.pop().getCounterColor().toString();
+    			penaltyCode = penaltyCode + "_CLUBS";
+//    			//Place counter on penalty board
+//	    		super.placeCounter(color, 2, 1,penaltyboard);
     		}
 		}
 	}
@@ -46,5 +65,18 @@ public class Queen extends Penalty {
 	public boolean checkForPenalty(Card card, DumpCard dumpCard) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	@Override
+	public void setPenalty() {
+		this.penaltyCode = "QP";
+	}
+
+	public String getPenaltyCode() {
+		return penaltyCode;
+	}
+	
+	public String getCounterColor() {
+		return counterColor;
 	}
 }

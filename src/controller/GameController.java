@@ -15,6 +15,7 @@ import static model.Suit.JOKER;
 
 public class GameController {
 
+	static int initial;
     int[] countersAvailable = new int[4];
     //Creating player array
     static Player[] players = new Player[4];
@@ -23,7 +24,7 @@ public class GameController {
 
     //Create deck of cards
     static Deck deck = new Deck();
-
+    
     //Retrieve dump card
     static Card topCard = deck.getDeck().pop();
     static DumpCard dumpCard = new DumpCard(topCard.getSuit(), topCard.getRank(), topCard.getNumber());
@@ -65,12 +66,13 @@ public class GameController {
 
             /************************** MAIN FRAME ********************/
             MainFrame.turnCount = -1;
-            new MainFrame(players, dumpCardImage, trick, game);
+            new MainFrame(players, dumpCard, dumpCardImage, trick, game);
 
             /******************PENALTY BOARD *************************/
-//            new PenaltyBoardFrame();
-        }
-
+            if(initial==0) {
+            new PenaltyBoardFrame();
+            initial=1;
+        } }
 
     }
 

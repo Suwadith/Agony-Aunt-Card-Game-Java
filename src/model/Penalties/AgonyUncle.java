@@ -6,14 +6,19 @@ import model.*;
 public class AgonyUncle extends Penalty {
 	
 	private boolean penaltyPresent;
+	public String penaltyCode;
+	public String counterColor;
 	
-	  public AgonyUncle(Card cardPenalty, DumpCard dumpCard, Stack<Counter> counters, PenaltyBoard penaltyboard) {
+	  public AgonyUncle(Card cardPenalty, DumpCard dumpCard, Stack<Counter> counters) {
 		  	this.penaltyPresent = checkForPenalty(cardPenalty, dumpCard);
 	    	if(penaltyPresent) {
-	    		String counterColor = counters.pop().getCounterColor().toString();
-	    		char color = counterColor.charAt(0);
-	        	//Place counter on penalty board
-	    		super.placeCounter(color, 0, 0,penaltyboard);
+//	    		counters.pop();
+	    		setPenalty();
+	    		counterColor = counters.pop().getCounterColor().toString();
+	    		System.out.println(counterColor);
+//	    		char color = counterColor.charAt(0);
+//	        	//Place counter on penalty board
+//	    		super.placeCounter(color, 0, 0,penaltyboard);
 	    	}
 		}
 	
@@ -31,5 +36,18 @@ public class AgonyUncle extends Penalty {
 	public boolean checkForPenalty(Card card) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	@Override
+	public void setPenalty() {
+		this.penaltyCode = "AU";
+	}
+
+	public String getPenaltyCode() {
+		return penaltyCode;
+	}
+	
+	public String getCounterColor() {
+		return counterColor;
 	}
 }

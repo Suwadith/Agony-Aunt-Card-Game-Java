@@ -217,24 +217,24 @@ public class Main {
             	Card cardPenalty = entry.getValue();
             
                 //Agony Aunt Penalty
-                new AgonyAunt(cardPenalty, dumpCard, trick.getWinner().getCounters(),penaltyboard);	
+//                new AgonyAunt(cardPenalty, dumpCard, trick.getWinner().getCounters(),penaltyboard);	
             	
-            	//Agony Uncle Penalty
-            	new AgonyUncle(cardPenalty, dumpCard, trick.getWinner().getCounters(), penaltyboard);
+//            	//Agony Uncle Penalty
+//            	new AgonyUncle(cardPenalty, dumpCard, trick.getWinner().getCounters(), penaltyboard);
            
             	//Queen Penalty
-            	new Queen(cardPenalty, trick.getWinner().getCounters(), penaltyboard);
+//            	new Queen(cardPenalty, trick.getWinner().getCounters(), penaltyboard);
 
             }
 
             //Dumpth trick penalty
-            new DumpthTrick(dumpCard, Trick.trickNumber, trick.getWinner().getCounters(), penaltyboard);
+//            new DumpthTrick(dumpCard, Trick.trickNumber, trick.getWinner().getCounters(), penaltyboard);
 
             //Last trick penalty
-            new LastTrick(Trick.trickNumber, trick.getWinner().getCounters(), penaltyboard);
+//            new LastTrick(Trick.trickNumber, trick.getWinner().getCounters(), penaltyboard);
 
             //Most trick penalty
-            new MostTrick(game, penaltyboard);
+//            new MostTrick(game, penaltyboard);
         	
             /* Display Penalty Board */
             penaltyboard.displayBoard();

@@ -9,13 +9,18 @@ import model.PenaltyBoard;
 import java.util.Stack;
 
 public class DumpthTrick extends Penalty {
-
-    public DumpthTrick(Card dumpCard, Integer trickNumber, Stack<Counter> counters, PenaltyBoard penaltyBoard) {
+	
+	public String penaltyCode;
+	public String counterColor;
+	
+    public DumpthTrick(Card dumpCard, Integer trickNumber, Stack<Counter> counters) {
         if(dumpCard.getNumber() == trickNumber) {
+//        	counters.pop();
+        	setPenalty();
             String counterColor = counters.pop().getCounterColor().toString();
-            char color = counterColor.charAt(0);
-            //Call method to place counter
-            super.placeCounter(color, 2, 2, penaltyBoard);
+//            char color = counterColor.charAt(0);
+//            //Call method to place counter
+//            super.placeCounter(color, 2, 2, penaltyBoard);
         }
     }
 
@@ -29,4 +34,17 @@ public class DumpthTrick extends Penalty {
         // TODO Auto-generated method stub
         return false;
     }
+    
+	@Override
+	public void setPenalty() {
+		this.penaltyCode = "DT";
+	}
+
+	public String getPenaltyCode() {
+		return penaltyCode;
+	}
+	
+	public String getCounterColor() {
+		return counterColor;
+	}
 }
