@@ -22,7 +22,7 @@ import static model.Suit.JOKER;
 public class MainFrame extends JFrame {
     //	DrawCircle circleCounter = new DrawCircle();
     public static JLabel jL, N1, p1N, N2, p2N, N3, p3N, N4, p4N, p1C, p2C, p3C, p4C, 
-    					 dumpCardTitle, dCard, leadingCard, trickNumber;
+    					 dumpCardTitle, dCard, leadingCard, trickNumber, currentPlayerName;
     public ArrayList<JLabel> followingCards = new ArrayList<>();
     public static JPanel jP;
     public static Graphics g;
@@ -37,6 +37,7 @@ public class MainFrame extends JFrame {
     public static String aa_code, au_code, dt_code, lt_code, mt_code, qp_code;
     public static ArrayList<String> penaltyCode = new ArrayList<>();
     public static String counterColor;
+//    public static String playerName;
 
     public MainFrame(Player[] players, DumpCard dumpCard, String dumpCardImage, Trick trick, Game game, PenaltyBoard penaltyBoard) {
         setTitle("Play Agony Aunt");
@@ -81,6 +82,12 @@ public class MainFrame extends JFrame {
         dCard = new JLabel((icon));
         dCard.setBounds(8, 1, 100, 160);
         jP.add(dCard);
+
+        //Display trick number
+        String trick_no = "Trick:" + String.valueOf(Trick.trickNumber);
+        trickNumber = new JLabel(trick_no);
+        trickNumber.setBounds(300, 2, 80, 20);
+        jP.add(trickNumber);
 
         jL = new JLabel("Player information");
         jL.setBounds(1100, 1, 200, 15);
@@ -170,14 +177,10 @@ public class MainFrame extends JFrame {
 
     //load images cards
     public void setupCardImages(Trick trick, Game game, PenaltyBoard penaltyBoard) {
-
-        //Display trick number
-        String trick_no = "Trick:" + String.valueOf(Trick.trickNumber);
-        trickNumber = new JLabel(trick_no);
-        trickNumber.setBounds(300, 2, 80, 20);
-        jP.add(trickNumber);
         
         if (turnCount == -1) {
+
+            displayCurrentPLayerName(trick.getTrickLeader().getPlayerName());
 
             //Leading a trick
             System.out.println(trick.getTrickLeader().getPlayerName() + "'s cards are as follows");
@@ -192,6 +195,9 @@ public class MainFrame extends JFrame {
 
             //following players
         } else if (turnCount > -1 && turnCount < 3) {
+            jP.remove(currentPlayerName);
+            displayCurrentPLayerName(trick.getFollowingPlayers()[turnCount].getPlayerName());
+
             System.out.println(turnCount);
             System.out.println(trick.getFollowingPlayers()[turnCount].getPlayerName() + "'s cards are as follows");
             System.out.println("-----------------------------");
@@ -378,7 +384,7 @@ public class MainFrame extends JFrame {
                     for (int d = 0; d < trick.getFollowingCards().length; d++) {
                         trick.getWinner().updateTotalCardsWon(trick.getFollowingCards()[d]);
                     }
-                    dispose();
+
                    
                     /* Iterate at the cards won to check for penalty */
                     for(Map.Entry<Integer, Card> entry: cardsWon.entrySet()) {
@@ -456,6 +462,83 @@ public class MainFrame extends JFrame {
                     //Add counter to board
                     new PenaltyBoardFrame(playerID, penaltyCode,counterColor);
 
+                    //Score
+                    if(Trick.trickNumber == 13) {
+                        System.out.println();
+                        System.out.println("***********************************************************");
+                        System.out.println("Additional score/counter removal (End of round (13 tricks))");
+                        System.out.println("***********************************************************");
+                        for(int e=0; e<4; e++) {
+                            int count =0;
+                            //Horizontal penalty check and counter removal
+                            for(int f=0; f<3; f++) {
+                                count = 0;
+                                for(int g=0; g<3; g++) {
+                                    if(penaltyBoard.getPenaltyBoard()[f][g].getPenaltySquareName().endsWith("(" + game.getPlayers()[e].getCounters().peek().getCounterColor().toString().charAt(0) +')')) {
+                                        count+=1;
+                                        if(count == 3) {
+                                            game.getPlayers()[e].getCounters().pop();
+                                            System.out.println(game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters horizontally on the penalty board");
+                                        }
+                                    }
+                                }
+                            }
+
+                            //Vertical penalty check and counter removal
+                            for(int f=0; f<3; f++) {
+                                count = 0;
+                                for(int g=0; g<3; g++) {
+                                    if(penaltyBoard.getPenaltyBoard()[g][f].getPenaltySquareName().endsWith("(" + game.getPlayers()[e].getCounters().peek().getCounterColor().toString().charAt(0) +')')) {
+                                        count+=1;
+                                        if(count == 3) {
+                                            game.getPlayers()[e].getCounters().pop();
+                                            System.out.println(game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters vertically on the penalty board");
+                                        }
+                                    }
+                                }
+                            }
+
+                            count =0;
+
+                            //Diagonal penalty check and counter removal
+                            for(int f=0; f<3; f++) {
+                                if(penaltyBoard.getPenaltyBoard()[f][f].getPenaltySquareName().endsWith("(" + game.getPlayers()[e].getCounters().peek().getCounterColor().toString().charAt(0) +')')) {
+                                    count+=1;
+                                    if(count == 3) {
+                                        game.getPlayers()[e].getCounters().pop();
+                                        System.out.println(game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters diagonally on the penalty board");
+                                    }
+                                }
+                            }
+
+                            count =0;
+                            for(int f=0; f<3; f++) {
+                                for(int g=0; g<3; g++) {
+                                    if(f+g == 2) {
+                                        if (penaltyBoard.getPenaltyBoard()[f][g].getPenaltySquareName().endsWith("(" + game.getPlayers()[e].getCounters().peek().getCounterColor().toString().charAt(0) + ')')) {
+                                            count += 1;
+                                            if (count == 3) {
+                                                game.getPlayers()[e].getCounters().pop();
+                                                System.out.println(game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters in a row on the penalty board");
+                                            }
+                                        }
+                                    }
+
+                                }
+                            }
+
+                        }
+                        //Print remaining counters each player has
+                        System.out.println();
+                        System.out.println("Players => Remaining Counters");
+                        System.out.println("-----------------------------");
+                        for(int f=0; f<4; f++) {
+                            System.out.println((f+1) + ". " + game.getPlayers()[f].getPlayerName() + ": " + game.getPlayers()[f].getCounters().size());
+                        }
+
+                    }
+
+                    dispose();
                     GameController.handleGame();
                 } else {
                     setupCardImages(trick, game, penaltyBoard);
@@ -517,5 +600,13 @@ public class MainFrame extends JFrame {
 //		}
 //
 //	}
+
+    public void displayCurrentPLayerName(String playerName) {
+        //Display trick number
+        String player_name = "Current Player: " + playerName;
+        currentPlayerName = new JLabel(player_name);
+        currentPlayerName.setBounds(50, 250, 500, 20);
+        jP.add(currentPlayerName);
+    }
 
 }
