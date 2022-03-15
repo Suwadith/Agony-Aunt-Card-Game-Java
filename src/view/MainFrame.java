@@ -21,8 +21,10 @@ import static model.Suit.JOKER;
 
 public class MainFrame extends JFrame {
     //	DrawCircle circleCounter = new DrawCircle();
-    public static JLabel jL, N1, p1N, N2, p2N, N3, p3N, N4, p4N, p1C, p2C, p3C, p4C, dumpCardTitle, dCard, tmpCard;
-    public static JPanel jP, mainPanel, subPanel;
+    public static JLabel jL, N1, p1N, N2, p2N, N3, p3N, N4, p4N, p1C, p2C, p3C, p4C, 
+    					 dumpCardTitle, dCard, leadingCard, trickNumber;
+    public ArrayList<JLabel> followingCards = new ArrayList<>();
+    public static JPanel jP;
     public static Graphics g;
     public static Color c;
     //	public ArrayList<JLabel> playingCards = new ArrayList<>();
@@ -51,7 +53,6 @@ public class MainFrame extends JFrame {
                 super.paintComponent(g);
                 g.setColor(Color.RED);
                 g.fillOval(1200, 20, 15, 15);
-                g.setColor(Color.BLACK);
                 g.drawOval(1200, 20, 15, 15);
 
                 g.setColor(Color.GREEN);
@@ -78,7 +79,6 @@ public class MainFrame extends JFrame {
         String filePath = "src\\view\\Cards\\" + dumpCardImage + ".png";
         ImageIcon icon = new ImageIcon(new ImageIcon(filePath).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
         dCard = new JLabel((icon));
-//		dumpCard.setIcon(icon);
         dCard.setBounds(8, 1, 100, 160);
         jP.add(dCard);
 
@@ -171,6 +171,12 @@ public class MainFrame extends JFrame {
     //load images cards
     public void setupCardImages(Trick trick, Game game) {
 
+        //Display trick number
+        String trick_no = "Trick:" + String.valueOf(Trick.trickNumber);
+        trickNumber = new JLabel(trick_no);
+        trickNumber.setBounds(300, 2, 80, 20);
+        jP.add(trickNumber);
+        
         if (turnCount == -1) {
 
             //Leading a trick
@@ -241,7 +247,6 @@ public class MainFrame extends JFrame {
 
     }
 
-
     //setup button click listeners for leader cards and handle card pick
     public void setUpCardChoiceListeners(Trick trick, Game game) {
         ActionListener cardListener = new ActionListener() {
@@ -264,7 +269,7 @@ public class MainFrame extends JFrame {
                     System.out.println("Card chosen by the leader");
                     System.out.println("--------------------------");
                     System.out.println(trick.getLeadCard());
-
+                    
                     //Add leading card to HashMap
                     cardsWon = new HashMap();
                     cardsWon.put(0, trick.getLeadCard());
@@ -282,32 +287,55 @@ public class MainFrame extends JFrame {
                     }
 
                     //trick.setFollowingCards(trick.getFollowingPlayers()[y].getPlayingCards().get(cardNumber), y);
-
                     trick.getFollowingPlayers()[turnCount].removeCard(followingCardKeys.get(playingCards.indexOf(o)));
                     System.out.println("Card chosen by the follower");
                     System.out.println("--------------------------");
                     System.out.println(trick.getFollowingCards()[turnCount]);
 
+                    //Display following cards to all players  on GUI
+                  	String followingcard = returnCardImgPath(trick.getFollowingCards()[turnCount]);
+                	ImageIcon icon = new ImageIcon(new ImageIcon(followingcard).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
+                    followingCards.add(new JLabel((icon)));
+//                    for(Card card : trick.getFollowingCards() ) {
+//                    	String followingcard = returnCardImgPath(card);
+//                    	ImageIcon icon = new ImageIcon(new ImageIcon(followingcard).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
+//                        followingCard = new JLabel((icon));
+//                        leadingCard.setBounds(585,20,80,110);
+//                        jP.add(leadingCard); 
+//                    }
+                    
+           
                     //Add following cards to HashMap
                     cardsWon.put((turnCount + 1), trick.getFollowingCards()[turnCount]);
-
-
+                }
+                
+                //Display leading card to all players  on GUI
+                String leadingcard = returnCardImgPath(trick.getLeadCard());
+                ImageIcon icon = new ImageIcon(new ImageIcon(leadingcard).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
+                leadingCard = new JLabel((icon));
+                leadingCard.setBounds(300,20,80,110);
+                jP.add(leadingCard);
+                
+                int y = 385;
+                for (int i = 0; i < followingCards.size(); i++) {
+                    followingCards.get(i).setBounds(y, 20, 80, 110);
+                    y+= 85;
                 }
 
+                for (JLabel cards : followingCards) {
+                    jP.add(cards);
+                }
+                
                 turnCount += 1;
-
                 for (JButton j : playingCards) {
                     jP.remove(j);
                 }
-
                 playingCards.clear();
                 leadCardKeys.clear();
                 followingCardKeys.clear();
                 repaint();
 
                 if (turnCount == 3) {
-
-
                     if (trick.getLeadCard().getRank() == Rank.ACE) {
                         trick.getTrickLeader().incrementTrickRoundsWon();
                         System.out.println("******************************");
@@ -351,13 +379,12 @@ public class MainFrame extends JFrame {
                         trick.getWinner().updateTotalCardsWon(trick.getFollowingCards()[d]);
                     }
                     dispose();
-                    //Check if any player incurred penalty
+                   
                     /* Iterate at the cards won to check for penalty */
                     for(Map.Entry<Integer, Card> entry: cardsWon.entrySet()) {
-                    	Card cardPenalty = entry.getValue();
+                    	Card cardPenalty = entry.getValue();   
                     
-                    
-                        //Agony Aunt Penalty check + pop a counter
+                        //Agony Aunt Penalty
                     	if(!penaltyCode.contains("AG")) {
                          AgonyAunt agonyAunt =  new AgonyAunt(cardPenalty, dump_Card, trick.getWinner().getCounters());	
                          penaltyCode.add(agonyAunt.getPenaltyCode());
