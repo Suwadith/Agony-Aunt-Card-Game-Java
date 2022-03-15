@@ -537,7 +537,6 @@ public class MainFrame extends JFrame {
                         }
 
                     }
-
                     dispose();
                     GameController.handleGame();
                 } else {
