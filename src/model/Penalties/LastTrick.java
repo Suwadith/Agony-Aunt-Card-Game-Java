@@ -13,14 +13,14 @@ public class LastTrick extends Penalty {
 	public String penaltyCode;
 	public String counterColor;
 	
-    public LastTrick(Integer trickNumber, Stack<Counter> counters) {
+    public LastTrick(Integer trickNumber, Stack<Counter> counters, PenaltyBoard penaltyBoard) {
         if(trickNumber == 13) {
 //        	counters.pop();
         	setPenalty();
             String counterColor = counters.pop().getCounterColor().toString();
-//            char color = counterColor.charAt(0);
+            char color = counterColor.charAt(0);
 //            //Call method to place counter
-//            super.placeCounter(color, 0, 2, penaltyBoard);
+            super.placeCounter(color, 0, 2, penaltyBoard);
         }
     }
 

@@ -9,7 +9,7 @@ public class Queen extends Penalty {
 	public String penaltyCode;
 	public String counterColor;
 	
-	public Queen(Card cardPenalty, Stack<Counter> counters) {
+	public Queen(Card cardPenalty, Stack<Counter> counters, PenaltyBoard penaltyboard) {
 		this.penaltyPresent = checkForPenalty(cardPenalty);
 		if(penaltyPresent) {
 //			counters.pop();
@@ -20,33 +20,37 @@ public class Queen extends Penalty {
 //    			counters.pop();
     			setPenalty();
         		counterColor = counters.pop().getCounterColor().toString();
+				char color = counterColor.charAt(0);
     			penaltyCode = penaltyCode + "_SPADES";
     			//Place counter on penalty board
-//	    		super.placeCounter(color, 0, 1,penaltyboard);
+	    		super.placeCounter(color, 0, 1,penaltyboard);
 			}
     		if(cardPenalty.getSuit() == Suit.HEARTS) {
 //    			counters.pop();
     			setPenalty();
     			counterColor = counters.pop().getCounterColor().toString();
+				char color = counterColor.charAt(0);
     			penaltyCode = penaltyCode + "_HEARTS";
 //    			//Place counter on penalty board
-//	    		super.placeCounter(color, 1, 0,penaltyboard);
+	    		super.placeCounter(color, 1, 0,penaltyboard);
     		}
     		if(cardPenalty.getSuit() == Suit.DIAMONDS) {
 //    			counters.pop();
     			setPenalty();
     			counterColor = counters.pop().getCounterColor().toString();
+				char color = counterColor.charAt(0);
     			penaltyCode = penaltyCode + "_DIAMONDS";
 //    			//Place counter on penalty board
-//	    		super.placeCounter(color, 1, 2,penaltyboard);
+	    		super.placeCounter(color, 1, 2,penaltyboard);
     		}
     		if(cardPenalty.getSuit() == Suit.CLUBS) {
 //    			counters.pop();
     			setPenalty();
     			counterColor = counters.pop().getCounterColor().toString();
+				char color = counterColor.charAt(0);
     			penaltyCode = penaltyCode + "_CLUBS";
 //    			//Place counter on penalty board
-//	    		super.placeCounter(color, 2, 1,penaltyboard);
+	    		super.placeCounter(color, 2, 1,penaltyboard);
     		}
 		}
 	}

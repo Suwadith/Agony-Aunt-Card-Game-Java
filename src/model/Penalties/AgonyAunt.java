@@ -19,14 +19,15 @@ public class AgonyAunt extends Penalty {
 //	    	}
 //	  }
 	
-	public AgonyAunt(Card cardPenalty, DumpCard dumpCard, Stack<Counter> counters) {
+	public AgonyAunt(Card cardPenalty, DumpCard dumpCard, Stack<Counter> counters, PenaltyBoard penaltyboard) {
     	this.penaltyPresent = checkForPenalty(cardPenalty, dumpCard);
     	if(penaltyPresent) {
 //    		counters.pop();
     		setPenalty();
     		counterColor = counters.pop().getCounterColor().toString();
+			char color = counterColor.charAt(0);
 //        	//Place counter on penalty board
-//    		super.placeCounter(color, 1, 1,penaltyboard);
+    		super.placeCounter(color, 1, 1,penaltyboard);
     	}
   }
 

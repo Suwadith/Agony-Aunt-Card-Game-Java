@@ -38,7 +38,7 @@ public class MainFrame extends JFrame {
     public static ArrayList<String> penaltyCode = new ArrayList<>();
     public static String counterColor;
 
-    public MainFrame(Player[] players, DumpCard dumpCard, String dumpCardImage, Trick trick, Game game) {
+    public MainFrame(Player[] players, DumpCard dumpCard, String dumpCardImage, Trick trick, Game game, PenaltyBoard penaltyBoard) {
         setTitle("Play Agony Aunt");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         counterColor = "";
@@ -146,7 +146,7 @@ public class MainFrame extends JFrame {
         jP.repaint();
 
         //calls the method to load the leader cards
-        setupCardImages(trick, game);
+        setupCardImages(trick, game, penaltyBoard);
 
 
         add(jP);
@@ -169,7 +169,7 @@ public class MainFrame extends JFrame {
 
 
     //load images cards
-    public void setupCardImages(Trick trick, Game game) {
+    public void setupCardImages(Trick trick, Game game, PenaltyBoard penaltyBoard) {
 
         //Display trick number
         String trick_no = "Trick:" + String.valueOf(Trick.trickNumber);
@@ -243,16 +243,16 @@ public class MainFrame extends JFrame {
             jP.add(j);
         }
 
-        setUpCardChoiceListeners(trick, game);
+        setUpCardChoiceListeners(trick, game, penaltyBoard);
 
     }
 
     //setup button click listeners for leader cards and handle card pick
-    public void setUpCardChoiceListeners(Trick trick, Game game) {
+    public void setUpCardChoiceListeners(Trick trick, Game game, PenaltyBoard penaltyBoard) {
         ActionListener cardListener = new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                Object o = e.getSource();
+            public void actionPerformed(ActionEvent ae) {
+                Object o = ae.getSource();
                 System.out.println(o.toString());
                 int playerID;
                 if (turnCount == -1) {
@@ -386,7 +386,7 @@ public class MainFrame extends JFrame {
                     
                         //Agony Aunt Penalty
                     	if(!penaltyCode.contains("AG")) {
-                         AgonyAunt agonyAunt =  new AgonyAunt(cardPenalty, dump_Card, trick.getWinner().getCounters());	
+                         AgonyAunt agonyAunt =  new AgonyAunt(cardPenalty, dump_Card, trick.getWinner().getCounters(), penaltyBoard);
                          penaltyCode.add(agonyAunt.getPenaltyCode());
                          if(counterColor==null || counterColor.isEmpty()) {
                          counterColor = agonyAunt.getCounterColor(); 
@@ -394,7 +394,7 @@ public class MainFrame extends JFrame {
                     	
                     	//Agony Uncle Penalty
                     	if(!penaltyCode.contains("AU")){
-                    	AgonyUncle agonyUncle = new AgonyUncle(cardPenalty, dump_Card, trick.getWinner().getCounters());
+                    	AgonyUncle agonyUncle = new AgonyUncle(cardPenalty, dump_Card, trick.getWinner().getCounters(), penaltyBoard);
                     	penaltyCode.add(agonyUncle.getPenaltyCode());
                     	if(counterColor==null || counterColor.isEmpty()) {
                     	counterColor = agonyUncle.getCounterColor(); 
@@ -402,28 +402,28 @@ public class MainFrame extends JFrame {
                     	
                     	//Queen Penalty
                     	if(!penaltyCode.contains("QP_DIAMONDS") && cardPenalty.getSuit() == Suit.DIAMONDS){
-                    	Queen queenPenalty = new Queen(cardPenalty, trick.getWinner().getCounters());
+                    	Queen queenPenalty = new Queen(cardPenalty, trick.getWinner().getCounters(), penaltyBoard);
                         penaltyCode.add(queenPenalty.getPenaltyCode());
                         if(counterColor==null || counterColor.isEmpty()) {
                         counterColor = queenPenalty.getCounterColor(); 
                         } }
                     
                     	if(!penaltyCode.contains("QP_CLUBS") && cardPenalty.getSuit() == Suit.CLUBS){
-                        	Queen queenPenalty = new Queen(cardPenalty, trick.getWinner().getCounters());
+                        	Queen queenPenalty = new Queen(cardPenalty, trick.getWinner().getCounters(), penaltyBoard);
                             penaltyCode.add(queenPenalty.getPenaltyCode());
                             if(counterColor==null || counterColor.isEmpty()) {
                             counterColor = queenPenalty.getCounterColor();
                             } }
                     
                     	if(!penaltyCode.contains("QP_SPADES") && cardPenalty.getSuit() == Suit.SPADES){
-                        	Queen queenPenalty = new Queen(cardPenalty, trick.getWinner().getCounters());
+                        	Queen queenPenalty = new Queen(cardPenalty, trick.getWinner().getCounters(), penaltyBoard);
                             penaltyCode.add(queenPenalty.getPenaltyCode());
                             if(counterColor==null || counterColor.isEmpty()) {
                             counterColor = queenPenalty.getCounterColor();
                             } }
                     	
                     	if(!penaltyCode.contains("QP_HEARTS") && cardPenalty.getSuit() == Suit.HEARTS){
-                        	Queen queenPenalty = new Queen(cardPenalty, trick.getWinner().getCounters());
+                        	Queen queenPenalty = new Queen(cardPenalty, trick.getWinner().getCounters(), penaltyBoard);
                             penaltyCode.add(queenPenalty.getPenaltyCode());
                             if(counterColor==null || counterColor.isEmpty()) {
                             counterColor = queenPenalty.getCounterColor();
@@ -431,21 +431,21 @@ public class MainFrame extends JFrame {
                     }
                     	
                     //Dumpth trick penalty
-                    DumpthTrick dumpthTrick = new DumpthTrick(dump_Card, Trick.trickNumber, trick.getWinner().getCounters());
+                    DumpthTrick dumpthTrick = new DumpthTrick(dump_Card, Trick.trickNumber, trick.getWinner().getCounters(), penaltyBoard);
                     penaltyCode.add(dumpthTrick.getPenaltyCode());
                     if(counterColor==null || counterColor.isEmpty()) {
                 	counterColor = dumpthTrick.getCounterColor();
                     }
                 	
                     //Last trick penalty
-                    LastTrick lastTrick = new LastTrick(Trick.trickNumber, trick.getWinner().getCounters());
+                    LastTrick lastTrick = new LastTrick(Trick.trickNumber, trick.getWinner().getCounters(), penaltyBoard);
                     penaltyCode.add(lastTrick.getPenaltyCode());
                     if(counterColor==null || counterColor.isEmpty()) {
                 	counterColor = lastTrick.getCounterColor();
                     }
                     
                     //Most trick penalty
-                    MostTrick mostTrick = new MostTrick(game);
+                    MostTrick mostTrick = new MostTrick(game, penaltyBoard);
                     penaltyCode.add(mostTrick.getPenaltyCode());
                     if(counterColor==null || counterColor.isEmpty()) {
                     counterColor = mostTrick.getCounterColor(); }
@@ -455,9 +455,10 @@ public class MainFrame extends JFrame {
                     
                     //Add counter to board
                     new PenaltyBoardFrame(playerID, penaltyCode,counterColor);
+
                     GameController.handleGame();
                 } else {
-                    setupCardImages(trick, game);
+                    setupCardImages(trick, game, penaltyBoard);
                 }
 
             }

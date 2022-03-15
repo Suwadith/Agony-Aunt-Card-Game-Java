@@ -8,7 +8,7 @@ public class MostTrick extends Penalty {
 	public String penaltyCode;
 	public String counterColor;
 	
-    public MostTrick(Game game) {
+    public MostTrick(Game game, PenaltyBoard penaltyBoard) {
 //        System.out.println(check(game).getPlayerName());
 
         if(Trick.trickNumber == 13) {
@@ -16,9 +16,9 @@ public class MostTrick extends Penalty {
 //            player.getCounters().pop();
             setPenalty();
             String counterColor = player.getCounters().pop().getCounterColor().toString();
-//            char color = counterColor.charAt(0);
+            char color = counterColor.charAt(0);
 //            //Call method to place counter
-//            super.placeCounter(color, 2, 0, penaltyBoard);
+            super.placeCounter(color, 2, 0, penaltyBoard);
         }
 
     }

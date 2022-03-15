@@ -15,7 +15,7 @@ import static model.Suit.JOKER;
 
 public class GameController {
 
-	static int initial;
+    static int initial;
     int[] countersAvailable = new int[4];
     //Creating player array
     static Player[] players = new Player[4];
@@ -24,7 +24,7 @@ public class GameController {
 
     //Create deck of cards
     static Deck deck = new Deck();
-    
+
     //Retrieve dump card
     static Card topCard = deck.getDeck().pop();
     static DumpCard dumpCard = new DumpCard(topCard.getSuit(), topCard.getRank(), topCard.getNumber());
@@ -32,18 +32,20 @@ public class GameController {
 
     //Start a game
     static Game game = new Game(players, dumpCard);
-    
+    static PenaltyBoard penaltyboard = new PenaltyBoard();
+
+
     public static void handleGame() {
         System.out.println(Trick.trickNumber);
         Trick trick = new Trick();
         System.out.println(Trick.trickNumber);
-        if(Trick.trickNumber<=13) {
+        if (Trick.trickNumber <= 13) {
 
             if (Trick.trickNumber == 1) {
                 trick.setTrickLeader(players[0]);
                 trick.setFollowingPlayers(new Player[]{players[1], players[2], players[3]});
             } else {
-                Trick previousTrick = game.getTricks()[Trick.trickNumber-1];
+                Trick previousTrick = game.getTricks()[Trick.trickNumber - 1];
                 trick.setTrickLeader(previousTrick.getPreviousTrickWinner());
                 List<Player> playerList = new ArrayList<>(Arrays.asList(players));
                 List<Player> reOrderedPlayerList = new ArrayList<>();
@@ -51,11 +53,11 @@ public class GameController {
                 //Order of following players to be in sequence to leading players
                 int leadPlayerIndex = playerList.indexOf(trick.getTrickLeader());
 
-                for(int f=leadPlayerIndex+1; f<playerList.size(); f++) {
+                for (int f = leadPlayerIndex + 1; f < playerList.size(); f++) {
                     reOrderedPlayerList.add(playerList.get(f));
                 }
 
-                for(int f=0; f<leadPlayerIndex; f++) {
+                for (int f = 0; f < leadPlayerIndex; f++) {
                     reOrderedPlayerList.add(playerList.get(f));
                 }
 
@@ -66,13 +68,15 @@ public class GameController {
 
             /************************** MAIN FRAME ********************/
             MainFrame.turnCount = -1;
-            new MainFrame(players, dumpCard, dumpCardImage, trick, game);
+            new MainFrame(players, dumpCard, dumpCardImage, trick, game, penaltyboard);
 
             /******************PENALTY BOARD *************************/
-            if(initial==0) {
-            new PenaltyBoardFrame();
-            initial=1;
-        } }
+            if (initial == 0) {
+                new PenaltyBoardFrame();
+                initial = 1;
+            }
+        }
+        penaltyboard.displayBoard();
 
     }
 
@@ -90,14 +94,13 @@ public class GameController {
 
     //method - get file name of card
     public void getDumpCardImage() {
-        if(topCard.getNumber() > 1 && topCard.getNumber() <= 10)
-        {
-        	dumpCardImage = topCard.getNumber() + "_of_" + topCard.getSuit();
+        if (topCard.getNumber() > 1 && topCard.getNumber() <= 10) {
+            dumpCardImage = topCard.getNumber() + "_of_" + topCard.getSuit();
         } else {
-        	dumpCardImage = topCard.getRank() + "_of_" + topCard.getSuit();
+            dumpCardImage = topCard.getRank() + "_of_" + topCard.getSuit();
         }
     }
-    
+
     public void assignCards(Player[] players, Deck deck) {
         //Assign 13 cards per player
         int x = 1;
@@ -109,8 +112,6 @@ public class GameController {
             x++;
         }
     }
-
-
 
 
 }

@@ -13,14 +13,14 @@ public class DumpthTrick extends Penalty {
 	public String penaltyCode;
 	public String counterColor;
 	
-    public DumpthTrick(Card dumpCard, Integer trickNumber, Stack<Counter> counters) {
+    public DumpthTrick(Card dumpCard, Integer trickNumber, Stack<Counter> counters, PenaltyBoard penaltyBoard) {
         if(dumpCard.getNumber() == trickNumber) {
 //        	counters.pop();
         	setPenalty();
             String counterColor = counters.pop().getCounterColor().toString();
-//            char color = counterColor.charAt(0);
+            char color = counterColor.charAt(0);
 //            //Call method to place counter
-//            super.placeCounter(color, 2, 2, penaltyBoard);
+            super.placeCounter(color, 2, 2, penaltyBoard);
         }
     }
 

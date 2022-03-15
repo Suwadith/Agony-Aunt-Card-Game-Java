@@ -9,16 +9,16 @@ public class AgonyUncle extends Penalty {
 	public String penaltyCode;
 	public String counterColor;
 	
-	  public AgonyUncle(Card cardPenalty, DumpCard dumpCard, Stack<Counter> counters) {
+	  public AgonyUncle(Card cardPenalty, DumpCard dumpCard, Stack<Counter> counters, PenaltyBoard penaltyboard) {
 		  	this.penaltyPresent = checkForPenalty(cardPenalty, dumpCard);
 	    	if(penaltyPresent) {
 //	    		counters.pop();
 	    		setPenalty();
 	    		counterColor = counters.pop().getCounterColor().toString();
 	    		System.out.println(counterColor);
-//	    		char color = counterColor.charAt(0);
+	    		char color = counterColor.charAt(0);
 //	        	//Place counter on penalty board
-//	    		super.placeCounter(color, 0, 0,penaltyboard);
+	    		super.placeCounter(color, 0, 0,penaltyboard);
 	    	}
 		}
 	
