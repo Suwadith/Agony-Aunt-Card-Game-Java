@@ -202,12 +202,12 @@ public class MainFrame extends JFrame {
             displayCurrentPLayerName(trick.getFollowingPlayers()[turnCount].getPlayerName());
 
 //            System.out.println(turnCount);
-            System.out.println(trick.getFollowingPlayers()[turnCount].getPlayerName() + "'s cards are as follows");
-            System.out.println("-----------------------------");
+//            System.out.println(trick.getFollowingPlayers()[turnCount].getPlayerName() + "'s cards are as follows");
+//            System.out.println("-----------------------------");
             if (Card.checkIfFollowingSuitPossible(trick.getFollowingPlayers()[turnCount].getPlayingCards(), trick.getLeadCard().getSuit())) {
                 trick.getFollowingPlayers()[turnCount].getPlayingCards().forEach((key, value) -> {
                     if (value.getSuit() == JOKER && game.getDumpCard().getSuit() == trick.getLeadCard().getSuit()) {
-                        System.out.println(key + " -> " + value.getSuit());
+//                        System.out.println(key + " -> " + value.getSuit());
                         String imgPath = returnCardImgPath(value);
 //						System.out.println(imgPath);
                         ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
@@ -241,7 +241,7 @@ public class MainFrame extends JFrame {
             }
         }
 
-        System.out.println(playingCards);
+//        System.out.println(playingCards);
         int x = 50;
         for (int i = 0; i < playingCards.size(); i++) {
             playingCards.get(i).setBounds(x, 300, 80, 110);
