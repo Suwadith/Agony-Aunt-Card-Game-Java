@@ -30,6 +30,7 @@ public class LoginFrame{
         jF.setSize(500, 350);
         jF.add(jP);
 
+        jF.setLocationRelativeTo(null);
         jP.setLayout(null);
 
 

@@ -37,6 +37,8 @@ public class MainFrame extends JFrame {
     public static String aa_code, au_code, dt_code, lt_code, mt_code, qp_code;
     public static ArrayList<String> penaltyCode = new ArrayList<>();
     public static String counterColor;
+    public static String additionalPenalty = "";
+    public static String finalSummary = "";
 //    public static String playerName;
 
     public MainFrame(Player[] players, DumpCard dumpCard, String dumpCardImage, Trick trick, Game game, PenaltyBoard penaltyBoard) {
@@ -157,6 +159,7 @@ public class MainFrame extends JFrame {
 
 
         add(jP);
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
@@ -198,7 +201,7 @@ public class MainFrame extends JFrame {
             jP.remove(currentPlayerName);
             displayCurrentPLayerName(trick.getFollowingPlayers()[turnCount].getPlayerName());
 
-            System.out.println(turnCount);
+//            System.out.println(turnCount);
             System.out.println(trick.getFollowingPlayers()[turnCount].getPlayerName() + "'s cards are as follows");
             System.out.println("-----------------------------");
             if (Card.checkIfFollowingSuitPossible(trick.getFollowingPlayers()[turnCount].getPlayingCards(), trick.getLeadCard().getSuit())) {
@@ -222,13 +225,13 @@ public class MainFrame extends JFrame {
                 trick.getFollowingPlayers()[turnCount].getPlayingCards().forEach((key, value) -> {
                     if (value.getSuit() == JOKER) {
                         String imgPath = returnCardImgPath(value);
-                        System.out.println(imgPath);
+//                        System.out.println(imgPath);
                         ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
                         playingCards.add(new JButton(iconImg));
                         followingCardKeys.add(key);
                     } else {
                         String imgPath = returnCardImgPath(value);
-                        System.out.println(imgPath);
+//                        System.out.println(imgPath);
                         ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
                         playingCards.add(new JButton(iconImg));
                         followingCardKeys.add(key);
@@ -259,7 +262,7 @@ public class MainFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 Object o = ae.getSource();
-                System.out.println(o.toString());
+//                System.out.println(o.toString());
                 int playerID;
                 if (turnCount == -1) {
                     System.out.println(trick.getTrickLeader().getPlayerName());
@@ -288,7 +291,7 @@ public class MainFrame extends JFrame {
                         trick.setFollowingCards(game.getDumpCard(), turnCount);
                     } else {
                         trick.setFollowingCards(trick.getFollowingPlayers()[turnCount].getPlayingCards().get(followingCardKeys.get(playingCards.indexOf(o))), turnCount);
-                        System.out.println("NEWWW");
+//                        System.out.println("NEWWW");
                         System.out.println(trick.getFollowingPlayers()[turnCount].getPlayingCards().get(followingCardKeys.get(playingCards.indexOf(o))));
                     }
 
@@ -462,6 +465,10 @@ public class MainFrame extends JFrame {
                     //Add counter to board
                     new PenaltyBoardFrame(playerID, penaltyCode,counterColor);
 
+                    JFrame jFrame = new JFrame();
+                    JOptionPane.showMessageDialog(jFrame,
+                            "Winner of the trick: " + trick.getWinner().getPlayerName());
+
                     //Score
                     if(Trick.trickNumber == 13) {
                         System.out.println();
@@ -479,6 +486,7 @@ public class MainFrame extends JFrame {
                                         if(count == 3) {
                                             game.getPlayers()[e].getCounters().pop();
                                             System.out.println(game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters horizontally on the penalty board");
+                                            additionalPenalty += game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters horizontally on the penalty board \n";
                                         }
                                     }
                                 }
@@ -493,6 +501,7 @@ public class MainFrame extends JFrame {
                                         if(count == 3) {
                                             game.getPlayers()[e].getCounters().pop();
                                             System.out.println(game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters vertically on the penalty board");
+                                            additionalPenalty += game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters vertically on the penalty board \n";
                                         }
                                     }
                                 }
@@ -507,6 +516,7 @@ public class MainFrame extends JFrame {
                                     if(count == 3) {
                                         game.getPlayers()[e].getCounters().pop();
                                         System.out.println(game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters diagonally on the penalty board");
+                                        additionalPenalty += game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters diagonally on the penalty board \n";
                                     }
                                 }
                             }
@@ -520,6 +530,7 @@ public class MainFrame extends JFrame {
                                             if (count == 3) {
                                                 game.getPlayers()[e].getCounters().pop();
                                                 System.out.println(game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters in a row on the penalty board");
+                                                additionalPenalty += game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters in a row on the penalty board \n";
                                             }
                                         }
                                     }
@@ -534,9 +545,22 @@ public class MainFrame extends JFrame {
                         System.out.println("-----------------------------");
                         for(int f=0; f<4; f++) {
                             System.out.println((f+1) + ". " + game.getPlayers()[f].getPlayerName() + ": " + game.getPlayers()[f].getCounters().size());
+                            finalSummary += (f+1) + ". " + game.getPlayers()[f].getPlayerName() + ": " + game.getPlayers()[f].getCounters().size() + "\n";
                         }
 
+                        JFrame jjFrame = new JFrame();
+                        JOptionPane.showMessageDialog(jjFrame,
+                                "End of the round\n" +
+                                        "================\n\n" +
+                                        "Additional Penalties\n" +
+                                        "====================\n" +
+                                        additionalPenalty + "\n" +
+                                        "Final Counter Summary\n" +
+                                        "=====================\n" +
+                                        finalSummary);
+
                     }
+
                     dispose();
                     GameController.handleGame();
                 } else {
@@ -550,55 +574,6 @@ public class MainFrame extends JFrame {
             j.addActionListener(cardListener);
         }
     }
-
-
-//	public void setupNextPlayerCards(Trick trick, Game game) {
-//		System.out.println(trick.getFollowingPlayers()[turnCount].getPlayerName() + "'s cards are as follows");
-//		System.out.println("-----------------------------");
-//		if(Card.checkIfFollowingSuitPossible(trick.getFollowingPlayers()[turnCount].getPlayingCards(), trick.getLeadCard().getSuit())) {
-//			trick.getFollowingPlayers()[turnCount].getPlayingCards().forEach((key, value) -> {
-//				if (value.getSuit() == JOKER && game.getDumpCard().getSuit() == trick.getLeadCard().getSuit()) {
-//					System.out.println(key + " -> " + value.getSuit());
-//					String imgPath = returnCardImgPath(value);
-//					System.out.println(imgPath);
-//					ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80,110, Image.SCALE_SMOOTH));
-//					playingCards.add(new JButton(iconImg));
-//				} else if(value.getSuit() == trick.getLeadCard().getSuit()) {
-//					String imgPath = returnCardImgPath(value);
-//					System.out.println(imgPath);
-//					ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80,110, Image.SCALE_SMOOTH));
-//					playingCards.add(new JButton(iconImg));
-//				}
-//			});
-//		} else {
-//			trick.getFollowingPlayers()[turnCount].getPlayingCards().forEach((key, value) -> {
-//				if (value.getSuit() == JOKER) {
-//					String imgPath = returnCardImgPath(value);
-//					System.out.println(imgPath);
-//					ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80,110, Image.SCALE_SMOOTH));
-//					playingCards.add(new JButton(iconImg));
-//				} else {
-//					String imgPath = returnCardImgPath(value);
-//					System.out.println(imgPath);
-//					ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80,110, Image.SCALE_SMOOTH));
-//					playingCards.add(new JButton(iconImg));
-//				}
-//			});
-//		}
-//
-//
-//		System.out.println(playingCards);
-//		int x = 50;
-//		for (int i = 0; i < playingCards.size(); i++) {
-//			playingCards.get(i).setBounds(x, 300, 80, 110);
-//			x += 85;
-//		}
-//
-//		for (JButton j : playingCards) {
-//			jP.add(j);
-//		}
-//
-//	}
 
     public void displayCurrentPLayerName(String playerName) {
         //Display trick number

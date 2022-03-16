@@ -36,9 +36,9 @@ public class GameController {
 
 
     public static void handleGame() {
-        System.out.println(Trick.trickNumber);
+//        System.out.println(Trick.trickNumber);
         Trick trick = new Trick();
-        System.out.println(Trick.trickNumber);
+//        System.out.println(Trick.trickNumber);
         if (Trick.trickNumber <= 13) {
 
             if (Trick.trickNumber == 1) {
