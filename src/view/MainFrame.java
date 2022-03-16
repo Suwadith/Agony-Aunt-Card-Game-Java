@@ -467,8 +467,8 @@ public class MainFrame extends JFrame {
                     JOptionPane.showMessageDialog(jFrame,
                             "Winner of the trick: " + trick.getWinner().getPlayerName());
                     
-                    //Add counter to board
-                    new PenaltyBoardFrame(playerID, penaltyCode,counterColor);
+//                    //Add counter to board
+//                    new PenaltyBoardFrame(playerID, penaltyCode,counterColor);
                     
                     //Score
                     if(Trick.trickNumber == 13) {
@@ -563,7 +563,9 @@ public class MainFrame extends JFrame {
                     }
 
                     dispose();
-                    GameController.handleGame();
+//                    GameController.handleGame();
+                  //Add counter to board
+                    new PenaltyBoardFrame(playerID, penaltyCode,counterColor);
                 } else {
                     setupCardImages(trick, game, penaltyBoard);
                 }

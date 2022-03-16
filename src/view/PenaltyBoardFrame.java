@@ -1,6 +1,8 @@
 package view;
 
 import javax.swing.*;
+
+import controller.GameController;
 import model.*;
 import model.Penalties.DumpthTrick;
 
@@ -21,12 +23,13 @@ public class PenaltyBoardFrame extends JFrame{
 	public String counterColor;
 	public static int agonyAunt, agonyUncle, queenSpades, queenDiamond, queenHearts, queenClubs, dumpthTrick, mostTrick, omega;
 	public static JButton jBS;
-	public static Player[] players;
-	public static DumpCard dumpCard;
-	public static String dumpCardImage;
-	public static Trick trick;
-	public static Game game;
-	public static PenaltyBoard penaltyboard;
+	public static int initial;
+	public Player[] players;
+	public DumpCard dumpCard;
+	public String dumpCardImage;
+	public Trick trick;
+	public Game game;
+	public PenaltyBoard penaltyboard;
 	  
 	public PenaltyBoardFrame(Player[] players, DumpCard dumpCard, String dumpCardImage, Trick trick, Game game, PenaltyBoard penaltyBoard){
 		setTitle("Penalty Board");
@@ -334,10 +337,15 @@ public class PenaltyBoardFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
             	dispose();
+                if (initial == 0) {
             	/************************** MAIN FRAME ********************/
                 MainFrame.turnCount = -1;
                 new MainFrame(players, dumpCard, dumpCardImage, trick, game, penaltyboard);
-            }
+                initial = 1;
+                } else {
+                	GameController.handleGame();
+                }
+                }
         });
 	    mainPanel.setBackground(Color.WHITE);
 	    add(mainPanel);

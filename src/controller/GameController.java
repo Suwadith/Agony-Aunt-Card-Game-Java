@@ -67,14 +67,15 @@ public class GameController {
                 trick.setFollowingPlayers(tempList);
             }
 
-//            /************************** MAIN FRAME ********************/
-//            MainFrame.turnCount = -1;
-//            new MainFrame(players, dumpCard, dumpCardImage, trick, game, penaltyboard);
-
             /******************PENALTY BOARD *************************/
             if (initial == 0) {
                 new PenaltyBoardFrame(players, dumpCard, dumpCardImage, trick, game, penaltyboard);
                 initial = 1;
+            } else {
+
+              /************************** MAIN FRAME ********************/
+              MainFrame.turnCount = -1;
+              new MainFrame(players, dumpCard, dumpCardImage, trick, game, penaltyboard);
             }
         }
         penaltyboard.displayBoard();
