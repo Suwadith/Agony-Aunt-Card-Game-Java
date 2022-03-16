@@ -462,13 +462,14 @@ public class MainFrame extends JFrame {
                     //Determine the ID of player won
                     playerID = trick.getWinner().getPlayerNumber();
                     
-                    //Add counter to board
-                    new PenaltyBoardFrame(playerID, penaltyCode,counterColor);
 
                     JFrame jFrame = new JFrame();
                     JOptionPane.showMessageDialog(jFrame,
                             "Winner of the trick: " + trick.getWinner().getPlayerName());
-
+                    
+                    //Add counter to board
+                    new PenaltyBoardFrame(playerID, penaltyCode,counterColor);
+                    
                     //Score
                     if(Trick.trickNumber == 13) {
                         System.out.println();

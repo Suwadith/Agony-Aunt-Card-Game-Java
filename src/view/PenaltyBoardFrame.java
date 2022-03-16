@@ -5,6 +5,8 @@ import model.*;
 import model.Penalties.DumpthTrick;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Stack;
 import java.util.concurrent.TimeUnit;
@@ -12,15 +14,28 @@ import java.util.concurrent.TimeUnit;
 public class PenaltyBoardFrame extends JFrame{
 
 	public static JLabel pS1, pS2, pS3, pS4, pS5, pS6, pS7, pS8, pS9; 
-	private JPanel mainPanel, subPanel1, subPanel2, subPanel3, subPanel4, subPanel5, subPanel6, subPanel7, subPanel8, subPanel9;
+	private JPanel mainPanel, subPanel1, subPanel2, subPanel3, subPanel4, subPanel5, subPanel6, subPanel7, subPanel8, subPanel9, subPanel10;
 	public static Color color, colorAU, colorAG, colorQS, colorQD, colorQC, colorQH, colorDT, colorMT, colorLT;
 	public int playerID;
 	public ArrayList<String> penaltyCode;
 	public String counterColor;
 	public static int agonyAunt, agonyUncle, queenSpades, queenDiamond, queenHearts, queenClubs, dumpthTrick, mostTrick, omega;
-	
-	public PenaltyBoardFrame(){
+	public static JButton jBS;
+	public static Player[] players;
+	public static DumpCard dumpCard;
+	public static String dumpCardImage;
+	public static Trick trick;
+	public static Game game;
+	public static PenaltyBoard penaltyboard;
+	  
+	public PenaltyBoardFrame(Player[] players, DumpCard dumpCard, String dumpCardImage, Trick trick, Game game, PenaltyBoard penaltyBoard){
 		setTitle("Penalty Board");
+		this.players = players;
+		this.dumpCard = dumpCard;
+		this.dumpCardImage = dumpCardImage;
+		this.trick = trick;
+		this.game = game;
+		this.penaltyboard = penaltyBoard;
 		mainPanel();
 	}
 	
@@ -34,7 +49,7 @@ public class PenaltyBoardFrame extends JFrame{
 	
 	public void mainPanel() {
 		mainPanel = new JPanel(); 
-		mainPanel.setLayout(new GridLayout(3, 4));
+		mainPanel.setLayout(new GridLayout(4, 5));
 		if(counterColor == CounterColor.RED.toString()) {
 			color = Color.RED;
 		}
@@ -295,6 +310,10 @@ public class PenaltyBoardFrame extends JFrame{
 	    subPanel9.setBackground(Color.white);
 	    subPanel9.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 	    
+	    subPanel10 = new JPanel();
+	    subPanel10.add(new JLabel(""));
+	    subPanel10.setBackground(Color.white);
+	    
 	    mainPanel.add(subPanel1);
 	    mainPanel.add(subPanel2);
 	    mainPanel.add(subPanel3);
@@ -304,17 +323,27 @@ public class PenaltyBoardFrame extends JFrame{
 	    mainPanel.add(subPanel7);
 	    mainPanel.add(subPanel8);
 	    mainPanel.add(subPanel9);
+	    mainPanel.add(subPanel10);
+	    jBS = new JButton("Continue");
+        jBS.setBounds(20, 20, 20, 10);
+//        jBS.setBorder(BorderFactory.createEmptyBorder());
+//        jBS.setBorderPainted(false);
+//        jBS.setBackground(Color.WHITE);
+        mainPanel.add(jBS);
+        jBS.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	dispose();
+            	/************************** MAIN FRAME ********************/
+                MainFrame.turnCount = -1;
+                new MainFrame(players, dumpCard, dumpCardImage, trick, game, penaltyboard);
+            }
+        });
+	    mainPanel.setBackground(Color.WHITE);
 	    add(mainPanel);
 	    setSize(400, 300);
 	    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	    setLocationRelativeTo(null);
 	    setVisible(true);
-	    
-//	    try {
-//	    	TimeUnit.SECONDS.sleep(5);
-//	    	dispose();
-//	    } catch(InterruptedException ex) {	
-//	    }
-	    
 	}
 }
