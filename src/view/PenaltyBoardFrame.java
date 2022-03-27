@@ -23,12 +23,12 @@ public class PenaltyBoardFrame extends JFrame{
 	public String counterColor;
 	public static int agonyAunt, agonyUncle, queenSpades, queenDiamond, queenHearts, queenClubs, dumpthTrick, mostTrick, omega;
 	public static JButton jBS;
-	public static int initial;
 	public Player[] players;
 	public DumpCard dumpCard;
 	public String dumpCardImage;
 	public Trick trick;
 	public Game game;
+	private static int initial;
 	public PenaltyBoard penaltyboard;
 	  
 	public PenaltyBoardFrame(Player[] players, DumpCard dumpCard, String dumpCardImage, Trick trick, Game game, PenaltyBoard penaltyBoard){
@@ -65,13 +65,27 @@ public class PenaltyBoardFrame extends JFrame{
 		if(counterColor == CounterColor.BLUE.toString()) {
 			color = Color.BLUE;
 		}
-		
+//		if(penaltyCode!=null && Game.newGame) {
+		if(Game.newGame) {
+			if(penaltyCode!=null) {
+			penaltyCode.clear(); }
+			initial=0;
+			agonyUncle = 0;
+			agonyAunt = 0;
+			queenSpades = 0;
+			queenDiamond = 0;
+			queenHearts = 0;
+			queenClubs = 0;
+			dumpthTrick = 0;
+			mostTrick = 0;
+			omega =0;
+		}
 		//Joker square
 		subPanel1 = new JPanel()
 		{
 			@Override
 			public void paintComponent(Graphics g)
-			{
+			{ if(!Game.getNewGame()) {
 				if(agonyUncle==0) {
 				if(playerID>0 && penaltyCode.contains("AU")) {
 				super.paintComponent(g);
@@ -86,7 +100,7 @@ public class PenaltyBoardFrame extends JFrame{
 					g.setColor(colorAU);
 					g.fillOval(8,20,15,15);
 					g.drawOval(8,20,15,15);
-				} }
+				} } }
 			};
 		String jokerSquare = "src\\view\\PenaltyBoard\\jokersquare.jpg";
 		ImageIcon j_icon = new ImageIcon(new ImageIcon(jokerSquare).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
@@ -99,7 +113,8 @@ public class PenaltyBoardFrame extends JFrame{
 	    {
 			@Override
 			public void paintComponent(Graphics g)
-			{	if(queenSpades==0) {
+			{ if(!Game.getNewGame()) {
+				if(queenSpades==0) {
 				if(playerID>0 && penaltyCode.contains("QP_SPADES")) {
 				super.paintComponent(g);
 				g.setColor(color);
@@ -113,7 +128,7 @@ public class PenaltyBoardFrame extends JFrame{
 				g.setColor(colorQS);
 				g.fillOval(8,20,15,15);
 				g.drawOval(8,20,15,15);
-			} }
+			} } }
 	    	};
 	    String spadesSquare = "src\\view\\PenaltyBoard\\spadessquare.jpg";
 	    ImageIcon s_icon = new ImageIcon(new ImageIcon(spadesSquare).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
@@ -126,7 +141,8 @@ public class PenaltyBoardFrame extends JFrame{
 	    {
 			@Override
 			public void paintComponent(Graphics g) {
-			if(omega==0) {
+			if(!Game.getNewGame()) {
+				if(omega==0) {
 				if(playerID>0 && penaltyCode.contains("LT")) {
 				super.paintComponent(g);
 				g.setColor(color);
@@ -140,7 +156,7 @@ public class PenaltyBoardFrame extends JFrame{
 				g.setColor(colorLT);
 				g.fillOval(8,20,15,15);
 				g.drawOval(8,20,15,15);
-			} } 
+			} } }
 			};	
 	    String omegaSquare = "src\\view\\PenaltyBoard\\omegasquare.jpg";
 	    ImageIcon o_icon = new ImageIcon(new ImageIcon(omegaSquare).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
@@ -153,7 +169,7 @@ public class PenaltyBoardFrame extends JFrame{
 	    {
 			@Override
 			public void paintComponent(Graphics g)
-			{	
+			{	if(!Game.getNewGame()) {
 				if(queenHearts==0) {
 				if(playerID>0 && penaltyCode.contains("QP_HEARTS")) {
 				super.paintComponent(g);
@@ -168,7 +184,7 @@ public class PenaltyBoardFrame extends JFrame{
 					g.setColor(colorQH);
 					g.fillOval(8,20,15,15);
 					g.drawOval(8,20,15,15);	
-				}
+				} }
 			} };	
 	    String heartSquare = "src\\view\\PenaltyBoard\\heartssquare.jpg";
 	    ImageIcon h_icon = new ImageIcon(new ImageIcon(heartSquare).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
@@ -181,7 +197,7 @@ public class PenaltyBoardFrame extends JFrame{
 	    	{
 	    	@Override
 	    	public void paintComponent(Graphics g)
-				{
+				{ if(!Game.getNewGame()) {
 	    		if(agonyAunt==0) {
 	    		if(playerID>0 && penaltyCode.contains("AG")) {
 					super.paintComponent(g);
@@ -196,8 +212,7 @@ public class PenaltyBoardFrame extends JFrame{
 					g.setColor(colorAG);
 					g.fillOval(8,20,15,15);
 					g.drawOval(8,20,15,15); 
-	    		}
-	    		}
+	    		} } }
 			};	
 	    String queenSquare = "src\\view\\PenaltyBoard\\queensquare.jpg";
 	    ImageIcon q_icon = new ImageIcon(new ImageIcon(queenSquare).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
@@ -210,7 +225,7 @@ public class PenaltyBoardFrame extends JFrame{
 	    {
 			@Override
 			public void paintComponent(Graphics g)
-			{
+			{ if(!Game.getNewGame()) {
 				if(queenDiamond==0) {
 				if(playerID>0 && penaltyCode.contains("QP_DIAMONDS")) {
 					super.paintComponent(g);
@@ -225,7 +240,7 @@ public class PenaltyBoardFrame extends JFrame{
 					g.setColor(colorQD);
 					g.fillOval(8,20,15,15);
 					g.drawOval(8,20,15,15);
-				}
+				} }
 			} };	
 	    String diamondSquare = "src\\view\\PenaltyBoard\\diamondsquare.jpg";
 	    ImageIcon d_icon = new ImageIcon(new ImageIcon(diamondSquare).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
@@ -238,7 +253,8 @@ public class PenaltyBoardFrame extends JFrame{
 	    {
 			@Override
 			public void paintComponent(Graphics g)
-			{	if(mostTrick==0) {
+			{	if(!Game.getNewGame()) {
+				if(mostTrick==0) {
 				if(playerID>0 && penaltyCode.contains("MT")) {
 					super.paintComponent(g);
 					colorMT = color;
@@ -251,7 +267,7 @@ public class PenaltyBoardFrame extends JFrame{
 					g.setColor(colorMT);
 					g.fillOval(8,20,15,15);
 					g.drawOval(8,20,15,15);
-				}
+				} }
 			} };
 	    String plusSquare = "src\\view\\PenaltyBoard\\plussquare.jpg";
 	    ImageIcon p_icon = new ImageIcon(new ImageIcon(plusSquare).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
@@ -264,7 +280,8 @@ public class PenaltyBoardFrame extends JFrame{
 	    {
 			@Override
 			public void paintComponent(Graphics g)
-			{	if(queenClubs==0) {
+			{	if(!Game.getNewGame()) {
+				if(queenClubs==0) {
 				if(playerID>0 && penaltyCode.contains("QP_CLUBS")) {
 					super.paintComponent(g);
 					colorQC=color;
@@ -278,7 +295,7 @@ public class PenaltyBoardFrame extends JFrame{
 					g.setColor(colorQC);
 					g.fillOval(8,20,15,15);
 					g.drawOval(8,20,15,15);
-				}
+				} }
 			} };	
 	    String clubsSquare = "src\\view\\PenaltyBoard\\clubssquare.jpg";
 	    ImageIcon c_icon = new ImageIcon(new ImageIcon(clubsSquare).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
@@ -291,7 +308,8 @@ public class PenaltyBoardFrame extends JFrame{
 	    {
 			@Override
 			public void paintComponent(Graphics g)
-			{	if(dumpthTrick==0) {
+			{	if(!Game.getNewGame()) {
+				if(dumpthTrick==0) {
 				if(playerID>0 && penaltyCode.contains("DT")) {
 					super.paintComponent(g);
 					colorDT = color;
@@ -305,7 +323,7 @@ public class PenaltyBoardFrame extends JFrame{
 					g.setColor(colorDT);
 					g.fillOval(8,20,15,15);
 					g.drawOval(8,20,15,15);
-				}
+				} }
 			} };
 	    String hashSquare = "src\\view\\PenaltyBoard\\hashsquare.jpg";
 	    ImageIcon hash_icon = new ImageIcon(new ImageIcon(hashSquare).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
@@ -329,15 +347,13 @@ public class PenaltyBoardFrame extends JFrame{
 	    mainPanel.add(subPanel10);
 	    jBS = new JButton("Continue");
         jBS.setBounds(20, 20, 20, 10);
-//        jBS.setBorder(BorderFactory.createEmptyBorder());
-//        jBS.setBorderPainted(false);
-//        jBS.setBackground(Color.WHITE);
         mainPanel.add(jBS);
         jBS.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             	dispose();
-                if (initial == 0) {
+//                if (Trick.trickNumber == 1 && Game.getNewGame()) {            	
+                if (initial==0) {
             	/************************** MAIN FRAME ********************/
                 MainFrame.turnCount = -1;
                 new MainFrame(players, dumpCard, dumpCardImage, trick, game, penaltyboard);
@@ -347,6 +363,7 @@ public class PenaltyBoardFrame extends JFrame{
                 }
                 }
         });
+//        Game.setNewGame(true);
 	    mainPanel.setBackground(Color.WHITE);
 	    add(mainPanel);
 	    setSize(400, 400);

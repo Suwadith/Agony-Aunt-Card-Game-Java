@@ -5,7 +5,7 @@ import model.*;
 
 public class AgonyUncle extends Penalty {
 	
-	private boolean penaltyPresent;
+	public boolean penaltyPresent=false;
 	public String penaltyCode;
 	public String counterColor;
 	

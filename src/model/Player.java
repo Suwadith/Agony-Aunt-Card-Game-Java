@@ -11,9 +11,10 @@ public class Player implements Comparable<Player>{
     private Counter counter;
     private Map<Integer, Card> playingCards;
     private Map<Integer, Card> cardsWon;
-    private int trickRoundsWon;
-    private List<Card> totalCardsWon = new ArrayList<>();
-
+    public int trickRoundsWon;
+    public List<Card> totalCardsWon = new ArrayList<>();
+    private boolean penaltyIncurred=false;
+    
     public Player() {
     }
     
@@ -25,6 +26,7 @@ public class Player implements Comparable<Player>{
     }
 
     public void assignCounters(Counter counter) {
+    	this.counter = counter;
         for(int i=0; i<17; i++) {
             this.counters.push(counter);
         }
@@ -59,7 +61,7 @@ public class Player implements Comparable<Player>{
     }
 
     public void setCounter(Counter counter) {
-        this.counter = counter;
+        this.counters.push(counter);
     }
 
     public Map<Integer, Card> getPlayingCards() {
@@ -101,8 +103,17 @@ public class Player implements Comparable<Player>{
     public List<Card> getTotalCardsWon() {
         return totalCardsWon;
     }
+    
 
-    @Override
+    public boolean isPenaltyIncurred() {
+		return penaltyIncurred;
+	}
+
+	public void setPenaltyIncurred(boolean penaltyIncurred) {
+		this.penaltyIncurred = penaltyIncurred;
+	}
+
+	@Override
     public int compareTo(Player o) {
         if (this.getTrickRoundsWon() > o.getTrickRoundsWon()) {
             return 1;

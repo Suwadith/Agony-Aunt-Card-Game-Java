@@ -10,6 +10,7 @@ import java.util.Stack;
 
 public class DumpthTrick extends Penalty {
 	
+	public boolean penaltyPresent=false;
 	public String penaltyCode;
 	public String counterColor;
 	
@@ -38,6 +39,7 @@ public class DumpthTrick extends Penalty {
 	@Override
 	public void setPenalty() {
 		this.penaltyCode = "DT";
+		this.penaltyPresent=true;
 	}
 
 	public String getPenaltyCode() {

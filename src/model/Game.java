@@ -6,10 +6,13 @@ public class Game {
     private DumpCard dumpCard;
     private Trick[] tricks = new Trick[13];
     private Player winner;
+    private int roundNumber;
+    public static boolean newGame=true;
 
     public Game(Player[] players, DumpCard dumpCard) {
         this.players = players;
         this.dumpCard = dumpCard;
+        roundNumber += 1;
     }
 
     public Player[] getPlayers() {
@@ -47,4 +50,21 @@ public class Game {
     public void setWinner(Player winner) {
         this.winner = winner;
     }
+
+	public int getRoundNumber() {
+		return roundNumber;
+	}
+
+	public void setRoundNumber(int roundNumber) {
+		this.roundNumber = roundNumber;
+	}
+
+	public static boolean getNewGame() {
+		return newGame;
+	}
+
+	public static void setNewGame(boolean newGame) {
+		Game.newGame = newGame;
+	}
+	
 }

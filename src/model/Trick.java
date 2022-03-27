@@ -9,7 +9,7 @@ public class Trick {
     private Player winner;
     private Player previousTrickWinner;
     public static int trickNumber;
-
+    public static boolean refresh=false; 
 
     public Trick() {
         trickNumber += 1;
@@ -62,4 +62,20 @@ public class Trick {
     public void setPreviousTrickWinner(Player previousTrickWinner) {
         this.previousTrickWinner = previousTrickWinner;
     }
+
+	public static int getTrickNumber() {
+		return trickNumber;
+	}
+
+	public static void setTrickNumber(int trickNumber) {
+		Trick.trickNumber = trickNumber;
+	}
+
+	public static boolean isRefresh() {
+		return refresh;
+	}
+
+	public static void setRefresh(boolean refresh) {
+		Trick.refresh = refresh;
+	}
 }

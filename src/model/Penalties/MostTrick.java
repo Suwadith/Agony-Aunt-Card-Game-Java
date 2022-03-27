@@ -5,8 +5,10 @@ import model.*;
 import java.util.*;
 
 public class MostTrick extends Penalty {
+	public boolean penaltyPresent=false;
 	public String penaltyCode;
 	public String counterColor;
+	private int playerNo;
 	
     public MostTrick(Game game, PenaltyBoard penaltyBoard) {
 //        System.out.println(check(game).getPlayerName());
@@ -15,6 +17,7 @@ public class MostTrick extends Penalty {
             Player player =check(game);
 //            player.getCounters().pop();
             setPenalty();
+            game.getPlayers()[playerNo].setPenaltyIncurred(true);
             counterColor = player.getCounters().pop().getCounterColor().toString();
             char color = counterColor.charAt(0);
 //            //Call method to place counter
@@ -106,18 +109,21 @@ public class MostTrick extends Penalty {
                     Integer count = entry.getValue();
 
                     if(count == maxDumpNumber) {
-                        return player;
+                    	playerNo = player.getPlayerNumber();
+                        return player; 
                     }
                 }
 
             }
 
             //If there is only 1 player with the highest dump suit followed cards
+            playerNo = maxDumpPlayerList.get(0).getPlayerNumber();
             return maxDumpPlayerList.get(0);
 
         }
 
         //If there is only 1 player with the highest number of trick wins he'll be returned
+        playerNo = maxPlayer.getPlayerNumber();
         return maxPlayer;
     }
 
@@ -134,6 +140,7 @@ public class MostTrick extends Penalty {
 	@Override
 	public void setPenalty() {
 		this.penaltyCode = "MT";
+		this.penaltyPresent=true;
 	}
 
 	public String getPenaltyCode() {

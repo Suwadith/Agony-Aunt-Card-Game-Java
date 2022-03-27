@@ -15,7 +15,6 @@ import static model.Suit.JOKER;
 
 public class GameController {
 
-    static int initial;
     int[] countersAvailable = new int[4];
     //Creating player array
     static Player[] players = new Player[4];
@@ -24,23 +23,42 @@ public class GameController {
 
     //Create deck of cards
     static Deck deck = new Deck();
-
-    //Retrieve dump card
+//
+//    //Retrieve dump card
     static Card topCard = deck.getDeck().pop();
     static DumpCard dumpCard = new DumpCard(topCard.getSuit(), topCard.getRank(), topCard.getNumber());
     static String dumpCardImage = new String();
-
-    //Start a game
+//
+//    //Start a game
     static Game game = new Game(players, dumpCard);
     static PenaltyBoard penaltyboard = new PenaltyBoard();
 
 
     public static void handleGame() {
-//        System.out.println(Trick.trickNumber);
+    	if(game.getRoundNumber() == 1 && Game.newGame) {
+    		getDumpCardImage();	
+            assignCards(players, deck);	
+    	}
+//        if(game.getRoundNumber() > 1 && Game.newGame) {
+    	 if(game.getRoundNumber() > 1 && Trick.isRefresh()) {
+//        assignCards(players, deck);
+    	//Create deck of cards
+        deck = new Deck();
+        assignCards(players, deck);
+        //Retrieve dump card
+        topCard = deck.getDeck().pop();
+        dumpCard = new DumpCard(topCard.getSuit(), topCard.getRank(), topCard.getNumber());
+        getDumpCardImage();	
+        Game.setNewGame(true);
+        Trick.setRefresh(false);
+        game.setDumpCard(dumpCard);
+        //Start a game
+        penaltyboard = new PenaltyBoard();
+        }
+    	//        System.out.println(Trick.trickNumber);
         Trick trick = new Trick();
 //        System.out.println(Trick.trickNumber);
         if (Trick.trickNumber <= 13) {
-
             if (Trick.trickNumber == 1) {
                 trick.setTrickLeader(players[0]);
                 trick.setFollowingPlayers(new Player[]{players[1], players[2], players[3]});
@@ -68,9 +86,8 @@ public class GameController {
             }
 
             /******************PENALTY BOARD *************************/
-            if (initial == 0) {
+            if (Trick.trickNumber == 1) {
                 new PenaltyBoardFrame(players, dumpCard, dumpCardImage, trick, game, penaltyboard);
-                initial = 1;
             } else {
 
               /************************** MAIN FRAME ********************/
@@ -88,14 +105,14 @@ public class GameController {
             players[i] = new Player((i + 1), playerNames[i], counter[i]);
             countersAvailable[i] = players[i].getCounters().size();
         }
-        assignCards(players, deck);
-        getDumpCardImage();
+//        assignCards(players, deck);
+//        getDumpCardImage();
         handleGame();
 
     }
 
     //method - get file name of card
-    public void getDumpCardImage() {
+    public static void getDumpCardImage() {
         if (topCard.getNumber() > 1 && topCard.getNumber() <= 10) {
             dumpCardImage = topCard.getNumber() + "_of_" + topCard.getSuit();
         } else {
@@ -103,7 +120,7 @@ public class GameController {
         }
     }
 
-    public void assignCards(Player[] players, Deck deck) {
+    public static void assignCards(Player[] players, Deck deck) {
         //Assign 13 cards per player
         int x = 1;
         for (int i = 0; i < 13; i++) {
