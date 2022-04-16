@@ -28,6 +28,8 @@ public class MainFrame extends JFrame {
     public static Color c;
     //	public ArrayList<JLabel> playingCards = new ArrayList<>();
     public ArrayList<JButton> playingCards = new ArrayList<>();
+    public ArrayList<JButton> unPlayableCards = new ArrayList<>();
+    public ArrayList<JButton> cardsWonButton = new ArrayList<>();
     public static int turnCount;
     public static DumpCard dump_Card;
     public static Map<Integer, Card> cardsWon;
@@ -63,20 +65,20 @@ public class MainFrame extends JFrame {
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 g.setColor(Color.RED);
-                g.fillOval(1200, 20, 15, 15);
-                g.drawOval(1200, 20, 15, 15);
+                g.fillOval(1000, 20, 15, 15);
+                g.drawOval(1000, 20, 15, 15);
 
                 g.setColor(Color.GREEN);
-                g.fillOval(1200, 40, 15, 15);
-                g.drawOval(1200, 40, 15, 15);
+                g.fillOval(1000, 40, 15, 15);
+                g.drawOval(1000, 40, 15, 15);
 
                 g.setColor(Color.BLUE);
-                g.fillOval(1200, 60, 15, 15);
-                g.drawOval(1200, 60, 15, 15);
+                g.fillOval(1000, 60, 15, 15);
+                g.drawOval(1000, 60, 15, 15);
 
                 g.setColor(Color.YELLOW);
-                g.fillOval(1200, 80, 15, 15);
-                g.drawOval(1200, 80, 15, 15);
+                g.fillOval(1000, 80, 15, 15);
+                g.drawOval(1000, 80, 15, 15);
             }
         };
         jP.setLayout(null);
@@ -100,64 +102,92 @@ public class MainFrame extends JFrame {
         jP.add(trickNumber);
 
         jL = new JLabel("Player information");
-        jL.setBounds(1100, 1, 200, 15);
+        jL.setBounds(900, 1, 200, 15);
         jP.add(jL);
 
         //Display Player1 name
         N1 = new JLabel("1");
-        N1.setBounds(1100, 12, 300, 30);
+        N1.setBounds(900, 12, 300, 30);
         jP.add(N1);
         p1N = new JLabel(players[0].getPlayerName());
-        p1N.setBounds(1120, 12, 300, 30);
+        p1N.setBounds(920, 12, 300, 30);
         jP.add(p1N);
 
         //Display Player2 name
         N2 = new JLabel("2");
-        N2.setBounds(1100, 32, 300, 30);
+        N2.setBounds(900, 32, 300, 30);
         jP.add(N2);
         p2N = new JLabel(players[1].getPlayerName());
-        p2N.setBounds(1120, 32, 300, 30);
+        p2N.setBounds(920, 32, 300, 30);
         jP.add(p2N);
 
         //Display Player3 name
         N3 = new JLabel("3");
-        N3.setBounds(1100, 52, 300, 30);
+        N3.setBounds(900, 52, 300, 30);
         jP.add(N3);
         p3N = new JLabel(players[2].getPlayerName());
-        p3N.setBounds(1120, 52, 300, 30);
+        p3N.setBounds(920, 52, 300, 30);
         jP.add(p3N);
 
         //Display Player4 name
         N4 = new JLabel("4");
-        N4.setBounds(1100, 72, 300, 30);
+        N4.setBounds(900, 72, 300, 30);
         jP.add(N4);
         p4N = new JLabel(players[3].getPlayerName());
-        p4N.setBounds(1120, 72, 300, 30);
+        p4N.setBounds(920, 72, 300, 30);
         jP.add(p4N);
 
         //Display Available counters for player1
         p1C = new JLabel("");
-        p1C.setBounds(1220, 16, 20, 20);
+        p1C.setBounds(1020, 16, 20, 20);
         jP.add(p1C);
         p1C.setText(String.valueOf(players[0].getCounters().size()));
 
         //Display Available counters for player2
         p2C = new JLabel("");
-        p2C.setBounds(1220, 37, 20, 20);
+        p2C.setBounds(1020, 37, 20, 20);
         jP.add(p2C);
         p2C.setText(String.valueOf(players[1].getCounters().size()));
 
         //Display Available counters for player3
         p3C = new JLabel("");
-        p3C.setBounds(1220, 58, 20, 20);
+        p3C.setBounds(1020, 58, 20, 20);
         jP.add(p3C);
         p3C.setText(String.valueOf(players[2].getCounters().size()));
 
         //Display Available counters for player1
         p4C = new JLabel("");
-        p4C.setBounds(1220, 78, 20, 20);
+        p4C.setBounds(1020, 78, 20, 20);
         jP.add(p4C);
         p4C.setText(String.valueOf(players[3].getCounters().size()));
+
+        //Button for viewing cards won
+        for(int i=0; i<4; i++) {
+            cardsWonButton.add(new JButton("Cards Won"));
+        }
+
+        int q = 18;
+        for (int i = 0; i < cardsWonButton.size(); i++) {
+            cardsWonButton.get(i).setBounds(1040, q, 100,18);
+            q += 20;
+        }
+
+        for (JButton j : cardsWonButton) {
+            jP.add(j);
+        }
+
+        for(int i=0; i<4; i++) {
+            int finalI = i;
+            cardsWonButton.get(i).addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    //Player player = game.getPlayers()[finalI];
+//                    System.out.println("Works");
+//                    System.out.println(game.getPlayers()[finalI].getTotalCardsWon());
+                    new CardsWonFrame(game.getPlayers()[finalI].getTotalCardsWon());
+                }
+            });
+        }
 
         //Display counters
         jP.repaint();
@@ -183,6 +213,8 @@ public class MainFrame extends JFrame {
             }
         }
     }
+
+
 
     //load images cards
     public void setupCardImages(Trick trick, Game game, PenaltyBoard penaltyBoard) {
@@ -225,6 +257,12 @@ public class MainFrame extends JFrame {
                         ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
                         playingCards.add(new JButton(iconImg));
                         followingCardKeys.add(key);
+                    } else {
+                        String imgPath = returnCardImgPath(value);
+//						System.out.println(imgPath);
+                        ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
+                        unPlayableCards.add(new JButton(iconImg));
+//                        followingCardKeys.add(key);
                     }
                 });
             } else {
@@ -254,7 +292,17 @@ public class MainFrame extends JFrame {
             x += 85;
         }
 
+        for (int i = 0; i < unPlayableCards.size(); i++) {
+            unPlayableCards.get(i).setBounds(x, 300, 80, 110);
+            x += 85;
+        }
+
         for (JButton j : playingCards) {
+            jP.add(j);
+        }
+
+        for (JButton j : unPlayableCards) {
+            j.setEnabled(false);
             jP.add(j);
         }
 
@@ -334,7 +382,13 @@ public class MainFrame extends JFrame {
                 for (JButton j : playingCards) {
                     jP.remove(j);
                 }
+
+                for (JButton j : unPlayableCards) {
+                    jP.remove(j);
+                }
+
                 playingCards.clear();
+                unPlayableCards.clear();
                 leadCardKeys.clear();
                 followingCardKeys.clear();
                 repaint();
