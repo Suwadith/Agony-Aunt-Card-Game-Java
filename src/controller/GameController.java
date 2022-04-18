@@ -23,48 +23,47 @@ public class GameController {
 
     //Create deck of cards
     static Deck deck = new Deck();
-//
-//    //Retrieve dump card
+
+    //Retrieve dump card
     static Card topCard = deck.getDeck().pop();
     static DumpCard dumpCard = new DumpCard(topCard.getSuit(), topCard.getRank(), topCard.getNumber());
     static String dumpCardImage = new String();
-//
-//    //Start a game
+
+    //Start a game
     static Game game = new Game(players, dumpCard);
     static PenaltyBoard penaltyboard = new PenaltyBoard();
 
 
     public static void handleGame() {
-    	if(game.getRoundNumber() == 1 && Game.newGame) {
-    		getDumpCardImage();	
-            assignCards(players, deck);	
-    	}
-//        if(game.getRoundNumber() > 1 && Game.newGame) {
-    	 if(game.getRoundNumber() > 1 && Trick.isRefresh()) {
-//        assignCards(players, deck);
-    	//Create deck of cards
-        deck = new Deck();
-        assignCards(players, deck);
-        //Retrieve dump card
-        topCard = deck.getDeck().pop();
-        dumpCard = new DumpCard(topCard.getSuit(), topCard.getRank(), topCard.getNumber());
-        getDumpCardImage();	
-        Game.setNewGame(true);
-        Trick.setRefresh(false);
-        game.setDumpCard(dumpCard);
-        //Start a game
-        penaltyboard = new PenaltyBoard();
+        if (game.getRoundNumber() == 1 && Game.newGame) {
+            getDumpCardImage();
+            assignCards(players, deck);
         }
-    	//        System.out.println(Trick.trickNumber);
+
+        if (game.getRoundNumber() > 1 && Trick.isRefresh()) {
+
+            //Create deck of cards
+            deck = new Deck();
+            assignCards(players, deck);
+            //Retrieve dump card
+            topCard = deck.getDeck().pop();
+            dumpCard = new DumpCard(topCard.getSuit(), topCard.getRank(), topCard.getNumber());
+            getDumpCardImage();
+            Game.setNewGame(true);
+            Trick.setRefresh(false);
+            game.setDumpCard(dumpCard);
+            //Start a game
+            penaltyboard = new PenaltyBoard();
+        }
+
         Trick trick = new Trick();
-//        System.out.println(Trick.trickNumber);
+
         if (Trick.trickNumber <= 13) {
             if (Trick.trickNumber == 1) {
                 trick.setTrickLeader(players[0]);
                 trick.setFollowingPlayers(new Player[]{players[1], players[2], players[3]});
             } else {
-            	Trick previousTrick = game.getTricks()[Trick.trickNumber - 2];
-//                Trick previousTrick = game.getTricks()[Trick.trickNumber - 1];
+                Trick previousTrick = game.getTricks()[Trick.trickNumber - 2];
                 trick.setTrickLeader(previousTrick.getPreviousTrickWinner());
                 List<Player> playerList = new ArrayList<>(Arrays.asList(players));
                 List<Player> reOrderedPlayerList = new ArrayList<>();
@@ -80,7 +79,6 @@ public class GameController {
                     reOrderedPlayerList.add(playerList.get(f));
                 }
 
-//                playerList.remove(previousTrick.getPreviousTrickWinner());
                 Player[] tempList = reOrderedPlayerList.toArray(new Player[0]);
                 trick.setFollowingPlayers(tempList);
             }
@@ -90,9 +88,9 @@ public class GameController {
                 new PenaltyBoardFrame(players, dumpCard, dumpCardImage, trick, game, penaltyboard);
             } else {
 
-              /************************** MAIN FRAME ********************/
-              MainFrame.turnCount = -1;
-              new MainFrame(players, dumpCard, dumpCardImage, trick, game, penaltyboard);
+                /************************** MAIN FRAME ********************/
+                MainFrame.turnCount = -1;
+                new MainFrame(players, dumpCard, dumpCardImage, trick, game, penaltyboard);
             }
         }
         penaltyboard.displayBoard();
@@ -105,10 +103,7 @@ public class GameController {
             players[i] = new Player((i + 1), playerNames[i], counter[i]);
             countersAvailable[i] = players[i].getCounters().size();
         }
-//        assignCards(players, deck);
-//        getDumpCardImage();
         handleGame();
-
     }
 
     //method - get file name of card

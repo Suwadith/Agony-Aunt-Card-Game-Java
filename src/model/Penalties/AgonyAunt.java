@@ -8,25 +8,14 @@ public class AgonyAunt extends Penalty {
 	public boolean penaltyPresent=false;
 	public String penaltyCode;
 	public String counterColor;
-	
-//	  public AgonyAunt(Card cardPenalty, DumpCard dumpCard, Stack<Counter> counters, PenaltyBoard penaltyboard) {
-//	    	this.penaltyPresent = checkForPenalty(cardPenalty, dumpCard);
-//	    	if(penaltyPresent) {
-//	    		String counterColor = counters.pop().getCounterColor().toString();
-//	    		char color = counterColor.charAt(0);
-//	        	//Place counter on penalty board
-//	    		super.placeCounter(color, 1, 1,penaltyboard);
-//	    	}
-//	  }
-	
+
 	public AgonyAunt(Card cardPenalty, DumpCard dumpCard, Stack<Counter> counters, PenaltyBoard penaltyboard) {
     	this.penaltyPresent = checkForPenalty(cardPenalty, dumpCard);
     	if(penaltyPresent) {
-//    		counters.pop();
     		setPenalty();
     		counterColor = counters.pop().getCounterColor().toString();
 			char color = counterColor.charAt(0);
-//        	//Place counter on penalty board
+        	//Place counter on penalty board
     		super.placeCounter(color, 1, 1,penaltyboard);
     	}
   }

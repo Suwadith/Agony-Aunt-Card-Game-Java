@@ -16,11 +16,11 @@ public class DumpthTrick extends Penalty {
 	
     public DumpthTrick(Card dumpCard, Integer trickNumber, Stack<Counter> counters, PenaltyBoard penaltyBoard) {
         if(dumpCard.getNumber() == trickNumber) {
-//        	counters.pop();
+
         	setPenalty();
             counterColor = counters.pop().getCounterColor().toString();
             char color = counterColor.charAt(0);
-//            //Call method to place counter
+            //Call method to place counter
             super.placeCounter(color, 2, 2, penaltyBoard);
         }
     }

@@ -65,7 +65,6 @@ public class PenaltyBoardFrame extends JFrame{
 		if(counterColor == CounterColor.BLUE.toString()) {
 			color = Color.BLUE;
 		}
-//		if(penaltyCode!=null && Game.newGame) {
 		if(Game.newGame) {
 			if(penaltyCode!=null) {
 			penaltyCode.clear(); }
@@ -352,7 +351,6 @@ public class PenaltyBoardFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
             	dispose();
-//                if (Trick.trickNumber == 1 && Game.getNewGame()) {            	
                 if (initial==0) {
             	/************************** MAIN FRAME ********************/
                 MainFrame.turnCount = -1;
@@ -363,7 +361,6 @@ public class PenaltyBoardFrame extends JFrame{
                 }
                 }
         });
-//        Game.setNewGame(true);
 	    mainPanel.setBackground(Color.WHITE);
 	    add(mainPanel);
 	    setSize(400, 400);

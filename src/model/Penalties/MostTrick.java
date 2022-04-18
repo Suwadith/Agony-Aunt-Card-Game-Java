@@ -11,16 +11,14 @@ public class MostTrick extends Penalty {
 	private int playerNo;
 	
     public MostTrick(Game game, PenaltyBoard penaltyBoard) {
-//        System.out.println(check(game).getPlayerName());
 
         if(Trick.trickNumber == 13) {
             Player player =check(game);
-//            player.getCounters().pop();
             setPenalty();
             game.getPlayers()[playerNo].setPenaltyIncurred(true);
             counterColor = player.getCounters().pop().getCounterColor().toString();
             char color = counterColor.charAt(0);
-//            //Call method to place counter
+            //Call method to place counter
             super.placeCounter(color, 2, 0, penaltyBoard);
         }
 
@@ -93,7 +91,6 @@ public class MostTrick extends Penalty {
                 for(int i=0; i<maxDumpPlayerList.size(); i++) {
                     List<Integer> dumpNumber = new ArrayList<>();
                     for(int x=0; x<maxDumpPlayerList.get(i).getTotalCardsWon().size(); x++) {
-//                        List<Integer> dumpNumber = new ArrayList<>();
                         if(maxDumpPlayerList.get(i).getTotalCardsWon().get(x).getSuit() == dumpCard.getSuit()) {
                             dumpNumber.add(maxDumpPlayerList.get(i).getTotalCardsWon().get(x).getNumber());
                         }
