@@ -4,7 +4,6 @@ import java.awt.*;
 
 public class DrawCircle extends JPanel {
 
-//JPanel jP = new JPanel();
 
 @Override
 public void paintComponent(Graphics g)

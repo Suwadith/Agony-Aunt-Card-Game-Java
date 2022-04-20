@@ -21,7 +21,7 @@ import static model.Suit.JOKER;
 
 public class MainFrame extends JFrame {
     public static JLabel jL, N1, p1N, N2, p2N, N3, p3N, N4, p4N, p1C, p2C, p3C, p4C,
-            dumpCardTitle, dCard, leadingCard, trickNumber, currentPlayerName;
+            dumpCardTitle, dCard, leadingCard, trickNumber, currentPlayerName, roundNumber;
     public ArrayList<JLabel> followingCards = new ArrayList<>();
     public static JPanel jP;
     public static Graphics g;
@@ -36,11 +36,11 @@ public class MainFrame extends JFrame {
     public static ArrayList<Integer> followingCardKeys = new ArrayList<>();
     public static ArrayList<String> penaltyCode = new ArrayList<>();
     public static String counterColor;
-    public static String additionalPenalty = "";
-    public static String finalSummary = "";
+    public String additionalPenalty = "";
+    public String finalSummary = "";
     public Player tempGameWinner;
     private boolean flag = false;
-    private boolean endGame = false;
+    private static boolean endGame = false;
 
     public MainFrame(Player[] players, DumpCard dumpCard, String dumpCardImage, Trick trick, Game game, PenaltyBoard penaltyBoard) {
         setTitle("Play Agony Aunt");
@@ -81,7 +81,7 @@ public class MainFrame extends JFrame {
             }
         };
         jP.setLayout(null);
-
+        jP.setBackground(Color.WHITE);
         dump_Card = dumpCard;
         //display dump card
         dumpCardTitle = new JLabel("Dump Card");
@@ -94,10 +94,20 @@ public class MainFrame extends JFrame {
         dCard.setBounds(8, 1, 100, 160);
         jP.add(dCard);
 
+        //Display round number
+        String round_no = "Round:" + String.valueOf(game.getRoundNumber());
+        roundNumber = new JLabel(round_no);
+        roundNumber.setFont(new Font("Arial", Font.BOLD, 14));
+        roundNumber.setForeground(Color.RED);
+        roundNumber.setBounds(500,200,80,20);
+        jP.add(roundNumber);
+        
         //Display trick number
         String trick_no = "Trick:" + String.valueOf(Trick.trickNumber);
         trickNumber = new JLabel(trick_no);
-        trickNumber.setBounds(300, 2, 80, 20);
+        trickNumber.setFont(new Font("Arial", Font.BOLD, 14));
+        trickNumber.setForeground(Color.RED);
+        trickNumber.setBounds(500,2, 80, 20);
         jP.add(trickNumber);
 
         jL = new JLabel("Player information");
@@ -195,6 +205,7 @@ public class MainFrame extends JFrame {
 
         add(jP);
         setLocationRelativeTo(null);
+        setBackground(Color.WHITE);
         setVisible(true);
     }
 
@@ -511,10 +522,24 @@ public class MainFrame extends JFrame {
                                 }
                             }
                             //Announce winner
+                            if(!endGame) { 
                             JFrame gameWinnerFrame = new JFrame();
+                            UIManager.put("OptionPane.background", Color.WHITE);
+                            UIManager.put("Panel.background", Color.WHITE);
+                            UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 16));
+                            UIManager.put("OptionPane.messageForeground", Color.DARK_GRAY);
                             JOptionPane.showMessageDialog(gameWinnerFrame,
-                                    "Winner of the game: " + tempGameWinner.getPlayerName());
+                                    "Congratulations!!! Winner of the game: " + tempGameWinner.getPlayerName());
                             endGame = true;
+                            //End game
+                            JFrame gameOverFrame = new JFrame();
+                            UIManager.put("OptionPane.background", Color.BLACK);
+                            UIManager.put("Panel.background", Color.BLACK);
+                            UIManager.put("OptionPane.messageFont", new Font("Times New Roman", Font.BOLD, 30));
+                            UIManager.put("OptionPane.messageForeground", Color.WHITE);
+                            JOptionPane.showMessageDialog(gameOverFrame,
+                                    "!!!!! GAME OVER !!!!!");
+                            System.exit(0);}
                         }
                     }
 
@@ -570,10 +595,24 @@ public class MainFrame extends JFrame {
                                 }
                             }
                             //Announce winner
+                            if(!endGame) {
                             JFrame gameWinnerFrame = new JFrame();
+                            UIManager.put("OptionPane.background", Color.WHITE);
+                            UIManager.put("Panel.background", Color.WHITE);
+                            UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 16));
+                            UIManager.put("OptionPane.messageForeground", Color.DARK_GRAY);
                             JOptionPane.showMessageDialog(gameWinnerFrame,
-                                    "Winner of the game: " + tempGameWinner.getPlayerName());
-                            endGame = true;
+                                    "Congratulations!!! Winner of the game: " + tempGameWinner.getPlayerName());
+                            endGame = true; 
+                            //End game
+                            JFrame gameOverFrame = new JFrame();
+                            UIManager.put("OptionPane.background", Color.BLACK);
+                            UIManager.put("Panel.background", Color.BLACK);
+                            UIManager.put("OptionPane.messageFont", new Font("Times New Roman", Font.BOLD, 30));
+                            UIManager.put("OptionPane.messageForeground", Color.WHITE);
+                            JOptionPane.showMessageDialog(gameOverFrame,
+                                    "!!!!! GAME OVER !!!!!");
+                            System.exit(0);}
                         }
                     }
 
@@ -608,6 +647,7 @@ public class MainFrame extends JFrame {
                                 for (int f = 0; f < 3; f++) {
                                     count = 0;
                                     for (int g = 0; g < 3; g++) {
+                                    	if(!game.getPlayers()[e].getCounters().isEmpty()) {
                                         if (penaltyBoard.getPenaltyBoard()[g][f].getPenaltySquareName().endsWith("(" + game.getPlayers()[e].getCounters().peek().getCounterColor().toString().charAt(0) + ')')) {
                                             count += 1;
                                             if (count == 3) {
@@ -615,7 +655,7 @@ public class MainFrame extends JFrame {
                                                 System.out.println(game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters vertically on the penalty board");
                                                 additionalPenalty += game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters vertically on the penalty board \n";
                                             }
-                                        }
+                                        } }
                                     }
                                 }
 
@@ -623,6 +663,7 @@ public class MainFrame extends JFrame {
 
                                 //Diagonal penalty check and counter removal
                                 for (int f = 0; f < 3; f++) {
+                                	if(!game.getPlayers()[e].getCounters().isEmpty()) {
                                     if (penaltyBoard.getPenaltyBoard()[f][f].getPenaltySquareName().endsWith("(" + game.getPlayers()[e].getCounters().peek().getCounterColor().toString().charAt(0) + ')')) {
                                         count += 1;
                                         if (count == 3) {
@@ -630,13 +671,14 @@ public class MainFrame extends JFrame {
                                             System.out.println(game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters diagonally on the penalty board");
                                             additionalPenalty += game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters diagonally on the penalty board \n";
                                         }
-                                    }
+                                    } }
                                 }
 
                                 count = 0;
                                 for (int f = 0; f < 3; f++) {
                                     for (int g = 0; g < 3; g++) {
                                         if (f + g == 2) {
+                                        	if(!game.getPlayers()[e].getCounters().isEmpty()) {
                                             if (penaltyBoard.getPenaltyBoard()[f][g].getPenaltySquareName().endsWith("(" + game.getPlayers()[e].getCounters().peek().getCounterColor().toString().charAt(0) + ')')) {
                                                 count += 1;
                                                 if (count == 3) {
@@ -644,7 +686,7 @@ public class MainFrame extends JFrame {
                                                     System.out.println(game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters in a row on the penalty board");
                                                     additionalPenalty += game.getPlayers()[e].getPlayerName() + " looses 1 counter for having 3 counters in a row on the penalty board \n";
                                                 }
-                                            }
+                                            } }
                                         }
 
                                     }
@@ -674,9 +716,9 @@ public class MainFrame extends JFrame {
                             /*********** Calculate special scores **************/
 
                             //If no player lost all counters
-                            if (game.getPlayers()[0].getCounters().size() != 0 ||
-                                    game.getPlayers()[1].getCounters().size() != 0 ||
-                                    game.getPlayers()[2].getCounters().size() != 0 ||
+                            if (game.getPlayers()[0].getCounters().size() != 0 &&
+                                    game.getPlayers()[1].getCounters().size() != 0 &&
+                                    game.getPlayers()[2].getCounters().size() != 0 &&
                                     game.getPlayers()[3].getCounters().size() != 0) {
 
                                 //if player won most trick, return counters
@@ -738,10 +780,24 @@ public class MainFrame extends JFrame {
                                     }
                                 }
                                 //Announce winner
+                                if(!endGame) {
                                 JFrame gameWinnerFrame = new JFrame();
+                                UIManager.put("OptionPane.background", Color.WHITE);
+                                UIManager.put("Panel.background", Color.WHITE);
+                                UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 16));
+                                UIManager.put("OptionPane.messageForeground", Color.DARK_GRAY);
                                 JOptionPane.showMessageDialog(gameWinnerFrame,
-                                        "Winner of the game: " + tempGameWinner.getPlayerName());
+                                        "Congratulations!!! Winner of the game: " + tempGameWinner.getPlayerName());
                                 endGame = true;
+                                //End game
+                                JFrame gameOverFrame = new JFrame();
+                                UIManager.put("OptionPane.background", Color.BLACK);
+                                UIManager.put("Panel.background", Color.BLACK);
+                                UIManager.put("OptionPane.messageFont", new Font("Times New Roman", Font.BOLD, 30));
+                                UIManager.put("OptionPane.messageForeground", Color.WHITE);
+                                JOptionPane.showMessageDialog(gameOverFrame,
+                                        "!!!!! GAME OVER !!!!!");
+                                System.exit(0);}
                             }
                         }
                     }

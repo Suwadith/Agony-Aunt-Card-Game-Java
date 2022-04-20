@@ -6,7 +6,7 @@ public class Game {
     private DumpCard dumpCard;
     private Trick[] tricks = new Trick[13];
     private Player winner;
-    private int roundNumber;
+    public static int roundNumber;
     public static boolean newGame=true;
 
     public Game(Player[] players, DumpCard dumpCard) {

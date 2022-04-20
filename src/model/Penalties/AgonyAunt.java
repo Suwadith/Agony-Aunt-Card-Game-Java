@@ -13,10 +13,11 @@ public class AgonyAunt extends Penalty {
     	this.penaltyPresent = checkForPenalty(cardPenalty, dumpCard);
     	if(penaltyPresent) {
     		setPenalty();
+    		if(!counters.isEmpty()) {
     		counterColor = counters.pop().getCounterColor().toString();
 			char color = counterColor.charAt(0);
         	//Place counter on penalty board
-    		super.placeCounter(color, 1, 1,penaltyboard);
+    		super.placeCounter(color, 1, 1,penaltyboard); }
     	}
   }
 

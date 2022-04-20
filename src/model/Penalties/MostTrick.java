@@ -15,7 +15,7 @@ public class MostTrick extends Penalty {
         if(Trick.trickNumber == 13) {
             Player player =check(game);
             setPenalty();
-            game.getPlayers()[playerNo].setPenaltyIncurred(true);
+            game.getPlayers()[playerNo - 1].setPenaltyIncurred(true);
             counterColor = player.getCounters().pop().getCounterColor().toString();
             char color = counterColor.charAt(0);
             //Call method to place counter
