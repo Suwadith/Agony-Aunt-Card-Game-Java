@@ -12,7 +12,7 @@ public class MostTrick extends Penalty {
 	
     public MostTrick(Game game, PenaltyBoard penaltyBoard) {
 
-        if(Trick.trickNumber == 13) {
+//        if(Trick.trickNumber == 13) {
             Player player =check(game);
             setPenalty();
             game.getPlayers()[playerNo - 1].setPenaltyIncurred(true);
@@ -20,7 +20,7 @@ public class MostTrick extends Penalty {
             char color = counterColor.charAt(0);
             //Call method to place counter
             super.placeCounter(color, 2, 0, penaltyBoard);
-        }
+//        }
 
     }
 

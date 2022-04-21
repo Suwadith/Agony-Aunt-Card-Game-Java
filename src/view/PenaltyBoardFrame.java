@@ -20,7 +20,7 @@ public class PenaltyBoardFrame extends JFrame{
 	public static Color color, colorAU, colorAG, colorQS, colorQD, colorQC, colorQH, colorDT, colorMT, colorLT;
 	public int playerID;
 	public ArrayList<String> penaltyCode;
-	public String counterColor;
+	public String counterColor, mostTrickColor;
 	public static int agonyAunt, agonyUncle, queenSpades, queenDiamond, queenHearts, queenClubs, dumpthTrick, mostTrick, omega;
 	public static JButton jBS;
 	public Player[] players;
@@ -42,10 +42,11 @@ public class PenaltyBoardFrame extends JFrame{
 		mainPanel();
 	}
 	
-	public PenaltyBoardFrame(int player_ID, ArrayList<String> penalty_code, String counter_color){
+	public PenaltyBoardFrame(int player_ID, ArrayList<String> penalty_code, String counter_color, String mostTrick_Color){
 		this.playerID = player_ID;
 		this.penaltyCode = penalty_code;
 		this.counterColor = counter_color;
+		this.mostTrickColor = mostTrick_Color;
 		setTitle("Penalty Board");
 		mainPanel();
 	}
@@ -56,14 +57,26 @@ public class PenaltyBoardFrame extends JFrame{
 		if(counterColor == CounterColor.RED.toString()) {
 			color = Color.RED;
 		}
+		if(mostTrickColor == CounterColor.RED.toString()) {
+			colorMT = Color.RED;
+		}
 		if(counterColor == CounterColor.YELLOW.toString()) {
 			color = Color.YELLOW;
+		}
+		if(mostTrickColor == CounterColor.YELLOW.toString()) {
+			colorMT = Color.YELLOW;
 		}
 		if(counterColor == CounterColor.GREEN.toString()) {
 			color = Color.GREEN;
 		}
+		if(mostTrickColor == CounterColor.GREEN.toString()) {
+			colorMT = Color.GREEN;
+		}
 		if(counterColor == CounterColor.BLUE.toString()) {
 			color = Color.BLUE;
+		}
+		if(mostTrickColor == CounterColor.BLUE.toString()) {
+			colorMT = Color.BLUE;
 		}
 		if(Game.newGame) {
 			if(penaltyCode!=null) {
@@ -256,8 +269,8 @@ public class PenaltyBoardFrame extends JFrame{
 				if(mostTrick==0) {
 				if(playerID>0 && penaltyCode.contains("MT")) {
 					super.paintComponent(g);
-					colorMT = color;
-					g.setColor(color);
+//					colorMT = color;
+					g.setColor(colorMT);
 					g.fillOval(8,20,15,15);
 					g.drawOval(8,20,15,15);
 					mostTrick=1;} }

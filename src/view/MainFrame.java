@@ -35,7 +35,7 @@ public class MainFrame extends JFrame {
     public static ArrayList<Integer> leadCardKeys = new ArrayList<>();
     public static ArrayList<Integer> followingCardKeys = new ArrayList<>();
     public static ArrayList<String> penaltyCode = new ArrayList<>();
-    public static String counterColor;
+    public static String counterColor, mostTrickColor;
     public String additionalPenalty = "";
     public String finalSummary = "";
     public Player tempGameWinner;
@@ -45,11 +45,12 @@ public class MainFrame extends JFrame {
     public MainFrame(Player[] players, DumpCard dumpCard, String dumpCardImage, Trick trick, Game game, PenaltyBoard penaltyBoard) {
         setTitle("Play Agony Aunt");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        counterColor = "";
+        counterColor = ""; mostTrickColor = "";
         if (game.getRoundNumber() > 1 && Game.getNewGame()) {
             penaltyCode.clear();
             cardsWon.clear();
             counterColor = null;
+            mostTrickColor = null;
             for (int t = 0; t < 4; t++) {
                 game.getPlayers()[t].trickRoundsWon = 0;
                 game.getPlayers()[t].totalCardsWon.clear();
@@ -535,6 +536,9 @@ public class MainFrame extends JFrame {
                             JFrame gameOverFrame = new JFrame();
                             UIManager.put("OptionPane.background", Color.BLACK);
                             UIManager.put("Panel.background", Color.BLACK);
+                            UIManager.put("OptionPane.errorDialog.titlePane.foreground", Color.BLACK);
+                            UIManager.put("OptionPane.errorDialog.titlePane.background", Color.BLACK);
+                            UIManager.put("OptionPane.errorDialog.border.background", Color.BLACK);
                             UIManager.put("OptionPane.messageFont", new Font("Times New Roman", Font.BOLD, 30));
                             UIManager.put("OptionPane.messageForeground", Color.WHITE);
                             JOptionPane.showMessageDialog(gameOverFrame,
@@ -565,11 +569,12 @@ public class MainFrame extends JFrame {
                         }
 
                         //Most trick penalty
+                        if(Trick.trickNumber == 13) {
                         MostTrick mostTrick = new MostTrick(game, penaltyBoard);
                         penaltyCode.add(mostTrick.getPenaltyCode());
-                        if (counterColor == null || counterColor.isEmpty()) {
-                            counterColor = mostTrick.getCounterColor();
-                        }
+                        if (mostTrickColor == null || mostTrickColor.isEmpty()) {
+                        	mostTrickColor = mostTrick.getCounterColor();
+                        } }
 
                         game.setTrick(Trick.trickNumber - 1, trick);
 
@@ -608,6 +613,9 @@ public class MainFrame extends JFrame {
                             JFrame gameOverFrame = new JFrame();
                             UIManager.put("OptionPane.background", Color.BLACK);
                             UIManager.put("Panel.background", Color.BLACK);
+                            UIManager.put("OptionPane.errorDialog.titlePane.foreground", Color.BLACK);
+                            UIManager.put("OptionPane.errorDialog.titlePane.background", Color.BLACK);
+                            UIManager.put("OptionPane.errorDialog.border.background", Color.BLACK);
                             UIManager.put("OptionPane.messageFont", new Font("Times New Roman", Font.BOLD, 30));
                             UIManager.put("OptionPane.messageForeground", Color.WHITE);
                             JOptionPane.showMessageDialog(gameOverFrame,
@@ -793,6 +801,9 @@ public class MainFrame extends JFrame {
                                 JFrame gameOverFrame = new JFrame();
                                 UIManager.put("OptionPane.background", Color.BLACK);
                                 UIManager.put("Panel.background", Color.BLACK);
+                                UIManager.put("OptionPane.errorDialog.titlePane.foreground", Color.BLACK);
+                                UIManager.put("OptionPane.errorDialog.titlePane.background", Color.BLACK);
+                                UIManager.put("OptionPane.errorDialog.border.background", Color.BLACK);
                                 UIManager.put("OptionPane.messageFont", new Font("Times New Roman", Font.BOLD, 30));
                                 UIManager.put("OptionPane.messageForeground", Color.WHITE);
                                 JOptionPane.showMessageDialog(gameOverFrame,
@@ -808,7 +819,7 @@ public class MainFrame extends JFrame {
                             Game.setNewGame(false);
                         }
                         //Add counter to board
-                        new PenaltyBoardFrame(playerID, penaltyCode, counterColor);
+                        new PenaltyBoardFrame(playerID, penaltyCode, counterColor, mostTrickColor);
                     }
                 } else {
                     setupCardImages(trick, game, penaltyBoard);
