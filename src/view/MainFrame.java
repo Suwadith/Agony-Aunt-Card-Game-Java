@@ -89,8 +89,8 @@ public class MainFrame extends JFrame {
         dumpCardTitle.setBounds(20, 1, 80, 20);
         jP.add(dumpCardTitle);
 
-        String filePath = "src\\view\\Cards\\" + dumpCardImage + ".png";
-        ImageIcon icon = new ImageIcon(new ImageIcon(filePath).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
+        String filePath = "/" + dumpCardImage + ".png";
+        ImageIcon icon = new ImageIcon(new ImageIcon(getClass().getResource(filePath)).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
         dCard = new JLabel((icon));
         dCard.setBounds(8, 1, 100, 160);
         jP.add(dCard);
@@ -214,12 +214,12 @@ public class MainFrame extends JFrame {
     //get card image path
     public String returnCardImgPath(Card card) {
         if (card.getSuit() == JOKER) {
-            return "src\\view\\Cards\\" + card.getSuit() + ".png";
+            return "/" + card.getSuit() + ".png";
         } else {
             if (card.getNumber() > 1 && card.getNumber() <= 10) {
-                return "src\\view\\Cards\\" + card.getNumber() + "_of_" + card.getSuit() + ".png";
+                return "/" + card.getNumber() + "_of_" + card.getSuit() + ".png";
             } else {
-                return "src\\view\\Cards\\" + card.getRank() + "_of_" + card.getSuit() + ".png";
+                return "/" + card.getRank() + "_of_" + card.getSuit() + ".png";
             }
         }
     }
@@ -237,7 +237,7 @@ public class MainFrame extends JFrame {
             System.out.println("-----------------------------");
             trick.getTrickLeader().getPlayingCards().forEach((key, value) -> {
                 String imgPath = returnCardImgPath(value);
-                ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
+                ImageIcon iconImg = new ImageIcon(new ImageIcon(getClass().getResource(imgPath)).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
                 playingCards.add(new JButton(iconImg));
                 leadCardKeys.add(key);
             });
@@ -251,17 +251,17 @@ public class MainFrame extends JFrame {
                 trick.getFollowingPlayers()[turnCount].getPlayingCards().forEach((key, value) -> {
                     if (value.getSuit() == JOKER && game.getDumpCard().getSuit() == trick.getLeadCard().getSuit()) {
                         String imgPath = returnCardImgPath(value);
-                        ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
+                        ImageIcon iconImg = new ImageIcon(new ImageIcon(getClass().getResource(imgPath)).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
                         playingCards.add(new JButton(iconImg));
                         followingCardKeys.add(key);
                     } else if (value.getSuit() == trick.getLeadCard().getSuit()) {
                         String imgPath = returnCardImgPath(value);
-                        ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
+                        ImageIcon iconImg = new ImageIcon(new ImageIcon(getClass().getResource(imgPath)).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
                         playingCards.add(new JButton(iconImg));
                         followingCardKeys.add(key);
                     } else {
                         String imgPath = returnCardImgPath(value);
-                        ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
+                        ImageIcon iconImg = new ImageIcon(new ImageIcon(getClass().getResource(imgPath)).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
                         unPlayableCards.add(new JButton(iconImg));
                     }
                 });
@@ -269,12 +269,12 @@ public class MainFrame extends JFrame {
                 trick.getFollowingPlayers()[turnCount].getPlayingCards().forEach((key, value) -> {
                     if (value.getSuit() == JOKER) {
                         String imgPath = returnCardImgPath(value);
-                        ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
+                        ImageIcon iconImg = new ImageIcon(new ImageIcon(getClass().getResource(imgPath)).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
                         playingCards.add(new JButton(iconImg));
                         followingCardKeys.add(key);
                     } else {
                         String imgPath = returnCardImgPath(value);
-                        ImageIcon iconImg = new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
+                        ImageIcon iconImg = new ImageIcon(new ImageIcon(getClass().getResource(imgPath)).getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH));
                         playingCards.add(new JButton(iconImg));
                         followingCardKeys.add(key);
                     }

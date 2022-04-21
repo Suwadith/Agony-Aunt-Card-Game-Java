@@ -114,8 +114,8 @@ public class PenaltyBoardFrame extends JFrame{
 					g.drawOval(8,20,15,15);
 				} } }
 			};
-		String jokerSquare = "src\\view\\PenaltyBoard\\jokersquare.jpg";
-		ImageIcon j_icon = new ImageIcon(new ImageIcon(jokerSquare).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
+		String jokerSquare = "/jokersquare.JPG";
+		ImageIcon j_icon = new ImageIcon(new ImageIcon(getClass().getResource(jokerSquare)).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
 		subPanel1.add(new JLabel(j_icon, SwingConstants.CENTER));
 		subPanel1.setBackground(Color.white);
 		subPanel1.setBorder(BorderFactory.createLineBorder(Color.black, 1));
@@ -142,8 +142,8 @@ public class PenaltyBoardFrame extends JFrame{
 				g.drawOval(8,20,15,15);
 			} } }
 	    	};
-	    String spadesSquare = "src\\view\\PenaltyBoard\\spadessquare.jpg";
-	    ImageIcon s_icon = new ImageIcon(new ImageIcon(spadesSquare).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
+	    String spadesSquare = "/spadessquare.JPG";
+	    ImageIcon s_icon = new ImageIcon(new ImageIcon(getClass().getResource(spadesSquare)).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
 	    subPanel2.add(new JLabel(s_icon, SwingConstants.CENTER));
 	    subPanel2.setBackground(Color.white);
 	    subPanel2.setBorder(BorderFactory.createLineBorder(Color.black, 1));
@@ -170,8 +170,8 @@ public class PenaltyBoardFrame extends JFrame{
 				g.drawOval(8,20,15,15);
 			} } }
 			};	
-	    String omegaSquare = "src\\view\\PenaltyBoard\\omegasquare.jpg";
-	    ImageIcon o_icon = new ImageIcon(new ImageIcon(omegaSquare).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
+	    String omegaSquare = "/omegasquare.JPG";
+	    ImageIcon o_icon = new ImageIcon(new ImageIcon(getClass().getResource(omegaSquare)).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
 	    subPanel3.add(new JLabel(o_icon, SwingConstants.CENTER));
 	    subPanel3.setBackground(Color.white);
 	    subPanel3.setBorder(BorderFactory.createLineBorder(Color.black, 1));
@@ -198,8 +198,8 @@ public class PenaltyBoardFrame extends JFrame{
 					g.drawOval(8,20,15,15);	
 				} }
 			} };	
-	    String heartSquare = "src\\view\\PenaltyBoard\\heartssquare.jpg";
-	    ImageIcon h_icon = new ImageIcon(new ImageIcon(heartSquare).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
+	    String heartSquare = "/heartssquare.JPG";
+	    ImageIcon h_icon = new ImageIcon(new ImageIcon(getClass().getResource(heartSquare)).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
 	    subPanel4.add(new JLabel(h_icon, SwingConstants.CENTER));
 	    subPanel4.setBackground(Color.white);
 	    subPanel4.setBorder(BorderFactory.createLineBorder(Color.black, 1));
@@ -226,8 +226,8 @@ public class PenaltyBoardFrame extends JFrame{
 					g.drawOval(8,20,15,15); 
 	    		} } }
 			};	
-	    String queenSquare = "src\\view\\PenaltyBoard\\queensquare.jpg";
-	    ImageIcon q_icon = new ImageIcon(new ImageIcon(queenSquare).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
+	    String queenSquare = "/queensquare.JPG";
+	    ImageIcon q_icon = new ImageIcon(new ImageIcon(getClass().getResource(queenSquare)).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
 	    subPanel5.add(new JLabel(q_icon, SwingConstants.CENTER));
 	    subPanel5.setBackground(Color.white);
 	    subPanel5.setBorder(BorderFactory.createLineBorder(Color.black, 1));
@@ -254,8 +254,8 @@ public class PenaltyBoardFrame extends JFrame{
 					g.drawOval(8,20,15,15);
 				} }
 			} };	
-	    String diamondSquare = "src\\view\\PenaltyBoard\\diamondsquare.jpg";
-	    ImageIcon d_icon = new ImageIcon(new ImageIcon(diamondSquare).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
+	    String diamondSquare = "/diamondsquare.JPG";
+	    ImageIcon d_icon = new ImageIcon(new ImageIcon(getClass().getResource(diamondSquare)).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
 	    subPanel6.add(new JLabel(d_icon, SwingConstants.CENTER));
 	    subPanel6.setBackground(Color.white);
 	    subPanel6.setBorder(BorderFactory.createLineBorder(Color.black, 1));
@@ -281,8 +281,8 @@ public class PenaltyBoardFrame extends JFrame{
 					g.drawOval(8,20,15,15);
 				} }
 			} };
-	    String plusSquare = "src\\view\\PenaltyBoard\\plussquare.jpg";
-	    ImageIcon p_icon = new ImageIcon(new ImageIcon(plusSquare).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
+	    String plusSquare = "/plussquare.JPG";
+	    ImageIcon p_icon = new ImageIcon(new ImageIcon(getClass().getResource(plusSquare)).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
 	    subPanel7.add(new JLabel(p_icon, SwingConstants.CENTER));
 	    subPanel7.setBackground(Color.white);
 	    subPanel7.setBorder(BorderFactory.createLineBorder(Color.black, 1));
@@ -309,8 +309,8 @@ public class PenaltyBoardFrame extends JFrame{
 					g.drawOval(8,20,15,15);
 				} }
 			} };	
-	    String clubsSquare = "src\\view\\PenaltyBoard\\clubssquare.jpg";
-	    ImageIcon c_icon = new ImageIcon(new ImageIcon(clubsSquare).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
+	    String clubsSquare = "/clubssquare.JPG";
+	    ImageIcon c_icon = new ImageIcon(new ImageIcon(getClass().getResource(clubsSquare)).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
 	    subPanel8.add(new JLabel(c_icon, SwingConstants.CENTER));
 	    subPanel8.setBackground(Color.white);
 	    subPanel8.setBorder(BorderFactory.createLineBorder(Color.black, 1));
@@ -337,8 +337,8 @@ public class PenaltyBoardFrame extends JFrame{
 					g.drawOval(8,20,15,15);
 				} }
 			} };
-	    String hashSquare = "src\\view\\PenaltyBoard\\hashsquare.jpg";
-	    ImageIcon hash_icon = new ImageIcon(new ImageIcon(hashSquare).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
+	    String hashSquare = "/hashsquare.JPG";
+	    ImageIcon hash_icon = new ImageIcon(new ImageIcon(getClass().getResource(hashSquare)).getImage().getScaledInstance(80,80, Image.SCALE_SMOOTH));
 	    subPanel9.add(new JLabel(hash_icon, SwingConstants.CENTER));
 	    subPanel9.setBackground(Color.white);
 	    subPanel9.setBorder(BorderFactory.createLineBorder(Color.black, 1));

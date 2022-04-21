@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Agony-Aunt:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Agony_Aunt_jar</output-path>
+    <root id="archive" name="Agony-Aunt.jar">
+      <element id="module-output" name="Agony-Aunt" />
+    </root>
+  </artifact>
+</component>
