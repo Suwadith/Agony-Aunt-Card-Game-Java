@@ -76,7 +76,7 @@ public class Card {
         //If last card is joker, re-arrange cards
         if (cardSuit == Suit.JOKER) {
             cardList.remove(52);
-            int pos = randomNumber(0, 53);
+            int pos = randomNumber(2, 50);
             //Add last card in the middle of the list
             cardList.add(pos, lastCard);
         }
