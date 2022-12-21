@@ -1,4 +1,4 @@
-# Agony-Aunt-Card-Game-Java
+# Agony-Aunt-Card-Game-Java-Swing-GUI
 
 Agony Aunt is an original card game created by David Parlett.
 
